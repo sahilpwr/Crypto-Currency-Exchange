@@ -1,15 +1,13 @@
 package com.exchange;
 
-import java.util.Currency;
 import java.util.HashMap;
 
 public class CurrencySystem 
 {
 	private HashMap<String,User> users=new HashMap<>();
-	private CryptoCurrency[] currency=new CryptoCurrency[3];
+	private static CryptoCurrency[] currency=new CryptoCurrency[3];
 	
-	
-	public CryptoCurrency[] cryptoInfo()
+	public static CryptoCurrency[] cryptoInfo()
 	{
 		return currency;
 	}
@@ -44,12 +42,16 @@ public class CurrencySystem
 
 	public void checkSchedule()
 	{
-		
+	
 	}
 	
 	public static void main(String[] args) 
 	{
-		
+		currency[0]=new CryptoCurrency("bitcoin");
+		currency[0].start();
+		currency[1]=new CryptoCurrency("ethereum");
+		currency[1].start();
+		currency[2]=new CryptoCurrency("litecoin");
 
 	}
 

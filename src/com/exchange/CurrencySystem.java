@@ -25,7 +25,6 @@ public class CurrencySystem
 		newUser.setLastName(lastName);
 		newUser.setUserName(userName);
 		
-		
 		users.put(newUser.getUserName(),newUser);
 		
 		return true;

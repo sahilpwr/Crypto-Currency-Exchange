@@ -47,11 +47,11 @@ public class CurrencySystem
 	
 	public static void main(String[] args) 
 	{
-		currency[0]=new CryptoCurrency("bitcoin");
+		currency[0]=new CryptoCurrency("bitcoin",15000);
 		currency[0].start();
-		currency[1]=new CryptoCurrency("ethereum");
+		currency[1]=new CryptoCurrency("ethereum",8000);
 		currency[1].start();
-		currency[2]=new CryptoCurrency("litecoin");
+		currency[2]=new CryptoCurrency("litecoin",1000);
 		currency[2].start();
 
 	}

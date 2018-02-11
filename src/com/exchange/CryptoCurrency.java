@@ -28,7 +28,7 @@ public class CryptoCurrency extends Thread
 	   while(true)
 	   {
 		   Random rand = new Random();
-		   int  n = rand.nextInt(100) + 1;
+		   int  n = rand.nextInt(multiplier) + 1;
 		   System.out.println(n+" "+currencyName+" "+sdf.format(cal.getTime()));
 		   try 
 		   {

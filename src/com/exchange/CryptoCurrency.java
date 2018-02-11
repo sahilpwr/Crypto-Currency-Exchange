@@ -14,9 +14,10 @@ public class CryptoCurrency extends Thread
    private int multiplier; 
    
    
-   public CryptoCurrency(String currencyName) 
+   public CryptoCurrency(String currencyName, int multiplier) 
    {
 	   this.currencyName=currencyName;
+	   this.multiplier=multiplier;
    }
    
    public void run()
@@ -31,7 +32,7 @@ public class CryptoCurrency extends Thread
 		   System.out.println(n+" "+currencyName+" "+sdf.format(cal.getTime()));
 		   try 
 		   {
-			Thread.sleep(2000);
+			Thread.sleep(200);
 		   } 
 		   catch (InterruptedException e) 
 		   {

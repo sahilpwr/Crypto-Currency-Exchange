@@ -52,6 +52,7 @@ public class CurrencySystem
 		currency[1]=new CryptoCurrency("ethereum");
 		currency[1].start();
 		currency[2]=new CryptoCurrency("litecoin");
+		currency[2].start();
 
 	}
 

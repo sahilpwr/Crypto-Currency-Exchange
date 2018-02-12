@@ -4,12 +4,17 @@ package com.exchange;
  *
  * @author Candy
  */
-public class HomeGUI extends javax.swing.JFrame
+public class HomeGUI extends javax.swing.JFrame //implements Runnable
 {
 
-    /**
-     * Creates new form NewJFrame7
-     */
+   /* public void run()
+    {
+    	while(true)
+    	{
+    		
+    		Thread.sleep(2);
+    	}
+    }*/
     public HomeGUI() 
     {
         initComponents();

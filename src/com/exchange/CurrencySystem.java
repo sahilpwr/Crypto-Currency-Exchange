@@ -7,6 +7,8 @@ public class CurrencySystem
 	private HashMap<String,User> users=new HashMap<>();
 	private static CryptoCurrency[] currency=new CryptoCurrency[3];
 	
+	
+	
 	public static CryptoCurrency[] cryptoInfo()
 	{
 		return currency;
@@ -27,17 +29,17 @@ public class CurrencySystem
 		return true;
 	}
 	
-	public boolean checkUser(String userName,String password)
+	public User checkUser(String userName,String password)
 	{
 		if(users.containsKey(userName))
 		{
 		     User currentUser=users.get(userName);
 			 if( currentUser.getPassword().equals(password))
 			 {
-			   return true;
+			   return currentUser;
 			 }
 	    }
-	    return false;
+	   return null;
 	}
 
 	public void checkSchedule()
@@ -54,6 +56,8 @@ public class CurrencySystem
 		currency[2]=new CryptoCurrency("litecoin",1000);
 		currency[2].start();
 
+		CurrencySystem system=new CurrencySystem();
+		
 	}
 
 }

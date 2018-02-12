@@ -1,5 +1,8 @@
 package com.exchange;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class User 
 {
  private String firstName;
@@ -9,7 +12,29 @@ public class User
  private String[] bankPayment;
  private String[] creditPayemt;
  private  String userName;
+ private int limit;
+ private Calendar lastTransaction;
  
+ 
+ public int getLimit() {
+	return limit;
+}
+
+public void setLimit(int limit) {
+	this.limit = limit;
+}
+
+public Calendar getLastTransaction() {
+	return lastTransaction;
+}
+
+public void setLastTransaction(Calendar lastTransaction) {
+	this.lastTransaction = lastTransaction;
+}
+
+
+
+
  
  public  String getUserName() 
  {

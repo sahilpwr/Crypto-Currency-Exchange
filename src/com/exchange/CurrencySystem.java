@@ -57,7 +57,25 @@ public class CurrencySystem
 		currency[2].start();
 
 		CurrencySystem system=new CurrencySystem();
+		String button = null;
 		
+		
+		if(button.equals("payment"))
+		{
+			
+		}
+		else if(button.equals("transaction"))
+		{
+			
+		}
+		else if(button.equals("convert"))
+		{
+			
+		}
+		else if(button.equals("create"))
+		{
+			
+		}
 	}
 
 }

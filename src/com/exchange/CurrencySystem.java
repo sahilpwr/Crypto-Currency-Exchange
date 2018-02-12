@@ -1,6 +1,8 @@
 package com.exchange;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CurrencySystem 
 {
@@ -11,22 +13,28 @@ public class CurrencySystem
 	
 	public static CryptoCurrency[] cryptoInfo()
 	{
+		System.out.println(currency[0].getPrice());
 		return currency;
 	}
 
 
 	public boolean createUser(String userName,String password,String firstName, String lastName ,String emailID)
 	{
-		
-		User newUser=new User();
-		newUser.setEmailID(emailID);
-		newUser.setPassword(password);
-		newUser.setFirstName(firstName);
-		newUser.setLastName(lastName);
-		newUser.setUserName(userName);	
-		users.put(newUser.getUserName(),newUser);
-		
-		return true;
+		Pattern p = Pattern.compile("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$");
+		Matcher m = p.matcher(emailID);
+		if (m.find())
+		{
+			User newUser=new User();
+			newUser.setEmailID(emailID);
+			newUser.setPassword(password);
+			newUser.setFirstName(firstName);
+			newUser.setLastName(lastName);
+			newUser.setUserName(userName);	
+			users.put(newUser.getUserName(),newUser);
+			
+			return true;
+		}
+		return false;
 	}
 	
 	public User checkUser(String userName,String password)
@@ -72,10 +80,19 @@ public class CurrencySystem
 		{
 			
 		}
-		else if(button.equals("create"))
+		else if(button.equals("schedule"))
 		{
 			
 		}
+		else if(button.equals("autoSchedule"))
+		{
+			
+		}
+		else if(button.equals("alerts"))
+		{
+			
+		}
+		
 	}
 
 }

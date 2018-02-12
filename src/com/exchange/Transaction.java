@@ -106,10 +106,10 @@ public class Transaction {
 	
 
 	public boolean buyCurrency(int amount, Payment payment,
-			User user, CryptoCurrency cryptoCurrency)
+			User user, CryptoCurrency cryptoCurrency, double quantity)
 	{
 		
-		
+		//yet to implement fees and update wallet
 		double currentBalance=0;
 		HashMap<String, Double> details;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -119,12 +119,12 @@ public class Transaction {
 		
 		if(user.getLastTransaction().before(c)
 				
-				&& user.getLimit() < amount) 
+				&& user.getLimit() < amount) {
 			System.out.println("User has crossed the weekly limit");
-				
-		else if(user.getLastTransaction().before(c)  && user.getLimit() < amount) {
-			
+		
+		return false;
 		}
+				
 		else if(payment instanceof BankAccount)
 		{
 	
@@ -137,10 +137,12 @@ public class Transaction {
 					System.out.println("Success");
 					currentBalance -= amount;
 					details.put(ba.getBankName(), currentBalance);
+					return true;
 				}
 				else
 				{
 					System.out.println("No balance");
+					return false;
 				}
 			
 		}
@@ -156,33 +158,56 @@ public class Transaction {
 					System.out.println("Success");
 					currentBalance -= amount;
 					details.put(ca.getBankName(), currentBalance);
+					return true;
 				}
 				else
 				{
 					System.out.println("No balance");
+					return false;
 				}
 			
 		}
 	
-		return true;
+		return false;
+		
 	}
 	
-	public boolean sellCurrency() {
+	public boolean sellCurrency(User user, Payment payment, int amount , double quantity) {
 		
-		return true;
+		//yet to implement wallet
+		
+		
+		HashMap<String, Double> details;
+		double currentBalance =0;
+		
+		if(payment instanceof BankAccount)
+		{
+	
+				BankAccount ba=(BankAccount)payment;
+				details= ba.getBankAccount();
+				currentBalance=details.get(ba.getBankName());
+				details.put(ba.getBankName(),currentBalance+=amount );
+				return true;
+		
+		}
+		
+		else if(payment instanceof BankAccount)
+		{
+	
+				CreditCard ca=(CreditCard)payment;
+				details= ca.getCardType();
+				currentBalance=details.get(ca.getBankName());
+				details.put(ca.getBankName(),currentBalance+=amount );
+				return true;
+	
+		}
+		
+		return false;
 	}
 	
 	public void transactionHistory () {
 		
 	}
-	
-	public boolean addPayment() {
 		
-		return true;
-	}
-	
-	
-	
-	
 	
 }

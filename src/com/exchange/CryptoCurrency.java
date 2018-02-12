@@ -28,8 +28,9 @@ public class CryptoCurrency extends Thread
 	   while(true)
 	   {
 		   Random rand = new Random();
-		   int  n = rand.nextInt(multiplier) + 1;
-		   System.out.println(n+" "+currencyName+" "+sdf.format(cal.getTime()));
+		   int  price = rand.nextInt(multiplier) + 1;
+		   //System.out.println(n+" "+currencyName+" "+sdf.format(cal.getTime()));
+		   
 		   try 
 		   {
 			Thread.sleep(200);
@@ -40,5 +41,28 @@ public class CryptoCurrency extends Thread
 		   }
 	   }
    }
+
+public double getPrice() {
+	return price;
+}
+
+
+public Date getTime() {
+	return time;
+}
+
+public double getPercentDifference() {
+	return percentDifference;
+}
+
+public void setPercentDifference(double percentDifference) {
+	this.percentDifference = percentDifference;
+}
+
+public String getCurrencyName() {
+	return currencyName;
+}
+
+   
    
 }

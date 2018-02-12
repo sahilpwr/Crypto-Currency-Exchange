@@ -210,6 +210,8 @@ public class HomeGUI extends javax.swing.JFrame
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify                     
     private javax.swing.JLabel bitcoinPrice;

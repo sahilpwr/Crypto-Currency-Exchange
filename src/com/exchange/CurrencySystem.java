@@ -68,7 +68,7 @@ public class CurrencySystem
 		String button = null;
 		
 		
-		if(button.equals("payment"))
+		/*if(button.equals("payment"))
 		{
 			
 		}
@@ -91,7 +91,9 @@ public class CurrencySystem
 		else if(button.equals("alerts"))
 		{
 			
-		}
+		}*/
+		HomeGUI g=new HomeGUI();
+		g.setVisible(true);
 		
 	}
 

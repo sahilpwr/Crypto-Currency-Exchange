@@ -90,10 +90,15 @@ private double roi;
  
 User()
 {
-wallet[0]=new Wallet("bitcoin");
-wallet[1]=new Wallet("ethereum");
-wallet[2]=new Wallet("litecoin");
+	wallet[0]=new Wallet("bitcoin");
+	wallet[1]=new Wallet("ethereum");
+	wallet[2]=new Wallet("litecoin");
 }
- 
+ public void transaction()
+ {
+	 
+	 Transaction transaction=new Transaction();
+	// transaction.buyCurrency(100, payment, user, cryptoCurrency)
+ }
 
 }

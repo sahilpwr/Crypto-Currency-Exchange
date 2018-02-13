@@ -18,19 +18,19 @@ public class Transaction {
 	private String [] cardPayment;
 	private Date time;
 	private long transactionId;
-	private CryptoCurrency cryptoCurrency;
+	private CryptoCurrency[] currency;
 	private Payment payment;
 	private User user;
+	Wallet[] wallet;
+	
+	public Transaction(Wallet[] wallet,CryptoCurrency[] currency,User user) 
+	{
+		this.wallet=wallet;
+		this.currency=currency;
+		this.user=user;
+	}
 	
 	
-	public CryptoCurrency getCryptoCurrency() {
-		return cryptoCurrency;
-	}
-
-	public void setCryptoCurrency(CryptoCurrency cryptoCurrency) {
-		this.cryptoCurrency = cryptoCurrency;
-	}
-
 	public long getTransactionId() {
 		return transactionId;
 	}
@@ -112,6 +112,7 @@ public class Transaction {
 		//yet to implement fees and update wallet and transaction!
 		double currentBalance=0;
 		HashMap<String, Double> details;
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date()); // Now use today date.
@@ -191,7 +192,7 @@ public class Transaction {
 		
 		}
 		
-		else if(payment instanceof BankAccount)
+		else if(payment instanceof CreditCard)
 		{
 	
 				CreditCard ca=(CreditCard)payment;
@@ -205,7 +206,12 @@ public class Transaction {
 		return false;
 	}
 	
-	public void transactionHistory () {
+	public void transactionHistory () 
+	{
+		
+	}
+	public void convert()
+	{
 		
 	}
 		

@@ -4,17 +4,23 @@ package com.exchange;
  *
  * @author Candy
  */
-public class HomeGUI extends javax.swing.JFrame //implements Runnable
+public class HomeGUI extends javax.swing.JFrame implements Runnable
 {
 
-   /* public void run()
+    public void run()
     {
     	while(true)
     	{
     		
-    		Thread.sleep(2);
+    		try {
+				Thread.sleep(2);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
-    }*/
+    }
+    
     public HomeGUI() 
     {
         initComponents();

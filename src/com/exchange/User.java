@@ -14,6 +14,7 @@ public class User
  private  String userName;
  private int limit;
  private Calendar lastTransaction;
+ Wallet[] wallet=new Wallet[3];
  
  
  public int getLimit() {
@@ -31,8 +32,6 @@ public Calendar getLastTransaction() {
 public void setLastTransaction(Calendar lastTransaction) {
 	this.lastTransaction = lastTransaction;
 }
-
-
 
 
  
@@ -87,13 +86,14 @@ public void setRoi(double roi) {
 }
 
 
-
 private double roi;
  
- public void setUser()
- {
-	 
- }
+User()
+{
+wallet[0]=new Wallet("bitcoin");
+wallet[1]=new Wallet("ethereum");
+wallet[2]=new Wallet("litecoin");
+}
  
 
 }

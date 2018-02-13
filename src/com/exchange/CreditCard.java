@@ -14,6 +14,7 @@ public class CreditCard extends Payment {
 
 	public void setCardType(HashMap<String, Double> cardType) {
 		this.cardType = cardType;
+		
 	}
 	
 	

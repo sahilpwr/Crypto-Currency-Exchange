@@ -47,7 +47,8 @@ public class Payment {
 
 	protected String bankName;
 	private String userName;
-	private String password;
+	private String password; 
+	
 
 	
 	public Payment()

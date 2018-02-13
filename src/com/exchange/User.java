@@ -11,10 +11,11 @@ public class User
  private String password;
  private String[] bankPayment;
  private String[] creditPayemt;
- private  String userName;
  private int limit;
  private Calendar lastTransaction;
  Wallet[] wallet=new Wallet[3];
+ CryptoCurrency[] currency;
+ User user;
  
  
  public int getLimit() {
@@ -31,18 +32,6 @@ public Calendar getLastTransaction() {
 
 public void setLastTransaction(Calendar lastTransaction) {
 	this.lastTransaction = lastTransaction;
-}
-
-
- 
- public  String getUserName() 
- {
-	return userName;
- }
-
-public void setUserName(String userName) 
-{
-	this.userName = userName;
 }
 
 public String getFirstName() {
@@ -97,7 +86,7 @@ User()
  public void transaction()
  {
 	 
-	 Transaction transaction=new Transaction();
+	 Transaction transaction=new Transaction(wallet,currency,user);
 	// transaction.buyCurrency(100, payment, user, cryptoCurrency)
  }
 

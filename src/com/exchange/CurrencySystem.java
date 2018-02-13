@@ -1,5 +1,5 @@
 package com.exchange;
-
+import com.exchange.gui.*;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +18,7 @@ public class CurrencySystem
 	}
 
 
-	public boolean createUser(String userName,String password,String firstName, String lastName ,String emailID)
+	public boolean createUser(String password,String firstName, String lastName ,String emailID)
 	{
 		Pattern p = Pattern.compile("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$");
 		Matcher m = p.matcher(emailID);
@@ -29,19 +29,18 @@ public class CurrencySystem
 			newUser.setPassword(password);
 			newUser.setFirstName(firstName);
 			newUser.setLastName(lastName);
-			newUser.setUserName(userName);	
-			users.put(newUser.getUserName(),newUser);
+			users.put(newUser.getEmailID(),newUser);
 			
 			return true;
 		}
 		return false;
 	}
 	
-	public User checkUser(String userName,String password)
+	public User checkUser(String emailID,String password)
 	{
-		if(users.containsKey(userName))
+		if(users.containsKey(emailID))
 		{
-		     User currentUser=users.get(userName);
+		     User currentUser=users.get(emailID);
 			 if( currentUser.getPassword().equals(password))
 			 {
 			   return currentUser;

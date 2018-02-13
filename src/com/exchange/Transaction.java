@@ -109,7 +109,7 @@ public class Transaction {
 			User user, CryptoCurrency cryptoCurrency, double quantity)
 	{
 		
-		//yet to implement fees and update wallet
+		//yet to implement fees and update wallet and transaction!
 		double currentBalance=0;
 		HashMap<String, Double> details;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

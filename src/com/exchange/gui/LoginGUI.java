@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
+import com.exchange.Transaction;
 import com.exchange.User;
 
 public class LoginGUI extends javax.swing.JFrame 
@@ -13,9 +14,9 @@ public class LoginGUI extends javax.swing.JFrame
 
     private CurrencySystem system;
     User currentUser;
-    public LoginGUI() 
+    public LoginGUI(CurrencySystem system) 
     {
-    	system=new CurrencySystem();
+    	this.system=system;
         initComponents();
     }
 
@@ -102,7 +103,6 @@ public class LoginGUI extends javax.swing.JFrame
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
     {                                      
        
-       system = new CurrencySystem();
    
                     if(jTextField1.getText().equals(""))
                     {
@@ -112,13 +112,13 @@ public class LoginGUI extends javax.swing.JFrame
                     {
                         JOptionPane.showMessageDialog(null, "password is required");
                     }
-                    else if(CurrencySystem.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
+                    else if(system.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
                     {
-                        currentUser = CurrencySystem.checkUser(jTextField1.getText(), jTextField2.getText());
+                        currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
                         JOptionPane.showMessageDialog(null, "login succesful");
 
-                    
-                       DashboardGUI g = new DashboardGUI();
+                       System.out.println(currentUser.getEmailID());
+                       DashboardGUI g = new DashboardGUI(system);
                        g.setVisible(true);
                     }
                     //DashboardGUI g = new DashboardGUI();
@@ -129,35 +129,7 @@ public class LoginGUI extends javax.swing.JFrame
         
     }   
     
-    public static void main(String args[])
-    {
-      
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginGUI().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;

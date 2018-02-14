@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class CurrencySystem 
 {
-	private static HashMap<String,User> users=new HashMap<>();
+	private  HashMap<String,User> users=new HashMap<>();
 	private static CryptoCurrency[] currency=new CryptoCurrency[3];
 	
 	
@@ -18,11 +18,11 @@ public class CurrencySystem
 	}
 
 
-	public static boolean createUser(String password,String firstName, String lastName ,String emailID)
+	public  boolean createUser(String password,String firstName, String lastName ,String emailID)
 	{
-		Pattern p = Pattern.compile("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$");
-		Matcher m = p.matcher(emailID);
-		if (m.find())
+		//Pattern p = Pattern.compile("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$");
+		//Matcher m = p.matcher(emailID);
+		if (!users.containsKey(emailID))
 		{
 			User newUser=new User();
 			newUser.setEmailID(emailID);
@@ -36,7 +36,7 @@ public class CurrencySystem
 		return false;
 	}
 	
-	public static User checkUser(String emailID,String password)
+	public  User checkUser(String emailID,String password)
 	{
 		if(users.containsKey(emailID))
 		{
@@ -91,7 +91,7 @@ public class CurrencySystem
 		{
 			
 		}*/
-		HomeGUI g=new HomeGUI();
+		HomeGUI g=new HomeGUI(system);
 		g.setVisible(true);
 		
 	}

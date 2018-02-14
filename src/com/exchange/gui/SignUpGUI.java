@@ -6,9 +6,10 @@ import com.exchange.CurrencySystem;
 
 public class SignUpGUI extends javax.swing.JFrame {
 
-    
-    public SignUpGUI() 
+	CurrencySystem system;
+    public SignUpGUI(CurrencySystem system) 
     {
+    	this.system=system;
         initComponents();
     }
 
@@ -146,53 +147,19 @@ public class SignUpGUI extends javax.swing.JFrame {
         }
         else
         {
-            CurrencySystem c = new CurrencySystem();
-            c.createUser(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText());
+           
+            system.createUser(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText());
             JOptionPane.showMessageDialog(null, "new user added");
-            HomeGUI g = new HomeGUI();
+            HomeGUI g = new HomeGUI(system);
             g.setVisible(true);
         }
     }                                        
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) 
+    {                                            
+     
     }                                           
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignUpGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignUpGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignUpGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignUpGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SignUpGUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;

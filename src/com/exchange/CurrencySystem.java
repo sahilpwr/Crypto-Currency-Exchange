@@ -7,11 +7,19 @@ import java.util.regex.Pattern;
 public class CurrencySystem 
 {
 	private  HashMap<String,User> users=new HashMap<>();
-	private static CryptoCurrency[] currency=new CryptoCurrency[3];
+	private CryptoCurrency[] currency=new CryptoCurrency[3];
 	
+	public CurrencySystem()
+	{
+		currency[0]=new CryptoCurrency("bitcoin",15000);
+		currency[0].start();
+		currency[1]=new CryptoCurrency("ethereum",8000);
+		currency[1].start();
+		currency[2]=new CryptoCurrency("litecoin",1000);
+		currency[2].start();
+	}
 	
-	
-	public static CryptoCurrency[] cryptoInfo()
+	public CryptoCurrency[] cryptoInfo()
 	{
 		System.out.println(currency[0].getPrice());
 		return currency;
@@ -56,13 +64,6 @@ public class CurrencySystem
 	
 	public static void main(String[] args) 
 	{
-		currency[0]=new CryptoCurrency("bitcoin",15000);
-		currency[0].start();
-		currency[1]=new CryptoCurrency("ethereum",8000);
-		currency[1].start();
-		currency[2]=new CryptoCurrency("litecoin",1000);
-		currency[2].start();
-
 		CurrencySystem system=new CurrencySystem();
 		String button = null;
 		

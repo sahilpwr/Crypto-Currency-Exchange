@@ -3,7 +3,7 @@ package com.exchange.gui;
 import com.exchange.CurrencySystem;
 
 
-public class HomeGUI extends javax.swing.JFrame //implements Runnable
+public class HomeGUI extends javax.swing.JFrame implements Runnable
 {
 	CurrencySystem system;
  
@@ -11,12 +11,14 @@ public class HomeGUI extends javax.swing.JFrame //implements Runnable
     {
     	this.system=system;
         initComponents(); 
+       
     }
 
 
                         
     private void initComponents()
     {
+    	
 
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -203,4 +205,11 @@ public class HomeGUI extends javax.swing.JFrame //implements Runnable
     private javax.swing.JButton login;
     private javax.swing.JButton signUp;
     // End of variables declaration                   
+
+	@Override
+	public void run()
+	{
+		
+		
+	}
 }

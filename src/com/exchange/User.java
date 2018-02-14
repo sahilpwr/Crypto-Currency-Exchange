@@ -88,6 +88,7 @@ User()
 	 
 	 Transaction transaction=new Transaction(wallet,currency,user);
 	// transaction.buyCurrency(100, payment, user, cryptoCurrency)
+	
  }
 
 }

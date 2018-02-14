@@ -23,6 +23,11 @@ public class Transaction {
 	private User user;
 	Wallet[] wallet;
 	
+	
+	public Transaction() {
+		
+	}
+	
 	public Transaction(Wallet[] wallet,CryptoCurrency[] currency,User user) 
 	{
 		this.wallet=wallet;
@@ -106,7 +111,8 @@ public class Transaction {
 	
 
 	public boolean buyCurrency(int amount, Payment payment,
-			User user, CryptoCurrency cryptoCurrency, double quantity)
+			User user, CryptoCurrency[] cryptoCurrency, double quantity, Wallet [] wallet,
+			String currency)
 	{
 		
 		//yet to implement fees and update wallet and transaction!
@@ -138,6 +144,14 @@ public class Transaction {
 					System.out.println("Success");
 					currentBalance -= amount;
 					details.put(ba.getBankName(), currentBalance);
+					
+					if(currency.equalsIgnoreCase("bitcoin"))
+						wallet[0].addCurrency(quantity);
+					else if(currency.equalsIgnoreCase("ethereum"))
+						wallet[1].addCurrency(quantity);
+					else
+						wallet[2].addCurrency(quantity);
+					
 					return true;
 				}
 				else
@@ -159,6 +173,14 @@ public class Transaction {
 					System.out.println("Success");
 					currentBalance -= amount;
 					details.put(ca.getBankName(), currentBalance);
+					
+					if(currency.equalsIgnoreCase("bitcoin"))
+						wallet[0].addCurrency(quantity);
+					else if(currency.equalsIgnoreCase("ethereum"))
+						wallet[1].addCurrency(quantity);
+					else
+						wallet[2].addCurrency(quantity);
+					
 					return true;
 				}
 				else
@@ -173,7 +195,8 @@ public class Transaction {
 		
 	}
 	
-	public boolean sellCurrency(User user, Payment payment, int amount , double quantity) {
+	public boolean sellCurrency(User user, Payment payment, int amount , double quantity,
+			String currency, Wallet [] wallet) {
 		
 		//yet to implement wallet
 		
@@ -188,6 +211,14 @@ public class Transaction {
 				details= ba.getBankAccount();
 				currentBalance=details.get(ba.getBankName());
 				details.put(ba.getBankName(),currentBalance+=amount );
+				
+				if(currency.equalsIgnoreCase("bitcoin"))
+					wallet[0].subCurrency(quantity);
+				else if(currency.equalsIgnoreCase("ethereum"))
+					wallet[1].subCurrency(quantity);
+				else
+					wallet[2].subCurrency(quantity);
+				
 				return true;
 		
 		}
@@ -199,6 +230,15 @@ public class Transaction {
 				details= ca.getCardType();
 				currentBalance=details.get(ca.getBankName());
 				details.put(ca.getBankName(),currentBalance+=amount );
+				
+				if(currency.equalsIgnoreCase("bitcoin"))
+					wallet[0].subCurrency(quantity);
+				else if(currency.equalsIgnoreCase("ethereum"))
+					wallet[1].subCurrency(quantity);
+				else
+					wallet[2].subCurrency(quantity);
+				
+				
 				return true;
 	
 		}

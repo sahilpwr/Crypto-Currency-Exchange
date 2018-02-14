@@ -7,6 +7,10 @@ public class Wallet {
 	String currencyName;
 	double quantity;
 	
+	public Wallet() {
+		
+	}
+	
 	public Wallet(String currencyName) 
 	{
 		this.currencyName=currencyName;
@@ -20,7 +24,7 @@ public class Wallet {
 		return true;
 	}
 	
-	public boolean subCurrency() {
+	public boolean subCurrency(double quantity) {
 		if(this.quantity>quantity)
 		{
 			this.quantity=this.quantity-quantity;

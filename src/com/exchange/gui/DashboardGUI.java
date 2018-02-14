@@ -155,7 +155,7 @@ public void run()
                 jButton7ActionPerformed(evt);
             }
         });
-
+        
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jButton8.setText("Create Alerts");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -358,9 +358,11 @@ public void run()
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
     }                                        
-
+    
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+    	BasicScheduler g = new BasicScheduler();
+    	g.setVisible(true);
     }                                        
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
@@ -371,6 +373,12 @@ public void run()
         // TODO add your handling code here:
     }                                        
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    	AutoScheduler g = new AutoScheduler();
+    	g.setVisible(true);
+    }  
+    
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
     }                                         

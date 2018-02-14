@@ -8,6 +8,7 @@ public class HomeGUI extends javax.swing.JFrame //implements Runnable
    private CurrencySystem system;
     public HomeGUI() 
     {
+    	system=new CurrencySystem();
         initComponents(); 
     }
 
@@ -169,7 +170,7 @@ public class HomeGUI extends javax.swing.JFrame //implements Runnable
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) 
     {                                      
-        LoginGUI g=new LoginGUI();
+        LoginGUI g=new LoginGUI(system);
 	    g.setVisible(true);
     }                                     
     

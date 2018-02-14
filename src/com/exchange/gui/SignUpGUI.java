@@ -139,11 +139,13 @@ public class SignUpGUI extends javax.swing.JFrame {
         else if(jTextField3.getText().equals(""))
         {
                         JOptionPane.showMessageDialog(null, "emailID is required");
-                    }
-        else if(jTextField4.getText().equals("")){
+        }
+        else if(jTextField4.getText().equals(""))
+        {
             JOptionPane.showMessageDialog(null, "password is required");
         }
-        else{
+        else
+        {
             CurrencySystem c = new CurrencySystem();
             c.createUser(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText());
             JOptionPane.showMessageDialog(null, "new user added");

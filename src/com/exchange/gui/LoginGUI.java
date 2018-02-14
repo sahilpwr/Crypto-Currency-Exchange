@@ -112,9 +112,9 @@ public class LoginGUI extends javax.swing.JFrame
                     {
                         JOptionPane.showMessageDialog(null, "password is required");
                     }
-                    else if(system.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
+                    else if(CurrencySystem.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
                     {
-                        currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
+                        currentUser = CurrencySystem.checkUser(jTextField1.getText(), jTextField2.getText());
                         JOptionPane.showMessageDialog(null, "login succesful");
 
                     

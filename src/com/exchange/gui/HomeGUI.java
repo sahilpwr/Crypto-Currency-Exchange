@@ -170,7 +170,7 @@ public class HomeGUI extends javax.swing.JFrame //implements Runnable
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) 
     {                                      
-        LoginGUI g=new LoginGUI(system);
+        LoginGUI g=new LoginGUI();
 	    g.setVisible(true);
     }                                     
     

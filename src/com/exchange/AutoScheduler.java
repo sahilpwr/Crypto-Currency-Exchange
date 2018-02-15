@@ -1,8 +1,7 @@
 package com.exchange;
 
 public class AutoScheduler {
-	private boolean investmentType;
-	private boolean divideInvestment;
+	private String investmentType;
 	private double[] percentageDivision;
 	private double[] growthDivision;
 	private boolean roi;

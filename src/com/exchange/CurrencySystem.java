@@ -16,7 +16,7 @@ public class CurrencySystem
 		currency[1]=new CryptoCurrency("ethereum",8000);
 		currency[1].start();
 		currency[2]=new CryptoCurrency("litecoin",1000);
-		currency[2].start();
+		currency[2].start();    
 	}
 	
 	public CryptoCurrency[] cryptoInfo()

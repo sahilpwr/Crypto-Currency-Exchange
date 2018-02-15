@@ -18,7 +18,7 @@ public class HomeGUI extends javax.swing.JFrame implements Runnable
                         
     private void initComponents()
     {
-    	
+    	 
 
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();

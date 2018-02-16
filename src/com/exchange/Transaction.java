@@ -1,13 +1,14 @@
 package com.exchange;
 
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Transaction {
+public class Transaction implements Serializable {
 	
 
 	private double price;

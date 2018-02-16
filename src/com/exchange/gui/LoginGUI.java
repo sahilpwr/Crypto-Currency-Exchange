@@ -2,6 +2,8 @@
 
 package com.exchange.gui;
 
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 import com.exchange.CryptoCurrency;
@@ -43,7 +45,15 @@ public class LoginGUI extends javax.swing.JFrame
         jButton1.setText("Log In");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+					jButton1ActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
         
@@ -100,7 +110,7 @@ public class LoginGUI extends javax.swing.JFrame
     }// </editor-fold>                        
 
  
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException
     {                                      
        
    

@@ -33,11 +33,7 @@ public class Wallet {
 		return false;
 		
 	}
-	
-	public void convertCurrency() {
-		
-	}
-	
+
 	
 }
 

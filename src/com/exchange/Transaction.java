@@ -22,7 +22,7 @@ public class Transaction {
 	private CryptoCurrency[] currency;
 	private Payment payment;
 	private User user;
-	Wallet[] wallet;
+	private Wallet[] wallet;
 	
 	
 	public Transaction() {
@@ -252,8 +252,26 @@ public class Transaction {
 
 		
 	}
-	public void convert()
+	public void convert(int quantity, String currency1, String currency2)
 	{
+	
+		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("ethereum"))
+			wallet[1].quantity+=quantity*currency[0].getPrice()/currency[1].getPrice();
+		
+		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("litecoin"))
+			wallet[2].quantity+=quantity*currency[0].getPrice()/currency[2].getPrice();
+		
+		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("bitcoin"))
+			wallet[0].quantity+=quantity*currency[1].getPrice()/currency[0].getPrice();
+		
+		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("litecoin"))
+			wallet[2].quantity+=quantity*currency[1].getPrice()/currency[2].getPrice();
+		
+		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("bitcoin"))
+			wallet[0].quantity+=quantity*currency[2].getPrice()/currency[0].getPrice();
+		
+		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("ethereum"))
+			wallet[1].quantity+=quantity*currency[2].getPrice()/currency[1].getPrice();
 		
 	}
 		

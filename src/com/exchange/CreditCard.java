@@ -21,7 +21,7 @@ public class CreditCard extends Payment {
 		
 		Random rand = new Random();
 		 
-		cardType.put("BOFA", (double) (rand.nextInt(10000) + 1));
+		cardType.put("American Express", (double) (rand.nextInt(10000) + 1));
 		cardType.put("Chase", (double) (rand.nextInt(10000) + 1));
 		cardType.put("Wells Fargo", (double) (rand.nextInt(10000) + 1));
 		cardType.put("Citi", (double) (rand.nextInt(10000) + 1));

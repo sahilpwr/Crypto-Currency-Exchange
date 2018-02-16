@@ -45,12 +45,17 @@ public class LoginGUI extends javax.swing.JFrame
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                try {
+                try 
+                {
 					jButton1ActionPerformed(evt);
-				} catch (ClassNotFoundException e) {
+				} 
+                catch (ClassNotFoundException e)
+                {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (IOException e) {
+				}
+                catch (IOException e)
+                {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -125,11 +130,16 @@ public class LoginGUI extends javax.swing.JFrame
                     else if(system.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
                     {
                         currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
-                        JOptionPane.showMessageDialog(null, "login succesful");
-
-                       System.out.println(currentUser.getEmailID());
-                       DashboardGUI g = new DashboardGUI();
+                        JOptionPane.showMessageDialog(null, "Logged In");
+   
+                    
+                       DashboardGUI g = new DashboardGUI(system);
                        g.setVisible(true);
+                       
+                      // Thread dashboard=new Thread(g);
+                       //dashboard.start();
+                       
+                       
                     }
                     //DashboardGUI g = new DashboardGUI();
                     //g.setVisible(true);

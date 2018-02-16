@@ -1,6 +1,7 @@
 package com.exchange;
 import com.exchange.gui.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,11 +15,33 @@ import java.util.regex.Pattern;
 
 public class CurrencySystem implements Serializable
 {
-	private  HashMap<String,User> users=new HashMap<>();
+	private  HashMap<String,User> 	users;//=new HashMap<String,User>();
 	private CryptoCurrency[] currency=new CryptoCurrency[3];
+/*	private FileOutputStream fos=new FileOutputStream("Users.dat");
+	private ObjectOutputStream  oos=new ObjectOutputStream(fos);
+	private FileInputStream fis=new FileInputStream("Users.dat");
+	private ObjectInputStream ois=new ObjectInputStream(fis);*/
+
 	
-	public CurrencySystem()
+   
+	
+	public CurrencySystem() throws IOException
 	{
+		User newUser;
+		File f = new File("Users.dat");
+		if(!f.exists())
+		{     
+			users=new HashMap<String,User>();
+			FileOutputStream fos=new FileOutputStream("Users.dat");
+			ObjectOutputStream  oos=new ObjectOutputStream(fos);
+			newUser=new User();
+			users.put("none", newUser);
+			oos.writeObject(users);
+			
+		}
+		
+		
+		
 		currency[0]=new CryptoCurrency("bitcoin",15000);
 		currency[0].start();
 		currency[1]=new CryptoCurrency("ethereum",8000);
@@ -29,14 +52,20 @@ public class CurrencySystem implements Serializable
 	
 	public CryptoCurrency[] cryptoInfo()
 	{
-		System.out.println(currency[0].getPrice());
+		//System.out.println(currency[0].getPrice());
 		return currency;
 	}
 
 
 	public  boolean createUser(String password,String firstName, String lastName ,String emailID) throws IOException, ClassNotFoundException
 	{
-
+		
+		// users=(HashMap<String, User>)ois.readObject();
+		FileInputStream fis=new FileInputStream("Users.dat");
+		ObjectInputStream ois=new ObjectInputStream(fis);
+	    users=(HashMap<String, User>)ois.readObject();
+		
+		System.out.println(users.containsKey(emailID));
 		if (!users.containsKey(emailID))
 		{
 			User newUser=new User();
@@ -46,21 +75,27 @@ public class CurrencySystem implements Serializable
 			newUser.setLastName(lastName);
 			users.put(newUser.getEmailID(),newUser);
 			
-			FileOutputStream fos=new FileOutputStream("Users.ser");
-			ObjectOutputStream oos=new ObjectOutputStream(fos);
+			FileOutputStream fos=new FileOutputStream("Users.dat");
+			ObjectOutputStream  oos=new ObjectOutputStream(fos);
 			oos.writeObject(users);
 			oos.close();
             fos.close();
+            
+            
+           // users=(HashMap<String, User>)ois.readObject();
 			return true;
 		}
+		else
+			System.out.println("exist");
 		return false;
 	}
 	
 	public  User checkUser(String emailID,String password) throws IOException, ClassNotFoundException
 	{
-		FileInputStream fis=new FileInputStream("Users.ser");
+		
+		FileInputStream fis=new FileInputStream("Users.dat");
 		ObjectInputStream ois=new ObjectInputStream(fis);
-		HashMap<String, User>users=(HashMap<String, User>)ois.readObject();
+	    users=(HashMap<String, User>)ois.readObject();
 		
 		if(users.containsKey(emailID))
 		{
@@ -83,35 +118,11 @@ public class CurrencySystem implements Serializable
 		CurrencySystem system=new CurrencySystem();
 		String button = null;
 		
-		
-		
-		/*if(button.equals("payment"))
-		{
-			
-		}
-		else if(button.equals("transaction"))
-		{
-			
-		}
-		else if(button.equals("convert"))
-		{
-			
-		}
-		else if(button.equals("schedule"))
-		{
-			
-		}
-		else if(button.equals("autoSchedule"))
-		{
-			
-		}
-		else if(button.equals("alerts"))
-		{
-			
-		}*/
-		HomeGUI g=new HomeGUI(system);
-		g.setVisible(true);
-		
+	    HomeGUI g=new HomeGUI(system);
+	    g.setVisible(true);
+	    Thread t=new Thread(g);
+	    t.start();
+	   
 	}
 
 }

@@ -9,6 +9,7 @@ import com.exchange.CurrencySystem;
 public class SignUpGUI extends javax.swing.JFrame {
 
 	CurrencySystem system;
+	HomeGUI home;
     public SignUpGUI(CurrencySystem system) 
     {
     	this.system=system;
@@ -158,10 +159,18 @@ public class SignUpGUI extends javax.swing.JFrame {
         else
         {
            
-            system.createUser(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText());
-            JOptionPane.showMessageDialog(null, "new user added");
-            HomeGUI g = new HomeGUI(system);
-            g.setVisible(true);
+           boolean exists= system.createUser(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText());
+          
+           System.out.println(exists);
+           if(!exists)
+        	   JOptionPane.showMessageDialog(null, "User with emaild id "+jTextField3.getText()+" alrady exists"); 
+           else
+        	   JOptionPane.showMessageDialog(null, "Account Successfully Created");
+         
+            HomeGUI h=new HomeGUI(system);
+            h.setVisible(true);
+            Thread m=new Thread(h);
+            m.start();
         }
     }                                        
 

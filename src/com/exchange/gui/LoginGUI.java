@@ -128,7 +128,7 @@ public class LoginGUI extends javax.swing.JFrame
                         JOptionPane.showMessageDialog(null, "login succesful");
 
                        System.out.println(currentUser.getEmailID());
-                       DashboardGUI g = new DashboardGUI(system);
+                       DashboardGUI g = new DashboardGUI();
                        g.setVisible(true);
                     }
                     //DashboardGUI g = new DashboardGUI();

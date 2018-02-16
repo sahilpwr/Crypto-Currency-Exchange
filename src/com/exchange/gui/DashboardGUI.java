@@ -1,4 +1,7 @@
+
 package com.exchange.gui;
+import com.exchange.*;
+
 
 
 public class DashboardGUI extends javax.swing.JFrame implements Runnable{
@@ -374,7 +377,7 @@ public void run()
         // TODO add your handling code here:
     }                                             
 
-  
+   
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton alerts;

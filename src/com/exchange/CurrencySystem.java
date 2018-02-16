@@ -1,6 +1,7 @@
 package com.exchange;
 import com.exchange.gui.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,11 +15,20 @@ import java.util.regex.Pattern;
 
 public class CurrencySystem implements Serializable
 {
-	private  HashMap<String,User> users=new HashMap<>();
+	//private  HashMap<String,User> users=new HashMap<>();
 	private CryptoCurrency[] currency=new CryptoCurrency[3];
 	
-	public CurrencySystem()
+	public CurrencySystem() throws IOException, ClassNotFoundException
 	{
+		
+		File f = new File("Users.srt");
+		if(f.exists())
+		{ 
+			FileInputStream fis=new FileInputStream("Users.ser");
+			ObjectInputStream ois=new ObjectInputStream(fis);
+			HashMap<String, User> users=(HashMap<String, User>)ois.readObject();
+		}
+		
 		currency[0]=new CryptoCurrency("bitcoin",15000);
 		currency[0].start();
 		currency[1]=new CryptoCurrency("ethereum",8000);
@@ -38,6 +48,11 @@ public class CurrencySystem implements Serializable
 	{
 		//Pattern p = Pattern.compile("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$");
 		//Matcher m = p.matcher(emailID);
+		
+		FileInputStream fis=new FileInputStream("Users.ser");
+		ObjectInputStream ois=new ObjectInputStream(fis);
+		HashMap<String, User> users=(HashMap<String, User>)ois.readObject();
+		
 		if (!users.containsKey(emailID))
 		{
 			User newUser=new User();

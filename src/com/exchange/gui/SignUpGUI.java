@@ -9,6 +9,7 @@ import com.exchange.CurrencySystem;
 public class SignUpGUI extends javax.swing.JFrame {
 
 	CurrencySystem system;
+	HomeGUI home;
     public SignUpGUI(CurrencySystem system) 
     {
     	this.system=system;
@@ -166,9 +167,10 @@ public class SignUpGUI extends javax.swing.JFrame {
            else
         	   JOptionPane.showMessageDialog(null, "Account Successfully Created");
          
-           
-           HomeGUI g = new HomeGUI(system);
-            g.setVisible(true);
+            HomeGUI h=new HomeGUI(system);
+            h.setVisible(true);
+            Thread m=new Thread(h);
+            m.start();
         }
     }                                        
 

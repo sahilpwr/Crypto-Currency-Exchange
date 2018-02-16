@@ -8,10 +8,12 @@ public class HomeGUI extends javax.swing.JFrame implements Runnable
 {
 	CurrencySystem system;
 	CryptoCurrency[] currency=new CryptoCurrency[3];
+
  
     public HomeGUI(CurrencySystem system) 
     {
     	this.system=system;
+    
         initComponents(); 
        
     }

@@ -130,11 +130,16 @@ public class LoginGUI extends javax.swing.JFrame
                     else if(system.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
                     {
                         currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
-                        JOptionPane.showMessageDialog(null, "login succesful");
-
-                       System.out.println(currentUser.getEmailID());
-                       DashboardGUI g = new DashboardGUI();
+                        JOptionPane.showMessageDialog(null, "Logged In");
+   
+                    
+                       DashboardGUI g = new DashboardGUI(system);
                        g.setVisible(true);
+                       
+                      // Thread dashboard=new Thread(g);
+                       //dashboard.start();
+                       
+                       
                     }
                     //DashboardGUI g = new DashboardGUI();
                     //g.setVisible(true);

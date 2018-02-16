@@ -1,11 +1,13 @@
 package com.exchange.gui;
 
+import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 
 
 public class HomeGUI extends javax.swing.JFrame implements Runnable
 {
 	CurrencySystem system;
+	CryptoCurrency[] currency=new CryptoCurrency[3];
  
     public HomeGUI(CurrencySystem system) 
     {
@@ -209,7 +211,25 @@ public class HomeGUI extends javax.swing.JFrame implements Runnable
 	@Override
 	public void run()
 	{
-		
+		while(true)
+		{
+			currency=system.cryptoInfo();
+			System.out.println(currency[0].getPrice());
+			
+			bitcoinPrice.setText("$ "+Double.toString(currency[0].getPrice()));
+			ethereumPrice.setText("$ "+Double.toString(currency[1].getPrice()));
+			litecoinPrice.setText("$ "+Double.toString(currency[2].getPrice()));
+			try
+			{
+				Thread.sleep(2000);
+			} 
+			catch (InterruptedException e)
+			{
+				
+				e.printStackTrace();
+			}
+			
+		}
 		
 	}
 }

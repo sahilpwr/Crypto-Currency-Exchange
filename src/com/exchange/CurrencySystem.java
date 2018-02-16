@@ -52,7 +52,7 @@ public class CurrencySystem implements Serializable
 	
 	public CryptoCurrency[] cryptoInfo()
 	{
-		System.out.println(currency[0].getPrice());
+		//System.out.println(currency[0].getPrice());
 		return currency;
 	}
 
@@ -118,35 +118,11 @@ public class CurrencySystem implements Serializable
 		CurrencySystem system=new CurrencySystem();
 		String button = null;
 		
-		
-		
-		/*if(button.equals("payment"))
-		{
-			
-		}
-		else if(button.equals("transaction"))
-		{
-			
-		}
-		else if(button.equals("convert"))
-		{
-			
-		}
-		else if(button.equals("schedule"))
-		{
-			
-		}
-		else if(button.equals("autoSchedule"))
-		{
-			
-		}
-		else if(button.equals("alerts"))
-		{
-			
-		}*/
-		HomeGUI g=new HomeGUI(system);
-		g.setVisible(true);
-		
+	    HomeGUI g=new HomeGUI(system);
+	    g.setVisible(true);
+	    Thread t=new Thread(g);
+	    t.start();
+	   
 	}
 
 }

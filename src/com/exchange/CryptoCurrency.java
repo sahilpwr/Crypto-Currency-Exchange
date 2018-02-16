@@ -29,7 +29,7 @@ public class CryptoCurrency extends Thread implements Serializable
 	   while(true)
 	   {
 		   Random rand = new Random();
-		   int  price = rand.nextInt(multiplier) + 1;
+		   price = rand.nextInt(multiplier) + 1;
 		   //System.out.println(n+" "+currencyName+" "+sdf.format(cal.getTime()));
 		   
 		   try 

@@ -36,14 +36,7 @@ public class CurrencySystem implements Serializable
 
 	public  boolean createUser(String password,String firstName, String lastName ,String emailID) throws IOException, ClassNotFoundException
 	{
-<<<<<<< Updated upstream
-		//Pattern p = Pattern.compile("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$");
-		//Matcher m = p.matcher(emailID);
-=======
-	
-		
-		
->>>>>>> Stashed changes
+
 		if (!users.containsKey(emailID))
 		{
 			User newUser=new User();

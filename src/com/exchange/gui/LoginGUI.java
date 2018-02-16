@@ -6,9 +6,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
-import com.exchange.Transaction;
 import com.exchange.User;
 
 public class LoginGUI extends javax.swing.JFrame 
@@ -43,8 +41,10 @@ public class LoginGUI extends javax.swing.JFrame
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jButton1.setText("Log In");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 try {
 					jButton1ActionPerformed(evt);
 				} catch (ClassNotFoundException e) {

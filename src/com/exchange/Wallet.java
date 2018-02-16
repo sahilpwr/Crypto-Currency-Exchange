@@ -1,7 +1,8 @@
 package com.exchange;
 
+import java.io.Serializable;
 
-public class Wallet {
+public class Wallet implements Serializable{
 
 	
 	String currencyName;

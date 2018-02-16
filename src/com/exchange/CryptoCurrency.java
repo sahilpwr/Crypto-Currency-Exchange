@@ -1,11 +1,12 @@
 package com.exchange;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-public class CryptoCurrency extends Thread
+public class CryptoCurrency extends Thread implements Serializable
 {
    private double price;
    private Date time;

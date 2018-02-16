@@ -1,10 +1,18 @@
 package com.exchange;
 import com.exchange.gui.*;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CurrencySystem 
+public class CurrencySystem implements Serializable
 {
 	private  HashMap<String,User> users=new HashMap<>();
 	private CryptoCurrency[] currency=new CryptoCurrency[3];
@@ -26,7 +34,7 @@ public class CurrencySystem
 	}
 
 
-	public  boolean createUser(String password,String firstName, String lastName ,String emailID)
+	public  boolean createUser(String password,String firstName, String lastName ,String emailID) throws IOException
 	{
 		//Pattern p = Pattern.compile("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$");
 		//Matcher m = p.matcher(emailID);
@@ -39,13 +47,23 @@ public class CurrencySystem
 			newUser.setLastName(lastName);
 			users.put(newUser.getEmailID(),newUser);
 			
+			FileOutputStream fos=new FileOutputStream("Users.ser");
+			ObjectOutputStream oos=new ObjectOutputStream(fos);
+			oos.writeObject(users);
+			oos.close();
+            fos.close();
 			return true;
 		}
 		return false;
 	}
 	
-	public  User checkUser(String emailID,String password)
+	public  User checkUser(String emailID,String password) throws IOException, ClassNotFoundException
 	{
+		FileInputStream fis=new FileInputStream("Users.ser");
+		ObjectInputStream ois=new ObjectInputStream(fis);
+		HashMap<String, User> users=(HashMap<String, User>)ois.readObject();
+		
+		
 		if(users.containsKey(emailID))
 		{
 		     User currentUser=users.get(emailID);
@@ -66,6 +84,7 @@ public class CurrencySystem
 	{
 		CurrencySystem system=new CurrencySystem();
 		String button = null;
+		
 		
 		
 		/*if(button.equals("payment"))

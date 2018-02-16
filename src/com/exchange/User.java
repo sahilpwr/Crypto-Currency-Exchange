@@ -1,9 +1,10 @@
 package com.exchange;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class User 
+public class User implements Serializable
 {
  private String firstName;
  private  String lastName;

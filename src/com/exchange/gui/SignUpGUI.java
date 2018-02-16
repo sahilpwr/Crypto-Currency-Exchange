@@ -1,5 +1,7 @@
 package com.exchange.gui;
 
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 import com.exchange.CurrencySystem;
@@ -54,7 +56,12 @@ public class SignUpGUI extends javax.swing.JFrame {
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+					jButton1ActionPerformed(evt);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -126,7 +133,7 @@ public class SignUpGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException 
     {                                         
       
         if(jTextField1.getText().equals(""))

@@ -22,7 +22,7 @@ public class BankAccount extends Payment {
 		
 		Random rand = new Random();
 		 
-		bankAccount.put("BOFA", (double) (rand.nextInt(10000) + 1));
+		bankAccount.put("BoA", (double) (rand.nextInt(10000) + 1));
 		bankAccount.put("Chase", (double) (rand.nextInt(10000) + 1));
 		bankAccount.put("Wells Fargo", (double) (rand.nextInt(10000) + 1));
 		bankAccount.put("Citi", (double) (rand.nextInt(10000) + 1));

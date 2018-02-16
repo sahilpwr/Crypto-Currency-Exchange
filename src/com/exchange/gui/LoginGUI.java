@@ -45,12 +45,17 @@ public class LoginGUI extends javax.swing.JFrame
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                try {
+                try 
+                {
 					jButton1ActionPerformed(evt);
-				} catch (ClassNotFoundException e) {
+				} 
+                catch (ClassNotFoundException e)
+                {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (IOException e) {
+				}
+                catch (IOException e)
+                {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

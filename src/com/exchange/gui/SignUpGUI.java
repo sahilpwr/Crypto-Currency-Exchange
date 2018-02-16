@@ -158,8 +158,11 @@ public class SignUpGUI extends javax.swing.JFrame {
         else
         {
            
-            system.createUser(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText());
-            JOptionPane.showMessageDialog(null, "new user added");
+           boolean exists= system.createUser(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText());
+           if(!exists)
+        	   JOptionPane.showMessageDialog(null, "new user added");
+           else
+        	   JOptionPane.showMessageDialog(null, "User with "+jTextField3.getText()+" alrady exists");
             HomeGUI g = new HomeGUI(system);
             g.setVisible(true);
         }

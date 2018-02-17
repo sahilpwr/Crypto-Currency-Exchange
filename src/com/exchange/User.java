@@ -3,6 +3,7 @@ package com.exchange;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class User implements Serializable
 {
@@ -17,6 +18,8 @@ public class User implements Serializable
  Wallet[] wallet=new Wallet[3];
  CryptoCurrency[] currency;
  User user;
+ HashMap<Integer, Alert> alerts=new HashMap<>();
+ static int alertID=1;
  
  
  public int getLimit() {
@@ -91,5 +94,22 @@ User()
 	// transaction.buyCurrency(100, payment, user, cryptoCurrency)
 	
  }
+ 
+ public void createAlert(CurrencySystem system,String currencyName,double price)
+ {
+	 Alert alertPrice =new Alert(alertID);
+	 alertPrice.createAlert(system, currencyName, price);
+	 alertPrice.start();
+     alerts.put(alertID, alertPrice);
+     
+     alertID++;
+ }
+ 
+ public void destroyAlert(int id)
+ {
+	 if(alerts.containsKey(id))
+		 alerts.remove(id);
+ }
+ 
 
 }

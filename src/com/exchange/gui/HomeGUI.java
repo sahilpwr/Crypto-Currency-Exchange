@@ -46,13 +46,13 @@ public class HomeGUI extends javax.swing.JFrame implements Runnable
         jLabel1.setText("Home");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel7.setText("% Change in last 2 min");
+        jLabel7.setText("Change in last 4 seconds");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel8.setText("% Change in last 2 min");
+        jLabel8.setText("Change in last 4 seconds");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel9.setText("% Change in last 2 min");
+        jLabel9.setText("Change in last 4 seconds");
 
         changeBitcoin.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         changeBitcoin.setText("+26.53%");
@@ -221,6 +221,10 @@ public class HomeGUI extends javax.swing.JFrame implements Runnable
 			bitcoinPrice.setText("$ "+Double.toString(currency[0].getPrice()));
 			ethereumPrice.setText("$ "+Double.toString(currency[1].getPrice()));
 			litecoinPrice.setText("$ "+Double.toString(currency[2].getPrice()));
+			
+			changeBitcoin.setText(""+Integer.toString(currency[0].getPercentDifference())+" %");
+			changeEthereum.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
+			changeLitecoin.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
 			try
 			{
 				Thread.sleep(2000);

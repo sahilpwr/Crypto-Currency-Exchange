@@ -1,6 +1,8 @@
 package com.exchange;
 
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,15 +21,21 @@ public class Transaction implements Serializable {
 	private String [] bankPayment;
 	private String [] cardPayment;
 	private Date time;
-	private long transactionId;
+	private static long transactionId;
 	private CryptoCurrency[] currency;
 	private Payment payment;
 	private User user;
 	private Wallet[] wallet;
 	
+	Calendar cal;
+	SimpleDateFormat sdf;
 	
-	public Transaction() {
+	PrintWriter output = null; 
+	
+	
+	public Transaction() throws FileNotFoundException {
 		
+		output = new PrintWriter("transaction.txt");
 	}
 	
 	public Transaction(Wallet[] wallet,CryptoCurrency[] currency,User user) 
@@ -37,15 +45,6 @@ public class Transaction implements Serializable {
 		this.user=user;
 	}
 	
-	
-	public long getTransactionId() {
-		return transactionId;
-	}
-
-	public void setTransactionId(long transactionId) {
-		this.transactionId = transactionId;
-	}
-
 	public double getPrice() {
 		return price;
 	}
@@ -153,6 +152,12 @@ public class Transaction implements Serializable {
 						wallet[1].addCurrency(quantity);
 					else
 						wallet[2].addCurrency(quantity);
+
+					transactionId ++;
+					
+					output.print(transactionId);
+					output.print(user.getLastTransaction());
+					output.println("Buy");
 					
 					return true;
 				}
@@ -182,6 +187,11 @@ public class Transaction implements Serializable {
 						wallet[1].addCurrency(quantity);
 					else
 						wallet[2].addCurrency(quantity);
+					
+					output.print(transactionId);
+					output.print(user.getLastTransaction());
+					output.println("Buy");
+					
 					
 					return true;
 				}
@@ -221,6 +231,10 @@ public class Transaction implements Serializable {
 				else
 					wallet[2].subCurrency(quantity);
 				
+				output.print(transactionId);
+				output.print(user.getLastTransaction());
+				output.println("Sell");
+				
 				return true;
 		
 		}
@@ -240,6 +254,10 @@ public class Transaction implements Serializable {
 				else
 					wallet[2].subCurrency(quantity);
 				
+				
+				output.print(transactionId);
+				output.print(user.getLastTransaction());
+				output.println("Sell");
 				
 				return true;
 	
@@ -273,6 +291,13 @@ public class Transaction implements Serializable {
 		
 		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("ethereum"))
 			wallet[1].quantity+=quantity*currency[2].getPrice()/currency[1].getPrice();
+		
+		
+		output.print(transactionId);
+		output.print(user.getLastTransaction());
+		output.println("Convert");
+		
+		
 		
 	}
 		

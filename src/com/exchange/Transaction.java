@@ -421,22 +421,22 @@ public class Transaction implements Serializable {
 	{
 	
 		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("ethereum"))
-			wallet[1].quantity+=quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[1].getPrice();
+			wallet[1].addCurrency(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[1].getPrice());
 		
 		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("litecoin"))
-			wallet[2].quantity+=quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[2].getPrice();
+			wallet[2].addCurrency(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[2].getPrice());
 		
 		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("bitcoin"))
-			wallet[0].quantity+=quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[0].getPrice();
+			wallet[0].addCurrency(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[0].getPrice());
 		
 		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("litecoin"))
-			wallet[2].quantity+=quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[2].getPrice();
+			wallet[2].addCurrency(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[2].getPrice());
 		
 		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("bitcoin"))
-			wallet[0].quantity+=quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[0].getPrice();
+			wallet[0].addCurrency(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[0].getPrice());
 		
 		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("ethereum"))
-			wallet[1].quantity+=quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[1].getPrice();
+			wallet[1].addCurrency(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[1].getPrice());
 		
 		
 		output.print(transactionId);

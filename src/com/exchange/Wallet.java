@@ -5,17 +5,21 @@ import java.io.Serializable;
 public class Wallet implements Serializable{
 
 	
-	String currencyName;
-	double quantity;
+	private String currencyName;
+	private double quantity;
 	
 	
+	public double getQuantity() {
+		return quantity;
+	}
+
 	public Wallet(String currencyName) 
 	{
 		this.currencyName=currencyName;
         quantity=0;
 
 	}
-
+	
 	public boolean addCurrency(double quantity) 
 	{
 		this.quantity=this.quantity+quantity;
@@ -31,11 +35,6 @@ public class Wallet implements Serializable{
 		return false;
 		
 	}
-	
-	public double getQuantity() {
-		return quantity;
-	}
-
 
 	
 }

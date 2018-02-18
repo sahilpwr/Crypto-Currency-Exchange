@@ -12,7 +12,7 @@ public class User implements Serializable
  private  String lastName;
  private String  emailID;
  private String password;
- Payment[] payment;
+ Payment[] payment=new Payment[2];
  private int limit;
  private Calendar lastTransaction;
  Wallet[] wallet=new Wallet[3];

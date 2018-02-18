@@ -1,26 +1,24 @@
-
 package com.exchange.gui;
-import com.exchange.*;
+
+import com.exchange.CurrencySystem;
 
 
 public class DashboardGUI extends javax.swing.JFrame implements Runnable
 {
-	
-	CurrencySystem system;
-	CryptoCurrency[] currency=new CryptoCurrency[3];
-
-    public DashboardGUI(CurrencySystem system)
+    CurrencySystem system;
+ 
+    public DashboardGUI(CurrencySystem system) 
     {
-    	this.system=system;
+    		this.system=system;
         initComponents();
     }
-    
 	public void run()
 	{
 	
 	}
+  
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -349,36 +347,33 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void bitcoinBuyActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void bitcoinBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcoinBuyActionPerformed
         // TODO add your handling code here:
-    }                                          
+    }//GEN-LAST:event_bitcoinBuyActionPerformed
 
-    private void bitcoinSellActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void bitcoinSellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcoinSellActionPerformed
         // TODO add your handling code here:
-    }                                           
+    }//GEN-LAST:event_bitcoinSellActionPerformed
 
-    private void scheduleActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scheduleActionPerformed
         // TODO add your handling code here:
-    }                                        
+    }//GEN-LAST:event_scheduleActionPerformed
 
-    private void alertsActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void alertsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alertsActionPerformed
         // TODO add your handling code here:
-    }                                      
+    }//GEN-LAST:event_alertsActionPerformed
 
-    private void convertActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void convertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertActionPerformed
         // TODO add your handling code here:
-    }                                       
+    }//GEN-LAST:event_convertActionPerformed
 
-    private void paymentMethodActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    private void paymentMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentMethodActionPerformed
         // TODO add your handling code here:
-    }                                             
+    }//GEN-LAST:event_paymentMethodActionPerformed
 
-   
-
-    // Variables declaration - do not modify                     
-    private javax.swing.JButton alerts;
+       private javax.swing.JButton alerts;
     private javax.swing.JButton autoSchedule;
     private javax.swing.JButton bitcoinBuy;
     private javax.swing.JButton bitcoinSell;
@@ -412,5 +407,5 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton paymentMethod;
     private javax.swing.JButton schedule;
     private javax.swing.JButton transaction;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }

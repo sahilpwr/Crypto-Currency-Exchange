@@ -4,28 +4,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class BankAccount extends Payment {
-
-	 public HashMap<String, Double> getBankAccount() {
+public class BankAccount extends Payment 
+{
+	private HashMap<String,Double> bankAccount = new HashMap<>();
+	public BankAccount() 
+	{
+		userName="sahil";	
+		password="sahil";
+	}
+		
+	 
+	public void setBankAccount(String bankName) 
+	{
+		Random rand = new Random();
+		bankAccount.put(bankName, (double) (rand.nextInt(10000) + 1));
+	}
+	
+	public HashMap<String, Double> getBankAccount() 
+	{
 		return bankAccount;
 	}
 
-	public void setBankAccount(HashMap<String, Double> bankAccount) {
-		this.bankAccount = bankAccount;
+	
+	public String getUserName()
+	{
+		return userName;
 	}
 
-	private HashMap<String,Double> bankAccount = new HashMap<>();
-	
-	
-	
-	public BankAccount() {
-		
-		Random rand = new Random();
-		 
-		bankAccount.put("BoA", (double) (rand.nextInt(10000) + 1));
-		bankAccount.put("Chase", (double) (rand.nextInt(10000) + 1));
-		bankAccount.put("Wells Fargo", (double) (rand.nextInt(10000) + 1));
-		bankAccount.put("Citi", (double) (rand.nextInt(10000) + 1));
-		bankAccount.put("HSBC", (double) (rand.nextInt(10000) + 1));
+	public String getPassword() 
+	{
+		return password;
 	}
+
+	
+	
+	
+
 }

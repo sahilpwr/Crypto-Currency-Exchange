@@ -5,30 +5,28 @@ import java.util.Random;
 
 public class CreditCard extends Payment {
 
-	 private HashMap<String,Double> cardType = new HashMap<>();
+	 private HashMap<String,Double> cardAccount = new HashMap<>();
 
-	public HashMap<String, Double> getCardType() {
-		return cardType;
-	}
-
-	public void setCardType(HashMap<String, Double> cardType) {
-		this.cardType = cardType;
+	public CreditCard()
+	{
 		
 	}
-	
-	
-	public CreditCard() {
-		
+	public void setcreditCardAccount(String cardName)
+	{
 		Random rand = new Random();
-		 
-		cardType.put("American Express", (double) (rand.nextInt(10000) + 1));
-		cardType.put("Chase", (double) (rand.nextInt(10000) + 1));
-		cardType.put("Wells Fargo", (double) (rand.nextInt(10000) + 1));
-		cardType.put("Citi", (double) (rand.nextInt(10000) + 1));
-		cardType.put("Discover", (double) (rand.nextInt(10000) + 1));
-		
-		
-		
+		cardAccount.put(cardName, (double) (rand.nextInt(10000) + 1));
 	}
+
+	
+	public String getUserName()
+	{
+		return userName;
+	}
+
+	public String getPassword() 
+	{
+		return password;
+	}
+
 	
 }

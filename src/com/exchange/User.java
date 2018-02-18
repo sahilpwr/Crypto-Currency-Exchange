@@ -11,16 +11,18 @@ public class User implements Serializable
  private  String lastName;
  private String  emailID;
  private String password;
- private String[] bankPayment;
- private String[] creditPayemt;
+ Payment payment;
  private int limit;
  private Calendar lastTransaction;
  Wallet[] wallet=new Wallet[3];
  CryptoCurrency[] currency;
  User user;
  HashMap<Integer, Alert> alerts=new HashMap<>();
- static int alertID=1;
- 
+int alertID=1;
+int transactionID=1;
+private double roi;
+HashMap<Integer, Transaction> transactionHistory=new HashMap();
+
  
  public int getLimit() {
 	return limit;
@@ -79,7 +81,7 @@ public void setRoi(double roi) {
 }
 
 
-private double roi;
+
  
 User()
 {
@@ -88,12 +90,17 @@ User()
 	wallet[2]=new Wallet("litecoin");
 }
  public void transaction()
- {
-	 
+ { 
 	 Transaction transaction=new Transaction(wallet,currency,user);
-	// transaction.buyCurrency(100, payment, user, cryptoCurrency)
-	
+	 transactionHistory.put(transactionID, transaction);	
+	 transactionID++;
  }
+ 
+ public int getTransactionID() 
+ {
+		return transactionID;
+ }
+
  
  public void createAlert(CurrencySystem system,String currencyName,double price)
  {
@@ -101,7 +108,6 @@ User()
 	 alertPrice.createAlert(system, currencyName, price);
 	 alertPrice.start();
      alerts.put(alertID, alertPrice);
-     
      alertID++;
  }
  

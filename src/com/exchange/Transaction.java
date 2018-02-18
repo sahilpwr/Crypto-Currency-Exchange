@@ -21,7 +21,7 @@ public class Transaction implements Serializable {
 	private String [] bankPayment;
 	private String [] cardPayment;
 	private Date time;
-	private static long transactionId;
+	private long transactionId;
 	private CryptoCurrency[] currency;
 	private Payment payment;
 	private User user;
@@ -33,7 +33,8 @@ public class Transaction implements Serializable {
 	PrintWriter output = null; 
 	
 	
-	public Transaction() throws FileNotFoundException {
+	public Transaction() throws FileNotFoundException
+	{
 		
 		output = new PrintWriter("transaction.txt");
 	}
@@ -111,8 +112,7 @@ public class Transaction implements Serializable {
 	
 	
 
-	public boolean buyCurrency(int amount, Payment payment,
-			User user, CryptoCurrency[] cryptoCurrency, double quantity, Wallet [] wallet,
+	public boolean buyCurrency(int amount, Payment payment,User user, CryptoCurrency[] cryptoCurrency, double quantity, Wallet [] wallet,
 			String currency)
 	{
 		
@@ -125,12 +125,11 @@ public class Transaction implements Serializable {
 		c.setTime(new Date()); // Now use today date.
 		c.add(Calendar.DATE, 7);
 		
-		if(user.getLastTransaction().before(c)
-				
-				&& user.getLimit() < amount) {
+		if(user.getLastTransaction().before(c)&& user.getLimit() < amount) 
+		{
 			System.out.println("User has crossed the weekly limit");
 		
-		return false;
+		    return false;
 		}
 				
 		else if(payment instanceof BankAccount)
@@ -267,10 +266,12 @@ public class Transaction implements Serializable {
 	}
 	
 	public void transactionHistory () 
+
 	{
 
 		
 	}
+	
 	public void convert(int quantity, String currency1, String currency2)
 	{
 	

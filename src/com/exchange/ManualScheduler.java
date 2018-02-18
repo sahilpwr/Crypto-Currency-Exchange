@@ -1,17 +1,22 @@
 package com.exchange;
 
-import java.sql.Date;
-
-public class ManualScheduler {
+public class ManualScheduler extends Schedule {
 	private double quantity;
 	
-	public ManualScheduler() {
+	public ManualScheduler() 
+	{
 		super();
 	}
-	
-	public boolean crateSchedule(Payment p, java.util.Date date, double dur, CryptoCurrency c,	
-			double amount, double quant ) {
-		return false;
+	public ManualScheduler(Payment payment, int dur, CryptoCurrency currency,	
+			double amount, double quantity) 
+	{
+		super();
+		this.payment[0] = payment;
+		this.duration = dur;
+		this.c[0] = currency;
+		this.amount = amount;
+		this.quantity = quantity;
 	}
+	
 
 }

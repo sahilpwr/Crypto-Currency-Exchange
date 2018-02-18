@@ -8,9 +8,6 @@ public class Wallet implements Serializable{
 	String currencyName;
 	double quantity;
 	
-	public Wallet() {
-		
-	}
 	
 	public Wallet(String currencyName) 
 	{
@@ -34,6 +31,11 @@ public class Wallet implements Serializable{
 		return false;
 		
 	}
+	
+	public double getQuantity() {
+		return quantity;
+	}
+
 
 	
 }

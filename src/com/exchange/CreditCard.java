@@ -7,10 +7,17 @@ public class CreditCard extends Payment {
 
 	 private HashMap<String,Double> cardAccount = new HashMap<>();
 
+	public HashMap<String, Double> getCardAccount() 
+	{
+		return cardAccount;
+	}
+	
 	public CreditCard()
 	{
-		
+		userName="pawar";	
+		password="pawar";
 	}
+	
 	public void setcreditCardAccount(String cardName)
 	{
 		Random rand = new Random();

@@ -1,5 +1,7 @@
 package com.exchange;
 
+import java.util.Date;
+
 public class ManualScheduler extends Schedule {
 	private double quantity;
 	
@@ -16,6 +18,11 @@ public class ManualScheduler extends Schedule {
 		this.c[0] = currency;
 		this.amount = amount;
 		this.quantity = quantity;
+	}
+	public void crateSchedule(Payment payment, Date date, double duration, CryptoCurrency cryptoCurrency, double amount,
+			double quantity2) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

@@ -1,5 +1,6 @@
 package com.exchange;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,7 +12,7 @@ public class User implements Serializable
  private  String lastName;
  private String  emailID;
  private String password;
- Payment payment;
+ Payment[] payment;
  private int limit;
  private Calendar lastTransaction;
  Wallet[] wallet=new Wallet[3];
@@ -88,10 +89,28 @@ User()
 	wallet[0]=new Wallet("bitcoin");
 	wallet[1]=new Wallet("ethereum");
 	wallet[2]=new Wallet("litecoin");
+	
+	payment[0]=new BankAccount();
+	payment[1]=new CreditCard();
 }
- public void transaction()
+public void addPayment()
+{
+
+}
+
+ public void transaction(String bankName,double amount, double quantity,
+			String currencyType,String transactionType,String paymentType) throws FileNotFoundException
  { 
 	 Transaction transaction=new Transaction(wallet,currency,user);
+	 if(transactionType=="buy"&&paymentType=="bank")
+	    transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[0]);
+	 else if(transactionType=="buy"&&paymentType=="credit")
+		 transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[1]);
+	 if(transactionType=="sell"&&paymentType=="bank")
+		  transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[0]);
+     else if(transactionType=="sell"&&paymentType=="credit")
+	      transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[1]);
+	 
 	 transactionHistory.put(transactionID, transaction);	
 	 transactionID++;
  }

@@ -33,6 +33,7 @@ public class CurrencySystem implements Serializable
 		{     
 			users=new HashMap<String,User>();
 			FileOutputStream fos=new FileOutputStream("Users.dat");
+			@SuppressWarnings("resource")
 			ObjectOutputStream  oos=new ObjectOutputStream(fos);
 			newUser=new User();
 			users.put("none", newUser);
@@ -57,6 +58,7 @@ public class CurrencySystem implements Serializable
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public  boolean createUser(String password,String firstName, String lastName ,String emailID) throws IOException, ClassNotFoundException
 	{
 		

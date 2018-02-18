@@ -22,12 +22,6 @@ public class Payment implements Serializable
 	{
 		transactionFee = 10.0;
 	}
-	
-
-	public String getBankName() 
-	{
-		return bankName;
-	}
 
 
 	public String getUserName()

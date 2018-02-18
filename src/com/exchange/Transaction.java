@@ -22,7 +22,7 @@ public class Transaction implements Serializable {
 	private String [] cardPayment;
 	private Date time;
 	private long transactionId;
-	private CryptoCurrency[] currency;
+	private CryptoCurrency[] cryptoCurrency;
 	private Payment payment;
 	private User user;
 	private Wallet[] wallet;
@@ -31,19 +31,15 @@ public class Transaction implements Serializable {
 	SimpleDateFormat sdf;
 	
 	PrintWriter output = null; 
+
 	
 	
-	public Transaction() throws FileNotFoundException
-	{
-		
-		output = new PrintWriter("transaction.txt");
-	}
-	
-	public Transaction(Wallet[] wallet,CryptoCurrency[] currency,User user) 
+	public Transaction(Wallet[] wallet,CryptoCurrency[] currency,User user) throws FileNotFoundException 
 	{
 		this.wallet=wallet;
-		this.currency=currency;
+		this.cryptoCurrency=currency;
 		this.user=user;
+		output = new PrintWriter("transaction.txt");
 	}
 	
 	public double getPrice() {
@@ -54,21 +50,7 @@ public class Transaction implements Serializable {
 		this.price = price;
 	}
 
-	public double getTransactionAmount() {
-		return transactionAmount;
-	}
 
-	public void setTransactionAmount(double transactionAmount) {
-		this.transactionAmount = transactionAmount;
-	}
-
-	public double getCurrencyQuantity() {
-		return currencyQuantity;
-	}
-
-	public void setCurrencyQuantity(double currencyQuantity) {
-		this.currencyQuantity = currencyQuantity;
-	}
 
 	public float getTransactionFee() {
 		return transactionFee;
@@ -110,10 +92,90 @@ public class Transaction implements Serializable {
 		this.time = time;
 	}
 	
-	
+	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName)
+	{
+		double currentBalance=details.get(bankName);
 
-	public boolean buyCurrency(int amount, Payment payment,User user, CryptoCurrency[] cryptoCurrency, double quantity, Wallet [] wallet,
-			String currency)
+       if(quantity>0)
+       {
+				
+				//amount calculation if quantity given	
+				
+				if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>quantity)
+				{
+					amount=cryptoCurrency[0].getPrice()*quantity;
+					currentBalance += amount;
+					details.put(bankName, currentBalance);
+					wallet[0].subCurrency(quantity);
+					
+				}
+				else if(currency.equalsIgnoreCase("ethereum")&&wallet[0].getQuantity()>quantity)
+				{
+					amount=cryptoCurrency[1].getPrice()*quantity;
+					currentBalance += amount;
+					details.put(bankName, currentBalance);
+					wallet[1].subCurrency(quantity);
+				}
+				else if(currency.equalsIgnoreCase("litecoin")&&wallet[0].getQuantity()>quantity)
+				{
+					amount=cryptoCurrency[2].getPrice()*quantity;
+					currentBalance += amount;
+					details.put(bankName, currentBalance);
+					wallet[2].subCurrency(quantity);
+				}
+				
+				output.print(transactionId);
+				output.print(user.getLastTransaction());
+				output.println("Buy");
+				
+				return true;
+	  }
+
+	 else if(amount>0)
+     {
+    	   
+    	   //quantity calculation if amount given
+
+	    	       if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>amount/cryptoCurrency[0].getPrice())
+				{
+					quantity=amount/cryptoCurrency[0].getPrice();
+					currentBalance += amount;
+					details.put(bankName, currentBalance);
+					wallet[0].subCurrency(quantity);
+					
+				}
+				else if(currency.equalsIgnoreCase("ethereum")&&wallet[1].getQuantity()>amount/cryptoCurrency[1].getPrice())
+				{
+					quantity=amount/cryptoCurrency[1].getPrice();
+					currentBalance += amount;
+					details.put(bankName, currentBalance);
+					wallet[1].subCurrency(quantity);
+				}
+				else if(currency.equalsIgnoreCase("ethereum")&&wallet[1].getQuantity()>amount/cryptoCurrency[2].getPrice())
+				{
+					quantity=amount/cryptoCurrency[2].getPrice();
+					currentBalance += amount;
+					details.put(bankName, currentBalance);
+					wallet[2].subCurrency(quantity);
+				}
+	    	       
+	    	            output.print(transactionId);
+					output.print(user.getLastTransaction());
+					output.println("Buy");
+					
+					return true;
+    	   		}
+    	   		else
+    	   		{
+    	   			System.out.println("No balance");
+				return false;
+    	   		}
+
+		
+	}
+
+	public boolean buyCurrency(String bankName,double amount, double quantity,
+			String currency,Payment payment)
 	{
 		
 		//yet to implement fees and update wallet and transaction!
@@ -122,7 +184,7 @@ public class Transaction implements Serializable {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Calendar c = Calendar.getInstance();
-		c.setTime(new Date()); // Now use today date.
+		c.setTime(new Date()); 
 		c.add(Calendar.DATE, 7);
 		
 		if(user.getLastTransaction().before(c)&& user.getLimit() < amount) 
@@ -134,25 +196,39 @@ public class Transaction implements Serializable {
 				
 		else if(payment instanceof BankAccount)
 		{
-	
-				BankAccount ba=(BankAccount)payment;
-				details= ba.getBankAccount();
-				currentBalance=details.get(ba.getBankName());
-				
+			BankAccount ba=(BankAccount)payment;
+			details= ba.getBankAccount();
+			currentBalance=details.get(bankName);
+	       if(quantity>0)
+	       {
+
 				if(currentBalance > amount)
 				{
-					System.out.println("Success");
-					currentBalance -= amount;
-					details.put(ba.getBankName(), currentBalance);
+					
+					//amount calculation if quantity given	
 					
 					if(currency.equalsIgnoreCase("bitcoin"))
+					{
+						amount=cryptoCurrency[0].getPrice()*quantity;
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
 						wallet[0].addCurrency(quantity);
+						
+					}
 					else if(currency.equalsIgnoreCase("ethereum"))
+					{
+						amount=cryptoCurrency[1].getPrice()*quantity;
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
 						wallet[1].addCurrency(quantity);
+					}
 					else
+					{
+						amount=cryptoCurrency[2].getPrice()*quantity;
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
 						wallet[2].addCurrency(quantity);
-
-					transactionId ++;
+					}
 					
 					output.print(transactionId);
 					output.print(user.getLastTransaction());
@@ -165,32 +241,89 @@ public class Transaction implements Serializable {
 					System.out.println("No balance");
 					return false;
 				}
+	       }
+	       else if(amount>0)
+	       {
+	    	   
+	    	   //quantity calculation if amount given
+	    	   		if(currentBalance>amount)
+	    	   		{
+		    	       if(currency.equalsIgnoreCase("bitcoin"))
+					{
+						quantity=amount/cryptoCurrency[0].getPrice();
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
+						wallet[0].addCurrency(quantity);
+						
+					}
+					else if(currency.equalsIgnoreCase("ethereum"))
+					{
+						quantity=amount/cryptoCurrency[1].getPrice();
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
+						wallet[1].addCurrency(quantity);
+					}
+					else
+					{
+						quantity=amount/cryptoCurrency[2].getPrice();
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
+						wallet[2].addCurrency(quantity);
+					}
+		    	       
+		    	            output.print(transactionId);
+						output.print(user.getLastTransaction());
+						output.println("Buy");
+						
+						return true;
+	    	   		}
+	    	   		else
+	    	   		{
+	    	   			System.out.println("No balance");
+					return false;
+	    	   		}
+	       }
 			
 		}
 		else if(payment instanceof CreditCard)
 		{
-	
-				CreditCard ca=(CreditCard)payment;
-				details= ca.getCardType();
-				currentBalance=details.get(ca.getBankName());
-				
+			CreditCard ca=(CreditCard)payment;
+			details= ca.getCardAccount();
+			currentBalance=details.get(bankName);
+	       if(quantity>0)
+	       {
+
 				if(currentBalance > amount)
 				{
-					System.out.println("Success");
-					currentBalance -= amount;
-					details.put(ca.getBankName(), currentBalance);
+					
+					//amount calculation if quantity given	
 					
 					if(currency.equalsIgnoreCase("bitcoin"))
+					{
+						amount=cryptoCurrency[0].getPrice()*quantity;
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
 						wallet[0].addCurrency(quantity);
+						
+					}
 					else if(currency.equalsIgnoreCase("ethereum"))
+					{
+						amount=cryptoCurrency[1].getPrice()*quantity;
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
 						wallet[1].addCurrency(quantity);
+					}
 					else
+					{
+						amount=cryptoCurrency[2].getPrice()*quantity;
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
 						wallet[2].addCurrency(quantity);
+					}
 					
 					output.print(transactionId);
 					output.print(user.getLastTransaction());
 					output.println("Buy");
-					
 					
 					return true;
 				}
@@ -199,69 +332,81 @@ public class Transaction implements Serializable {
 					System.out.println("No balance");
 					return false;
 				}
+	       }
+	       else if(amount>0)
+	       {
+	    	   
+	    	   //quantity calculation if amount given
+	    	   		if(currentBalance>amount)
+	    	   		{
+		    	       if(currency.equalsIgnoreCase("bitcoin"))
+					{
+						quantity=amount/cryptoCurrency[0].getPrice();
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
+						wallet[0].addCurrency(quantity);
+						
+					}
+					else if(currency.equalsIgnoreCase("ethereum"))
+					{
+						quantity=amount/cryptoCurrency[1].getPrice();
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
+						wallet[1].addCurrency(quantity);
+					}
+					else
+					{
+						quantity=amount/cryptoCurrency[2].getPrice();
+						currentBalance -= amount;
+						details.put(bankName, currentBalance);
+						wallet[2].addCurrency(quantity);
+					}
+		    	       
+		    	            output.print(transactionId);
+						output.print(user.getLastTransaction());
+						output.println("Buy");
+						
+						return true;
+	    	   		}
+	    	   		else
+	    	   		{
+	    	   			System.out.println("No balance");
+					return false;
+	    	   		}
+	       }
+		
 			
 		}
-	
 		return false;
-		
-	}
+	 }
 	
-	public boolean sellCurrency(User user, Payment payment, int amount , double quantity,
-			String currency, Wallet [] wallet) {
-		
-		//yet to implement wallet
-		
-		
+	public boolean sellCurrency(String bankName,double amount, double quantity,String currency,Payment payment) 
+	{
+
 		HashMap<String, Double> details;
-		double currentBalance =0;
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); 
+		c.add(Calendar.DATE, 7);
+		
+				
 		if(payment instanceof BankAccount)
 		{
-	
-				BankAccount ba=(BankAccount)payment;
-				details= ba.getBankAccount();
-				currentBalance=details.get(ba.getBankName());
-				details.put(ba.getBankName(),currentBalance+=amount );
-				
-				if(currency.equalsIgnoreCase("bitcoin"))
-					wallet[0].subCurrency(quantity);
-				else if(currency.equalsIgnoreCase("ethereum"))
-					wallet[1].subCurrency(quantity);
-				else
-					wallet[2].subCurrency(quantity);
-				
-				output.print(transactionId);
-				output.print(user.getLastTransaction());
-				output.println("Sell");
-				
-				return true;
-		
+			BankAccount ba=(BankAccount)payment;
+			details= ba.getBankAccount();
+			
+            return sellCommit(quantity, amount, details, currency, bankName);
 		}
-		
+	
 		else if(payment instanceof CreditCard)
 		{
-	
-				CreditCard ca=(CreditCard)payment;
-				details= ca.getCardType();
-				currentBalance=details.get(ca.getBankName());
-				details.put(ca.getBankName(),currentBalance+=amount );
-				
-				if(currency.equalsIgnoreCase("bitcoin"))
-					wallet[0].subCurrency(quantity);
-				else if(currency.equalsIgnoreCase("ethereum"))
-					wallet[1].subCurrency(quantity);
-				else
-					wallet[2].subCurrency(quantity);
-				
-				
-				output.print(transactionId);
-				output.print(user.getLastTransaction());
-				output.println("Sell");
-				
-				return true;
-	
+			CreditCard ca=(CreditCard)payment;
+			details= ca.getCardAccount();
+			
+           return  sellCommit(quantity, amount, details, currency, bankName);
+			
 		}
-		
 		return false;
 	}
 	
@@ -276,22 +421,22 @@ public class Transaction implements Serializable {
 	{
 	
 		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("ethereum"))
-			wallet[1].quantity+=quantity*currency[0].getPrice()/currency[1].getPrice();
+			wallet[1].quantity+=quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[1].getPrice();
 		
 		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("litecoin"))
-			wallet[2].quantity+=quantity*currency[0].getPrice()/currency[2].getPrice();
+			wallet[2].quantity+=quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[2].getPrice();
 		
 		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("bitcoin"))
-			wallet[0].quantity+=quantity*currency[1].getPrice()/currency[0].getPrice();
+			wallet[0].quantity+=quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[0].getPrice();
 		
 		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("litecoin"))
-			wallet[2].quantity+=quantity*currency[1].getPrice()/currency[2].getPrice();
+			wallet[2].quantity+=quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[2].getPrice();
 		
 		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("bitcoin"))
-			wallet[0].quantity+=quantity*currency[2].getPrice()/currency[0].getPrice();
+			wallet[0].quantity+=quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[0].getPrice();
 		
 		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("ethereum"))
-			wallet[1].quantity+=quantity*currency[2].getPrice()/currency[1].getPrice();
+			wallet[1].quantity+=quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[1].getPrice();
 		
 		
 		output.print(transactionId);

@@ -111,7 +111,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         litecoinPrice.setText("$350");
 
         bitcoinBuy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        bitcoinBuy.setText("BuyGUI");
+        bitcoinBuy.setText("Buy");
         bitcoinBuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bitcoinBuyActionPerformed(evt);
@@ -119,7 +119,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         bitcoinSell.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        bitcoinSell.setText("SellGUI");
+        bitcoinSell.setText("Sell");
         bitcoinSell.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bitcoinSellActionPerformed(evt);
@@ -127,7 +127,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         ethereumBuy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        ethereumBuy.setText("BuyGUI");
+        ethereumBuy.setText("Buy");
         ethereumBuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ethereumBuyActionPerformed(evt);
@@ -135,7 +135,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         ethereumSell.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        ethereumSell.setText("SellGUI");
+        ethereumSell.setText("Sell");
         ethereumSell.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ethereumSellActionPerformed(evt);
@@ -143,7 +143,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         litecoinBuy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        litecoinBuy.setText("BuyGUI");
+        litecoinBuy.setText("Buy");
         litecoinBuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 litecoinBuyActionPerformed(evt);
@@ -151,7 +151,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         litecoinSell.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        litecoinSell.setText("SellGUI");
+        litecoinSell.setText("Sell");
         litecoinSell.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 litecoinSellActionPerformed(evt);
@@ -426,43 +426,40 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
     private void bitcoinSellActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    		currency=system.cryptoInfo();
+    		 currency=system.cryptoInfo();
     	     SellGUI sell=new SellGUI(currentUser,currency,system);
     	     sell.setVisible(true);
-    }//GEN-LAST:event_bitcoinSellActionPerformed
-
-    private void scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scheduleActionPerformed
-        // TODO add your handling code here:
-    	
-    	System.out.println("Clicked");
-    	
-    	ManualSchedulerGUI g = new ManualSchedulerGUI(currentUser, system, currency);
-    	g.setVisible(true);
+    }
+    private void scheduleActionPerformed(java.awt.event.ActionEvent evt) 
+    {
+	    	System.out.println("Clicked");
+	    	
+	    	ManualSchedulerGUI g = new ManualSchedulerGUI(currentUser, system, currency);
+	    	g.setVisible(true);
     	
     	
-    }//GEN-LAST:event_scheduleActionPerformed
+    }
 
-    private void alertsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alertsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_alertsActionPerformed
+    private void alertsActionPerformed(java.awt.event.ActionEvent evt) 
+    {
+    	
+    }
 
-    private void convertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_convertActionPerformed
-
+    private void convertActionPerformed(java.awt.event.ActionEvent evt)
+    { 
+    		ConversionGUI convert=new ConversionGUI(currentUser,system);
+    		convert.setVisible(true);
+    }
     private void paymentMethodActionPerformed(java.awt.event.ActionEvent evt)
     {
-    	  PaymentMethodGUI payment=new PaymentMethodGUI(currentUser,system);
-    	  payment.setVisible(true);
+	    	  PaymentMethodGUI payment=new PaymentMethodGUI(currentUser,system);
+	    	  payment.setVisible(true);
     }
 
     private void autoScheduleActionPerformed(java.awt.event.ActionEvent evt) 
-    {//GEN-FIRST:event_autoScheduleActionPerformed
-        // TODO add your handling code here:
-        
-       
-        
-    }//GEN-LAST:event_autoScheduleActionPerformed
+    {
+          
+    }
 
     private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
         // TODO add your handling code here:

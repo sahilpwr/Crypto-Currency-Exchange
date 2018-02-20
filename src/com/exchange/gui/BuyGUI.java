@@ -135,10 +135,10 @@ public class BuyGUI extends javax.swing.JFrame {
         jLabel8.setText("2%");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel9.setText("Total Currency Deposited in Wallet");
+        jLabel9.setText("                                                          ");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel10.setText("1235 Ethreum");
+        jLabel10.setText("                ");
 
         amountRadio.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         amountRadio.setText("Price");

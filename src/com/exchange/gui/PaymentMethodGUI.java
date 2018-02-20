@@ -197,7 +197,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void accountRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountRadioActionPerformed
+    private void accountRadioActionPerformed(java.awt.event.ActionEvent evt) 
+    {
         if(accountRadio.isSelected())
         {
         		  cardRadio.setEnabled(false);
@@ -210,9 +211,10 @@ public class PaymentMethodGUI extends javax.swing.JFrame
         else if(!accountRadio.isSelected())
         {
       	  accountDropdown.removeAllItems();
-		  cardRadio.setEnabled(true);
+      	  cardRadio.setEnabled(true);
+      	  accountRadio.setEnabled(true);
         }
-    }//GEN-LAST:event_accountRadioActionPerformed
+    }
 
     private void accountNumberActionPerformed(java.awt.event.ActionEvent evt) 
     { 
@@ -222,8 +224,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame
 
     private void accountDropdownActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    	
-    	  bankName=accountDropdown.getSelectedItem().toString();
+    		if(accountDropdown.getSelectedItem()!=null)
+    				bankName=accountDropdown.getSelectedItem().toString();
     	   
     }
 
@@ -243,7 +245,9 @@ public class PaymentMethodGUI extends javax.swing.JFrame
        else if(!cardRadio.isSelected())
        {
     	   	   accountDropdown.removeAllItems();
-	   	   accountRadio.setEnabled(true);
+    	   	   cardRadio.setEnabled(true);
+            accountRadio.setEnabled(true);
+	   	   
        }
        
        

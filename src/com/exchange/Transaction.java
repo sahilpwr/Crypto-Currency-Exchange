@@ -15,7 +15,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Transaction implements Serializable {
+public class Transaction implements Serializable 
+{
 	
 
 	private double price;
@@ -129,20 +130,20 @@ public class Transaction implements Serializable {
     				
     				System.out.println("Current Balance"+ currentBalance);
 
-				if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>quantity)
+				if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[0].subCurrency(quantity);
 					
 				}
-				else if(currency.equalsIgnoreCase("ethereum")&&wallet[0].getQuantity()>quantity)
+				else if(currency.equalsIgnoreCase("ethereum")&&wallet[0].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[1].subCurrency(quantity);
 				}
-				else if(currency.equalsIgnoreCase("litecoin")&&wallet[0].getQuantity()>quantity)
+				else if(currency.equalsIgnoreCase("litecoin")&&wallet[0].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);

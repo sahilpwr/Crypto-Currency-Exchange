@@ -26,12 +26,7 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
      */
     public ManualSchedulerGUI() {
         initComponents();
-     	txtAmount.setText("");
-     	txtQuantity.setText("");
-     	txtDays.setText("");
-     	txtAmount.setColumns(10);
-     	txtQuantity.setColumns(10);
-     	txtDays.setColumns(10);
+     
     }
 
     public ManualSchedulerGUI(User user, CurrencySystem currencySystem, CryptoCurrency [] cryptoCurrencies)
@@ -41,6 +36,16 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
     	this.user = user;
     	this.currencySystem = currencySystem;
     	this.cryptoCurrencies = cryptoCurrencies;
+    	initComponents();
+    	
+    		txtAmount.setText("");
+     	txtQuantity.setText("");
+     	txtDays.setText("");
+     	txtAmount.setColumns(10);
+     	txtQuantity.setColumns(10);
+     	txtDays.setColumns(10);
+    	
+    	
    
     	
     }
@@ -467,19 +472,19 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
         }
         
         if(rbAmount.isSelected()){
-            txtQuantity.setEditable(false);
-            txtAmount.setEditable(true);
+        	txtQuantity.setText("0");
+           
             type = true;
             System.out.println("yes");
             System.out.println(txtAmount.getText());
             if(txtAmount.getText().trim().length() == 0 &&
             		txtAmount.getText().trim().equals("")){
                 JOptionPane.showMessageDialog(null, "Enter Amount!");
+                
             }
         }
         else {
-            txtQuantity.setEditable(true);
-            txtAmount.enable(false);
+        	txtAmount.setText("0");
             type = false;
             System.out.println("yes yes");
             System.out.println(txtQuantity.getText());
@@ -493,7 +498,8 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
        
         
         
-        ManualScheduler ms = new ManualScheduler(user,Double.parseDouble(txtAmount.getText()),Double.parseDouble(txtQuantity.getText()),duration,type,name, currencySystem, cryptoCurrencies);
+        ManualScheduler ms = new ManualScheduler(user,Double.parseDouble(txtAmount.getText()),Double.parseDouble(txtQuantity.getText()),
+        		duration,type,name, currencySystem, cryptoCurrencies);
         
         
     }//GEN-LAST:event_btnScheduleActionPerformed
@@ -577,11 +583,31 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
 
     private void rbAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAccountActionPerformed
         // TODO add your handling code here:
+        if(rbAccount.isSelected()){
+            rbAccount.setEnabled(true);
+            rbCreditCard.setEnabled(false);;
+}
+else if(!rbAccount.isSelected()){
+            rbAccount.setEnabled(true);
+            rbCreditCard.setEnabled(true);
+}
     }//GEN-LAST:event_rbAccountActionPerformed
 
     private void rbCreditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCreditCardActionPerformed
         // TODO add your handling code here:
+        if(rbCreditCard.isSelected()){
+            rbAccount.setEnabled(false);
+            rbCreditCard.setEnabled(true);;
+}
+else if(!rbCreditCard.isSelected()){
+            rbAccount.setEnabled(true);
+            rbCreditCard.setEnabled(true);
+}
+    	
+    	
+    	
     }//GEN-LAST:event_rbCreditCardActionPerformed
+    
 
     private void cbNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNamesActionPerformed
         // TODO add your handling code here:

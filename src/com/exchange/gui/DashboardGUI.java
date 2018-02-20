@@ -459,6 +459,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
     {//GEN-FIRST:event_autoScheduleActionPerformed
         // TODO add your handling code here:
         
+    	AutoSchedulerGUI g = new AutoSchedulerGUI(currentUser, system, currency);
+    	g.setVisible(true);
        
         
     }//GEN-LAST:event_autoScheduleActionPerformed

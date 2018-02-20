@@ -432,6 +432,13 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
     private void scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scheduleActionPerformed
         // TODO add your handling code here:
+    	
+    	System.out.println("Clicked");
+    	
+    	ManualSchedulerGUI g = new ManualSchedulerGUI(currentUser, system, currency);
+    	g.setVisible(true);
+    	
+    	
     }//GEN-LAST:event_scheduleActionPerformed
 
     private void alertsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alertsActionPerformed

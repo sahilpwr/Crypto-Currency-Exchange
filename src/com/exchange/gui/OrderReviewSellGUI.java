@@ -31,7 +31,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
     		
     		 
         	  if(bankName.contains("card"))
-        		  paymentType="card";
+        		  paymentType="credit";
         	  else 
         		  paymentType="bank";
 
@@ -154,7 +154,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
     	  g.setVisible(true);
     	  Thread dashboard=new Thread(g);
     	  dashboard.start();
-    }//GEN-LAST:event_buyActionPerformed
+    }
 
     private javax.swing.JButton buy;
     private javax.swing.JButton changeOrder;

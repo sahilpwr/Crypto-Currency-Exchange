@@ -46,7 +46,7 @@ public class CreditCard extends Payment {
 		ObjectInputStream ois=new ObjectInputStream(fis);
 		cardAccount=(HashMap<String, Double>)ois.readObject();
 		Random rand = new Random();
-		cardAccount.put(cardName, (double) (rand.nextInt(10000) + 1));
+		cardAccount.put(cardName, 20000.00);
 		
 		
 		FileOutputStream fos=new FileOutputStream(emailID+"Credit.dat");

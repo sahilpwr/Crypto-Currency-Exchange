@@ -137,13 +137,13 @@ public class Transaction implements Serializable
 					wallet[0].subCurrency(quantity);
 					
 				}
-				else if(currency.equalsIgnoreCase("ethereum")&&wallet[0].getQuantity()>=quantity)
+				else if(currency.equalsIgnoreCase("ethereum")&&wallet[1].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[1].subCurrency(quantity);
 				}
-				else if(currency.equalsIgnoreCase("litecoin")&&wallet[0].getQuantity()>=quantity)
+				else if(currency.equalsIgnoreCase("litecoin")&&wallet[2].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
@@ -276,9 +276,9 @@ public class Transaction implements Serializable
 						wallet[2].addCurrency(quantity);
 					}
 					
-					output.print(transactionId);
+				/*	output.print(transactionId);
 					output.print(user.getLastTransaction());
-					output.println("BuyGUI");
+					output.println("BuyGUI");*/
 					
 					fos=new FileOutputStream(emailID+"Bank.dat");
 					oos=new ObjectOutputStream(fos);

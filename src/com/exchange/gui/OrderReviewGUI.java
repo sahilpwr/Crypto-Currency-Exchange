@@ -32,9 +32,9 @@ public class OrderReviewGUI extends javax.swing.JFrame {
     		this.currencyName=currencyName;
     		this.system=system;
     		
-    		 
+    	
         	  if(bankName.contains("card"))
-        		  paymentType="card";
+        		  paymentType="credit";
         	  else 
         		  paymentType="bank";
 
@@ -160,7 +160,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
     	  g.setVisible(true);
     	  Thread dashboard=new Thread(g);
     	  dashboard.start();
-    }//GEN-LAST:event_buyActionPerformed
+    }
 
     private javax.swing.JButton buy;
     private javax.swing.JButton changeOrder;

@@ -1,9 +1,13 @@
 package com.exchange;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 public class User implements Serializable
@@ -12,10 +16,10 @@ public class User implements Serializable
  private  String lastName;
  private String  emailID;
  private String password;
- Payment[] payment=new Payment[2];
+ Payment[] payment;
  private int limit;
  private Calendar lastTransaction;
- Wallet[] wallet=new Wallet[3];
+ Wallet[] wallet;
  CryptoCurrency[] currency;
  User user;
  HashMap<Integer, Alert> alerts=new HashMap<>();
@@ -61,8 +65,35 @@ public String getEmailID() {
 	return emailID;
 }
 
-public void setEmailID(String emailID) {
+public void setEmailID(String emailID) throws IOException
+{
+	
 	this.emailID = emailID;
+	
+	payment=new Payment[2];
+	payment[0]=new BankAccount(emailID);
+	payment[1]=new CreditCard(emailID);
+
+	
+	File f = new File(emailID+"Wallet.dat");
+	
+	
+	if(!f.exists())
+	{     
+		wallet=new Wallet[3];
+		FileOutputStream fos=new FileOutputStream(emailID+"Wallet.dat");
+		ObjectOutputStream  oos=new ObjectOutputStream(fos);
+		wallet[0]=new Wallet("bitcoin");
+		wallet[1]=new Wallet("ethereum");
+		wallet[2]=new Wallet("litecoin");	
+		
+		oos.writeObject(wallet);
+		
+	}
+		
+		
+	
+	
 }
 
 public String getPassword() {
@@ -81,17 +112,19 @@ public void setRoi(double roi) {
 	this.roi = roi;
 }
 
-
+public Wallet[] getWallet() throws IOException, ClassNotFoundException
+{
+	FileInputStream fis=new FileInputStream(emailID+"Wallet.dat");
+	ObjectInputStream ois=new ObjectInputStream(fis);
+	wallet=(Wallet[])ois.readObject();
+	return wallet;
+}
 
  
-User()
+User() throws IOException
 {
-	wallet[0]=new Wallet("bitcoin");
-	wallet[1]=new Wallet("ethereum");
-	wallet[2]=new Wallet("litecoin");
 	
-	payment[0]=new BankAccount();
-	payment[1]=new CreditCard();
+
 }
 public void addPayment()
 {
@@ -99,9 +132,9 @@ public void addPayment()
 }
 
  public void transaction(String bankName,double amount, double quantity,
-			String currencyType,String transactionType,String paymentType) throws FileNotFoundException
+			String currencyType,String transactionType,String paymentType) throws ClassNotFoundException, IOException
  { 
-	 Transaction transaction=new Transaction(wallet,currency,user);
+	 Transaction transaction=new Transaction(emailID,currency,user);
 	 if(transactionType=="buy"&&paymentType=="bank")
 	    transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[0]);
 	 else if(transactionType=="buy"&&paymentType=="credit")
@@ -119,7 +152,15 @@ public void addPayment()
  {
 		return transactionID;
  }
+public Payment getBank() throws IOException, ClassNotFoundException
+{
+	return payment[0];
+}
 
+public Payment getCredit() throws IOException, ClassNotFoundException
+{
+	return payment[1];
+}
  
  public void createAlert(CurrencySystem system,String currencyName,double price)
  {

@@ -16,7 +16,7 @@ public class LoginGUI extends javax.swing.JFrame
     User currentUser;
     public LoginGUI(CurrencySystem system) 
     {
-    	this.system=system;
+    	   this.system=system;
         initComponents();
     }
 
@@ -129,24 +129,19 @@ public class LoginGUI extends javax.swing.JFrame
                     }
                     else if(system.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
                     {
-                        currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
-                        JOptionPane.showMessageDialog(null, "Logged In");
+                       currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
+                       JOptionPane.showMessageDialog(null, "Logged In");
    
                     
-                       DashboardGUI g = new DashboardGUI(system);
+                       DashboardGUI g = new DashboardGUI(currentUser,system);
                        g.setVisible(true);
                        
-                      // Thread dashboard=new Thread(g);
-                       //dashboard.start();
+                       Thread dashboard=new Thread(g);
+                       dashboard.start();
                        
                        
                     }
-                    //DashboardGUI g = new DashboardGUI();
-                    //g.setVisible(true);
-                    
-               
       
-        
     }   
     
    

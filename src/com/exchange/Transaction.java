@@ -1,7 +1,12 @@
 package com.exchange;
 
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -26,17 +31,21 @@ public class Transaction implements Serializable {
 	private Payment payment;
 	private User user;
 	private Wallet[] wallet;
-	
+	String emailID;
 	Calendar cal;
 	SimpleDateFormat sdf;
+	FileInputStream fis;
+	ObjectInputStream ois;
+	FileOutputStream fos;
+	ObjectOutputStream  oos;
 	
 	PrintWriter output = null; 
 
 	
 	
-	public Transaction(Wallet[] wallet,CryptoCurrency[] currency,User user) throws FileNotFoundException 
+	public Transaction(String emailID,CryptoCurrency[] currency,User user) throws IOException, ClassNotFoundException 
 	{
-		this.wallet=wallet;
+		this.emailID=emailID;
 		this.cryptoCurrency=currency;
 		this.user=user;
 		output = new PrintWriter("transaction.txt");
@@ -126,7 +135,7 @@ public class Transaction implements Serializable {
 				
 				output.print(transactionId);
 				output.print(user.getLastTransaction());
-				output.println("Buy");
+				output.println("BuyGUI");
 				
 				return true;
 	  }
@@ -161,7 +170,7 @@ public class Transaction implements Serializable {
 	    	       
 	    	            output.print(transactionId);
 					output.print(user.getLastTransaction());
-					output.println("Buy");
+					output.println("BuyGUI");
 					
 					return true;
     	   		}
@@ -175,31 +184,25 @@ public class Transaction implements Serializable {
 	}
 
 	public boolean buyCurrency(String bankName,double amount, double quantity,
-			String currency,Payment payment)
+			String currency,Payment payment) throws ClassNotFoundException, IOException
 	{
 		
 		//yet to implement fees and update wallet and transaction!
 		double currentBalance=0;
 		HashMap<String, Double> details;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date()); 
-		c.add(Calendar.DATE, 7);
-		
-		if(user.getLastTransaction().before(c)&& user.getLimit() < amount) 
-		{
-			System.out.println("User has crossed the weekly limit");
-		
-		    return false;
-		}
-				
-		else if(payment instanceof BankAccount)
+		fis=new FileInputStream(emailID+"Wallet.dat");
+		ois=new ObjectInputStream(fis);
+		wallet=(Wallet[])ois.readObject();
+	
+		System.out.println();		
+		if(payment instanceof BankAccount)
 		{
 			BankAccount ba=(BankAccount)payment;
 			details= ba.getBankAccount();
 			currentBalance=details.get(bankName);
-	       if(quantity>0)
+			System.out.println("Current Balance"+ currentBalance);
+	       if(quantity>0 && amount>0)
 	       {
 
 				if(currentBalance > amount)
@@ -209,7 +212,7 @@ public class Transaction implements Serializable {
 					
 					if(currency.equalsIgnoreCase("bitcoin"))
 					{
-						amount=cryptoCurrency[0].getPrice()*quantity;
+						
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[0].addCurrency(quantity);
@@ -217,22 +220,30 @@ public class Transaction implements Serializable {
 					}
 					else if(currency.equalsIgnoreCase("ethereum"))
 					{
-						amount=cryptoCurrency[1].getPrice()*quantity;
+						
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[1].addCurrency(quantity);
 					}
 					else
 					{
-						amount=cryptoCurrency[2].getPrice()*quantity;
+						
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[2].addCurrency(quantity);
 					}
 					
-					output.print(transactionId);
+					/*output.print(transactionId);
 					output.print(user.getLastTransaction());
-					output.println("Buy");
+					output.println("BuyGUI");*/
+					
+					fos=new FileOutputStream(emailID+"Wallet.dat");
+					oos=new ObjectOutputStream(fos);
+					oos.writeObject(wallet);
+					
+					fos=new FileOutputStream(emailID+"Bank.dat");
+					oos=new ObjectOutputStream(fos);
+					oos.writeObject(details);
 					
 					return true;
 				}
@@ -242,47 +253,7 @@ public class Transaction implements Serializable {
 					return false;
 				}
 	       }
-	       else if(amount>0)
-	       {
-	    	   
-	    	   //quantity calculation if amount given
-	    	   		if(currentBalance>amount)
-	    	   		{
-		    	       if(currency.equalsIgnoreCase("bitcoin"))
-					{
-						quantity=amount/cryptoCurrency[0].getPrice();
-						currentBalance -= amount;
-						details.put(bankName, currentBalance);
-						wallet[0].addCurrency(quantity);
-						
-					}
-					else if(currency.equalsIgnoreCase("ethereum"))
-					{
-						quantity=amount/cryptoCurrency[1].getPrice();
-						currentBalance -= amount;
-						details.put(bankName, currentBalance);
-						wallet[1].addCurrency(quantity);
-					}
-					else
-					{
-						quantity=amount/cryptoCurrency[2].getPrice();
-						currentBalance -= amount;
-						details.put(bankName, currentBalance);
-						wallet[2].addCurrency(quantity);
-					}
-		    	       
-		    	            output.print(transactionId);
-						output.print(user.getLastTransaction());
-						output.println("Buy");
-						
-						return true;
-	    	   		}
-	    	   		else
-	    	   		{
-	    	   			System.out.println("No balance");
-					return false;
-	    	   		}
-	       }
+	       
 			
 		}
 		else if(payment instanceof CreditCard)
@@ -290,7 +261,7 @@ public class Transaction implements Serializable {
 			CreditCard ca=(CreditCard)payment;
 			details= ca.getCardAccount();
 			currentBalance=details.get(bankName);
-	       if(quantity>0)
+	       if(quantity>0&& quantity>0)
 	       {
 
 				if(currentBalance > amount)
@@ -300,7 +271,7 @@ public class Transaction implements Serializable {
 					
 					if(currency.equalsIgnoreCase("bitcoin"))
 					{
-						amount=cryptoCurrency[0].getPrice()*quantity;
+						
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[0].addCurrency(quantity);
@@ -308,14 +279,14 @@ public class Transaction implements Serializable {
 					}
 					else if(currency.equalsIgnoreCase("ethereum"))
 					{
-						amount=cryptoCurrency[1].getPrice()*quantity;
+						
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[1].addCurrency(quantity);
 					}
 					else
 					{
-						amount=cryptoCurrency[2].getPrice()*quantity;
+						
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[2].addCurrency(quantity);
@@ -323,8 +294,12 @@ public class Transaction implements Serializable {
 					
 					output.print(transactionId);
 					output.print(user.getLastTransaction());
-					output.println("Buy");
+					output.println("BuyGUI");
 					
+					
+					FileOutputStream fos=new FileOutputStream(emailID+"Wallet.dat");
+					ObjectOutputStream  oos=new ObjectOutputStream(fos);
+					oos.writeObject(wallet);
 					return true;
 				}
 				else
@@ -333,54 +308,14 @@ public class Transaction implements Serializable {
 					return false;
 				}
 	       }
-	       else if(amount>0)
-	       {
-	    	   
-	    	   //quantity calculation if amount given
-	    	   		if(currentBalance>amount)
-	    	   		{
-		    	       if(currency.equalsIgnoreCase("bitcoin"))
-					{
-						quantity=amount/cryptoCurrency[0].getPrice();
-						currentBalance -= amount;
-						details.put(bankName, currentBalance);
-						wallet[0].addCurrency(quantity);
-						
-					}
-					else if(currency.equalsIgnoreCase("ethereum"))
-					{
-						quantity=amount/cryptoCurrency[1].getPrice();
-						currentBalance -= amount;
-						details.put(bankName, currentBalance);
-						wallet[1].addCurrency(quantity);
-					}
-					else
-					{
-						quantity=amount/cryptoCurrency[2].getPrice();
-						currentBalance -= amount;
-						details.put(bankName, currentBalance);
-						wallet[2].addCurrency(quantity);
-					}
-		    	       
-		    	            output.print(transactionId);
-						output.print(user.getLastTransaction());
-						output.println("Buy");
-						
-						return true;
-	    	   		}
-	    	   		else
-	    	   		{
-	    	   			System.out.println("No balance");
-					return false;
-	    	   		}
-	       }
+	      
 		
 			
 		}
 		return false;
 	 }
 	
-	public boolean sellCurrency(String bankName,double amount, double quantity,String currency,Payment payment) 
+	public boolean sellCurrency(String bankName,double amount, double quantity,String currency,Payment payment) throws ClassNotFoundException, IOException 
 	{
 
 		HashMap<String, Double> details;

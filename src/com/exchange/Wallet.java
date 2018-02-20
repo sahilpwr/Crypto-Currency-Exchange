@@ -16,7 +16,7 @@ public class Wallet implements Serializable{
 	public Wallet(String currencyName) 
 	{
 		this.currencyName=currencyName;
-        quantity=0;
+        quantity=0.0;
 
 	}
 	

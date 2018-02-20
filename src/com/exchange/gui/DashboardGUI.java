@@ -1,32 +1,66 @@
 package com.exchange.gui;
 
-import com.exchange.CurrencySystem;
+import java.io.IOException;
 
+import com.exchange.CryptoCurrency;
+import com.exchange.CurrencySystem;
+import com.exchange.User;
 
 public class DashboardGUI extends javax.swing.JFrame implements Runnable
 {
-    CurrencySystem system;
- 
-    public DashboardGUI(CurrencySystem system) 
+
+     CurrencySystem system;
+	 User currentUser;
+	 CryptoCurrency[] currency;
+	 
+	 
+    public DashboardGUI(User currentUser,CurrencySystem system) throws ClassNotFoundException, IOException 
     {
+    		this.currentUser=currentUser;
     		this.system=system;
+    		
         initComponents();
     }
+    
 	public void run()
 	{
+		while(true)
+		{
+			currency=system.cryptoInfo();
+			System.out.println(currency[0].getPrice());
+			
+			bitcoinPrice.setText("$ "+Double.toString(currency[0].getPrice()));
+			ethereumPrice.setText("$ "+Double.toString(currency[1].getPrice()));
+			litecoinPrice.setText("$ "+Double.toString(currency[2].getPrice()));
+			
+			bitcoinChange.setText(""+Integer.toString(currency[0].getPercentDifference())+" %");
+			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
+			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
+			try
+			{
+				Thread.sleep(2000);
+			} 
+			catch (InterruptedException e)
+			{
+				
+				e.printStackTrace();
+			}
+			
+		}
+		
 	
 	}
-  
+	    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() throws ClassNotFoundException, IOException {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        bitcoinPrice = new javax.swing.JLabel();
+        ethereumPrice = new javax.swing.JLabel();
+        litecoinPrice = new javax.swing.JLabel();
         bitcoinBuy = new javax.swing.JButton();
         bitcoinSell = new javax.swing.JButton();
         ethereumBuy = new javax.swing.JButton();
@@ -36,17 +70,17 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        bitcoinChange = new javax.swing.JLabel();
+        ethereumChange = new javax.swing.JLabel();
+        litecoinChange = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        litecoinWallet = new javax.swing.JLabel();
+        bitcoinBalance = new javax.swing.JLabel();
+        ethereumWallet = new javax.swing.JLabel();
         schedule = new javax.swing.JButton();
         alerts = new javax.swing.JButton();
         convert = new javax.swing.JButton();
@@ -54,7 +88,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         autoSchedule = new javax.swing.JButton();
         paymentMethod = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        roi = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,17 +101,17 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("Current Ethereum Price");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel4.setText("$12,000");
+        bitcoinPrice.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        bitcoinPrice.setText("$12,000");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel5.setText("$1000");
+        ethereumPrice.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        ethereumPrice.setText("$1000");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel6.setText("$350");
+        litecoinPrice.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        litecoinPrice.setText("$350");
 
         bitcoinBuy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        bitcoinBuy.setText("Buy");
+        bitcoinBuy.setText("BuyGUI");
         bitcoinBuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bitcoinBuyActionPerformed(evt);
@@ -85,7 +119,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         bitcoinSell.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        bitcoinSell.setText("Sell");
+        bitcoinSell.setText("SellGUI");
         bitcoinSell.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bitcoinSellActionPerformed(evt);
@@ -93,16 +127,36 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         ethereumBuy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        ethereumBuy.setText("Buy");
+        ethereumBuy.setText("BuyGUI");
+        ethereumBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ethereumBuyActionPerformed(evt);
+            }
+        });
 
         ethereumSell.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        ethereumSell.setText("Sell");
+        ethereumSell.setText("SellGUI");
+        ethereumSell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ethereumSellActionPerformed(evt);
+            }
+        });
 
         litecoinBuy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        litecoinBuy.setText("Buy");
+        litecoinBuy.setText("BuyGUI");
+        litecoinBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                litecoinBuyActionPerformed(evt);
+            }
+        });
 
         litecoinSell.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        litecoinSell.setText("Sell");
+        litecoinSell.setText("SellGUI");
+        litecoinSell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                litecoinSellActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setText("% Change in last 2 min");
@@ -113,14 +167,14 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel9.setText("% Change in last 2 min");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel10.setText("+26.53%");
+        bitcoinChange.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        bitcoinChange.setText("+26.53%");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel11.setText("-7.64%");
+        ethereumChange.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        ethereumChange.setText("-7.64%");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel12.setText("-19.53%");
+        litecoinChange.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        litecoinChange.setText("-19.53%");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel13.setText("Crypto Currency Dash Board");
@@ -137,15 +191,19 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel17.setText("Litecoin Balance");
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel18.setText("$24000");
+        litecoinWallet.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        litecoinWallet.setText("$24000");
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel19.setText("$1259.67");
+        bitcoinBalance.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        bitcoinBalance.setText("$1259.67");
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel20.setText("$20000");
+        ethereumWallet.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        ethereumWallet.setText("$20000");
 
+        bitcoinBalance.setText(Double.toString(currentUser.getWallet()[0].getQuantity()));
+		litecoinWallet.setText(Double.toString(currentUser.getWallet()[2].getQuantity()));
+		ethereumWallet.setText(Double.toString(currentUser.getWallet()[1].getQuantity()));
+        
         schedule.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         schedule.setText("Create Schedule");
         schedule.addActionListener(new java.awt.event.ActionListener() {
@@ -172,9 +230,19 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
         transaction.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         transaction.setText("Transcation History");
+        transaction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transactionActionPerformed(evt);
+            }
+        });
 
         autoSchedule.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         autoSchedule.setText("Create Auto Schedule");
+        autoSchedule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoScheduleActionPerformed(evt);
+            }
+        });
 
         paymentMethod.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         paymentMethod.setText("Add Payment Method");
@@ -187,8 +255,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel21.setText("ROI");
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel22.setText("$13,000");
+        roi.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        roi.setText("$13,000");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,7 +268,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addGap(38, 38, 38)
-                        .addComponent(jLabel20)
+                        .addComponent(ethereumWallet)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,22 +285,22 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
+                                                .addComponent(ethereumPrice)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jLabel7))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
+                                                .addComponent(bitcoinPrice)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jLabel8))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
+                                                .addComponent(litecoinPrice)
                                                 .addGap(87, 87, 87)
                                                 .addComponent(jLabel9)))
                                         .addGap(42, 42, 42)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(jLabel12)
-                                            .addComponent(jLabel11))
+                                            .addComponent(bitcoinChange)
+                                            .addComponent(litecoinChange)
+                                            .addComponent(ethereumChange))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(bitcoinBuy)
@@ -245,10 +313,10 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabel17)
                                                 .addGap(72, 72, 72)
-                                                .addComponent(jLabel18)
+                                                .addComponent(litecoinWallet)
                                                 .addGap(54, 54, 54)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jLabel19)
+                                                    .addComponent(bitcoinBalance)
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(jLabel15)
                                                         .addGap(150, 150, 150)))))))
@@ -275,7 +343,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
                         .addGap(536, 536, 536)
                         .addComponent(jLabel21)
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel22)))
+                        .addComponent(roi)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -292,32 +360,32 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel4)
+                    .addComponent(bitcoinPrice)
                     .addComponent(bitcoinBuy)
                     .addComponent(bitcoinSell)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel10))
+                    .addComponent(bitcoinChange))
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel5)
+                    .addComponent(ethereumPrice)
                     .addComponent(ethereumBuy)
                     .addComponent(ethereumSell)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel11))
+                    .addComponent(ethereumChange))
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel6)
+                    .addComponent(litecoinPrice)
                     .addComponent(litecoinBuy)
                     .addComponent(litecoinSell)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel12))
+                    .addComponent(litecoinChange))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel20)
+                            .addComponent(ethereumWallet)
                             .addComponent(jLabel16)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -326,14 +394,14 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jLabel19))
+                                .addComponent(bitcoinBalance))
                             .addComponent(jLabel15)
                             .addComponent(jLabel17)
-                            .addComponent(jLabel18))))
+                            .addComponent(litecoinWallet))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jLabel22))
+                    .addComponent(roi))
                 .addGap(18, 18, 18)
                 .addComponent(paymentMethod)
                 .addGap(36, 36, 36)
@@ -349,11 +417,16 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bitcoinBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcoinBuyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bitcoinBuyActionPerformed
+    private void bitcoinBuyActionPerformed(java.awt.event.ActionEvent evt) 
+    {
+    		currency=system.cryptoInfo();
+    		BuyGUI buy=new BuyGUI(currentUser,currency,system);
+    		buy.setVisible(true);
+    }
 
-    private void bitcoinSellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcoinSellActionPerformed
+    private void bitcoinSellActionPerformed(java.awt.event.ActionEvent evt) 
+    {
+    	//GEN-FIRST:event_bitcoinSellActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bitcoinSellActionPerformed
 
@@ -369,42 +442,74 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         // TODO add your handling code here:
     }//GEN-LAST:event_convertActionPerformed
 
-    private void paymentMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentMethodActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_paymentMethodActionPerformed
+    private void paymentMethodActionPerformed(java.awt.event.ActionEvent evt)
+    {
+    	  PaymentMethodGUI payment=new PaymentMethodGUI(currentUser,system);
+    	  payment.setVisible(true);
+    }
 
-       private javax.swing.JButton alerts;
+    private void autoScheduleActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_autoScheduleActionPerformed
+        // TODO add your handling code here:
+        
+       
+        
+    }//GEN-LAST:event_autoScheduleActionPerformed
+
+    private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_transactionActionPerformed
+
+    private void ethereumBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ethereumBuyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ethereumBuyActionPerformed
+
+    private void litecoinBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_litecoinBuyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_litecoinBuyActionPerformed
+
+    private void ethereumSellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ethereumSellActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ethereumSellActionPerformed
+
+    private void litecoinSellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_litecoinSellActionPerformed
+        // TODO add your handling code here:
+    }
+    
+    
+    
+    private javax.swing.JButton alerts;
     private javax.swing.JButton autoSchedule;
+    private javax.swing.JLabel bitcoinBalance;
     private javax.swing.JButton bitcoinBuy;
+    private javax.swing.JLabel bitcoinChange;
+    private javax.swing.JLabel bitcoinPrice;
     private javax.swing.JButton bitcoinSell;
     private javax.swing.JButton convert;
     private javax.swing.JButton ethereumBuy;
+    private javax.swing.JLabel ethereumChange;
+    private javax.swing.JLabel ethereumPrice;
     private javax.swing.JButton ethereumSell;
+    private javax.swing.JLabel ethereumWallet;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JButton litecoinBuy;
+    private javax.swing.JLabel litecoinChange;
+    private javax.swing.JLabel litecoinPrice;
     private javax.swing.JButton litecoinSell;
+    private javax.swing.JLabel litecoinWallet;
     private javax.swing.JButton paymentMethod;
+    private javax.swing.JLabel roi;
     private javax.swing.JButton schedule;
     private javax.swing.JButton transaction;
     // End of variables declaration//GEN-END:variables

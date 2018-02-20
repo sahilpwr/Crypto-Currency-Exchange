@@ -1,29 +1,68 @@
 package com.exchange;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public class BankAccount extends Payment 
 {
-	private HashMap<String,Double> bankAccount = new HashMap<>();
-	public BankAccount() 
+	private HashMap<String,Double> bankAccount; 
+	String emailID;
+	public BankAccount(String emailID) throws IOException 
 	{
 		userName="sahil";	
 		password="sahil";
+		this.emailID=emailID;
+		File f = new File(emailID+"Bank.dat");
+		
+		
+		if(!f.exists())
+		{     
+			bankAccount = new HashMap<String,Double>();
+			FileOutputStream fos=new FileOutputStream(emailID+"Bank.dat");
+			ObjectOutputStream  oos=new ObjectOutputStream(fos);
+			bankAccount.put("N",0.0);
+			
+			oos.writeObject(bankAccount);
+			
+		}
 	}
 		
 	 
-	public void setBankAccount(String bankName) 
+	public void setBankAccount(String bankName) throws IOException, ClassNotFoundException 
 	{
+		FileInputStream fis=new FileInputStream(emailID+"Bank.dat");
+		ObjectInputStream ois=new ObjectInputStream(fis);
+		bankAccount=(HashMap<String, Double>)ois.readObject();
 		Random rand = new Random();
-		bankAccount.put(bankName, (double) (rand.nextInt(10000) + 1));
+		bankAccount.put(bankName, 50000.00);
+		
+		
+		FileOutputStream fos=new FileOutputStream(emailID+"Bank.dat");
+		ObjectOutputStream  oos=new ObjectOutputStream(fos);
+	
+		
+		oos.writeObject(bankAccount);
 	}
 	
-	public HashMap<String, Double> getBankAccount() 
+	public HashMap<String, Double> getBankAccount() throws IOException, ClassNotFoundException 
 	{
+									
+		FileInputStream fis=new FileInputStream(emailID+"Bank.dat");
+		ObjectInputStream ois=new ObjectInputStream(fis);
+		bankAccount=(HashMap<String, Double>)ois.readObject();
+
 		return bankAccount;
 	}
+
+	
 
 	
 	public String getUserName()

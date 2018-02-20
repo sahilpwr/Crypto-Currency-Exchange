@@ -426,8 +426,9 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
     private void bitcoinSellActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    	//GEN-FIRST:event_bitcoinSellActionPerformed
-        // TODO add your handling code here:
+    		currency=system.cryptoInfo();
+    	     SellGUI sell=new SellGUI(currentUser,currency,system);
+    	     sell.setVisible(true);
     }//GEN-LAST:event_bitcoinSellActionPerformed
 
     private void scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scheduleActionPerformed

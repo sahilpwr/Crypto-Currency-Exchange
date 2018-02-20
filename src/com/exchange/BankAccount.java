@@ -28,7 +28,7 @@ public class BankAccount extends Payment
 			bankAccount = new HashMap<String,Double>();
 			FileOutputStream fos=new FileOutputStream(emailID+"Bank.dat");
 			ObjectOutputStream  oos=new ObjectOutputStream(fos);
-			bankAccount.put("N",0.0);
+			//bankAccount.put("N",0.0);
 			
 			oos.writeObject(bankAccount);
 			

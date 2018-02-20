@@ -1,6 +1,11 @@
 package com.exchange.gui;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
+import com.exchange.Payment;
 import com.exchange.User;
 
 /*
@@ -16,13 +21,15 @@ import com.exchange.User;
 public class BuyGUI extends javax.swing.JFrame {
 
 	CryptoCurrency[] currency;
-	double currentPrice;
+	 double currentPrice;
 	 User currentUser;
 	 double quantity;
 	 double amount;
 	 String bankName;
 	 String currencyName;
 	 CurrencySystem system;
+	 DecimalFormat df = new DecimalFormat(".##");
+
 	 
    public BuyGUI(User currentUser,CryptoCurrency[] currency,CurrencySystem system) 
    {
@@ -30,7 +37,7 @@ public class BuyGUI extends javax.swing.JFrame {
 		this.currency=currency;
 		this.system=system;
 		
-       initComponents();
+        initComponents();
    }
 
     @SuppressWarnings("unchecked")
@@ -72,7 +79,12 @@ public class BuyGUI extends javax.swing.JFrame {
         ethereumRadio.setText("Ethereum");
         ethereumRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ethereumRadioActionPerformed(evt);
+                try {
+					ethereumRadioActionPerformed(evt);
+				} catch (ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -80,7 +92,15 @@ public class BuyGUI extends javax.swing.JFrame {
         bitcoinRadio.setText("Bitcoin");
         bitcoinRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bitcoinRadioActionPerformed(evt);
+                try {
+					bitcoinRadioActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -88,7 +108,15 @@ public class BuyGUI extends javax.swing.JFrame {
         litecoinRadio.setText("Litecoin");
         litecoinRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                litecoinRadioActionPerformed(evt);
+                try {
+					litecoinRadioActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -250,68 +278,177 @@ public class BuyGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bitcoinRadioActionPerformed(java.awt.event.ActionEvent evt) 
-    {//GEN-FIRST:event_bitcoinRadioActionPerformed
-    	bankCombo.addItem("BofA Credit Card");
-    	bankCombo.addItem("Chase");
-    	bankCombo.addItem("Citi Credit card");
-    	bankCombo.addItem("HSBC Credit card");
-    	bankCombo.addItem("Well Fargo Credit card");
-    	currentPrice=currency[0].getPrice();
-    	currencyName=currency[0].getCurrencyName();
-    	System.out.println("Price     "+currentPrice);
+    
+    public void addCombo() throws ClassNotFoundException, IOException
+    {
+    	    Payment pay=currentUser.getBank();
+ 		HashMap<String, Double> map=pay.getBankAccount();
+ 		
+ 		
+ 	   if(!map.isEmpty())
+ 	   {
+ 			for(String key: map.keySet())
+ 			{
+ 			    	bankCombo.addItem(key);
+ 			}
+ 	   }
+ 	   
+ 	     pay=currentUser.getCredit();
+ 	     map=pay.getCardAccount();
+ 		
+ 	   if(!map.isEmpty())
+ 	   {
+ 			for(String key: map.keySet())
+ 			{
+ 			    	bankCombo.addItem(key);
+ 			}
+ 	   }
     	
-    	
-    }//GEN-LAST:event_bitcoinRadioActionPerformed
+    }
+    
+    private void bitcoinRadioActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
+    {  
+    		if(ethereumRadio.isSelected()||litecoinRadio.isSelected())
+		{
+			bankCombo.removeAllItems();
+			ethereumRadio.setEnabled(false);
+	      	litecoinRadio.setEnabled(false);
+		}
+    		else if(bitcoinRadio.isSelected())
+    		{
+	    	   addCombo();
+	    	   ethereumRadio.setEnabled(false);
+		   litecoinRadio.setEnabled(false);
+		   currentPrice=currency[0].getPrice();
+		   currencyName=currency[0].getCurrencyName(); 
+    		}
+    		else if(!bitcoinRadio.isSelected())
+    		{
+    			 ethereumRadio.setEnabled(true);
+    			litecoinRadio.setEnabled(true);
+    			bankCombo.removeAllItems();
+
+    		}
+    }
 
     private void checkoutActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    	    quantity=Double.parseDouble(jTextField2.getText());
-    	    System.out.println("quantity"+quantity);
-    		amount=currentPrice*quantity;
-    	    OrderReviewGUI order=new OrderReviewGUI(quantity,amount,bankName,currencyName,currentUser,system);
-    	    order.setVisible(true);
+    	   if(quantityRadio.isSelected())
+    	   { 
+	    	
+	    	    quantity=Double.parseDouble(jTextField2.getText());
+	    		amount=currentPrice*quantity;
+	    		
+	    	    OrderReviewGUI order=new OrderReviewGUI(quantity,amount,bankName,currencyName,currentUser,system);
+	    	    order.setVisible(true);
+    	   }
+    	   else if(amountRadio.isSelected())
+    	   {
+    		  
+    		   	amount=Double.parseDouble(jTextField1.getText());
+    			if(currentPrice!=0) 
+    				quantity=amount/currentPrice;
+    			else if(currentPrice==0)
+    				quantity=amount/100;
+
+    			
+    		    OrderReviewGUI order=new OrderReviewGUI(Double.parseDouble(df.format(quantity)),amount,bankName,currencyName,currentUser,system);
+    		    order.setVisible(true);
+    	   }
     	
-    }//GEN-LAST:event_checkoutActionPerformed
+    }
 
     private void amountRadioActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    }//GEN-LAST:event_amountRadioActionPerformed
+    		if(amountRadio.isSelected())
+    		{
+    			amountRadio.setEnabled(true);
+    			quantityRadio.setEnabled(false);
+    			jTextField2.setEnabled(false);
+    		}
+    		else if (!amountRadio.isSelected())
+    		{
+    			amountRadio.setEnabled(true );
+        	    quantityRadio.setEnabled(true);
+    			jTextField2.setEnabled(true);
+
+    		}
+    }
 
     private void quantityRadioActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    	  
-    		
-    }//GEN-LAST:event_quantityRadioActionPerformed
+    	   if(quantityRadio.isSelected())
+  	   { 
+    		   amountRadio.setEnabled(false);
+    		   quantityRadio.setEnabled(true);
+   		   jTextField1.setEnabled(false);
+
+  	   }
+    	   else if(!quantityRadio.isSelected())
+    	   {
+    		   amountRadio.setEnabled(true);
+       	   quantityRadio.setEnabled(true);
+   		   jTextField1.setEnabled(true);
+
+    	   }
+    }
 
     private void bankComboActionPerformed(java.awt.event.ActionEvent evt) 
     {
-     	bankName=bankCombo.getSelectedItem().toString();
-    }//GEN-LAST:event_bankComboActionPerformed
+    		if(bankCombo.getSelectedItem()!=null)
+     	     bankName=bankCombo.getSelectedItem().toString();
+    		//message box
+    }
 
-    private void ethereumRadioActionPerformed(java.awt.event.ActionEvent evt) 
+    private void ethereumRadioActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
     { 	 	
-	    	bankCombo.addItem("BofA Credit Card");
-	    	bankCombo.addItem("Chase");
-	    	bankCombo.addItem("Citi Credit card");
-	    	bankCombo.addItem("HSBC Credit card");
-	    	bankCombo.addItem("Well Fargo Credit card");
-    		currentPrice=currency[1].getPrice();
+    		if(bitcoinRadio.isSelected()||litecoinRadio.isSelected())
+    		{
+			bankCombo.removeAllItems();
+			bitcoinRadio.setEnabled(false);
+			litecoinRadio.setEnabled(false);
+    		}
+    		else if(ethereumRadio.isSelected())
+    		{
+    	        addCombo();
+    	        bitcoinRadio.setEnabled(false);
+    			litecoinRadio.setEnabled(false);
+    		    currentPrice=currency[1].getPrice();
     			currencyName=currency[1].getCurrencyName();
-    }//GEN-LAST:event_ethereumRadioActionPerformed
+    		}
+    		else if(!ethereumRadio.isSelected())
+    		{
+    			bitcoinRadio.setEnabled(true);
+     		litecoinRadio.setEnabled(true);
+    			bankCombo.removeAllItems();
 
-    private void litecoinRadioActionPerformed(java.awt.event.ActionEvent evt) { 
-    	bankCombo.addItem("BofA Credit Card");
-    	bankCombo.addItem("Chase");
-    	bankCombo.addItem("Citi Credit card");
-    	bankCombo.addItem("HSBC Credit card");
-    	bankCombo.addItem("Well Fargo Credit card"); 	
-    	currentPrice=currency[2].getPrice();
-     	currencyName=currency[2].getCurrencyName();
-    }//GEN-LAST:event_litecoinRadioActionPerformed
+    		}
+    }
+
+	private void litecoinRadioActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
+	{ 
+		if(ethereumRadio.isSelected()||bitcoinRadio.isSelected())
+		{
+			bankCombo.removeAllItems();
+			bitcoinRadio.setEnabled(false);
+			ethereumRadio.setEnabled(false);
+		}
+		else if(litecoinRadio.isSelected())
+		{
+			addCombo();
+		    	currentPrice=currency[2].getPrice();
+	     	currencyName=currency[2].getCurrencyName();
+		}
+		else if(!litecoinRadio.isSelected())
+		{
+			bitcoinRadio.setEnabled(true);
+     		ethereumRadio.setEnabled(true);
+    			bankCombo.removeAllItems();
+		}
+		
+    }
 
   
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton amountRadio;
     private javax.swing.JComboBox<String> bankCombo;
     private javax.swing.JRadioButton bitcoinRadio;

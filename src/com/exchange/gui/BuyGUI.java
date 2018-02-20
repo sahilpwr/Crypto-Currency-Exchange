@@ -66,7 +66,7 @@ public class BuyGUI extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("BuyGUI");
+        jLabel1.setText("Buy");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -135,10 +135,10 @@ public class BuyGUI extends javax.swing.JFrame {
         jLabel8.setText("2%");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel9.setText("Total Currency Deposited in Wallet");
+        jLabel9.setText("                                                          ");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel10.setText("1235 Ethreum");
+        jLabel10.setText("                ");
 
         amountRadio.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         amountRadio.setText("Price");
@@ -159,7 +159,7 @@ public class BuyGUI extends javax.swing.JFrame {
         
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel6.setText("Select bank to deposit");
+        jLabel6.setText("Select bank");
 
         bankCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Bank" }));
         bankCombo.addActionListener(new java.awt.event.ActionListener() {

@@ -15,7 +15,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Transaction implements Serializable {
+public class Transaction implements Serializable 
+{
 	
 
 	private double price;
@@ -114,38 +115,44 @@ public class Transaction implements Serializable {
 	
 	}
 	
-	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName) throws IOException
+	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName) throws IOException, ClassNotFoundException
 	{
 		double currentBalance=details.get(bankName);
+		System.out.println("Current Balance"+ currentBalance);
 
        if(quantity>0 && amount>0)
        {
 				
 				//amount calculation if quantity given	
-				
-				if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>quantity)
+    				fis=new FileInputStream(emailID+"Wallet.dat");
+    				ois=new ObjectInputStream(fis);
+    				wallet=(Wallet[])ois.readObject();
+    				
+    				System.out.println("Current Balance"+ currentBalance);
+
+				if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[0].subCurrency(quantity);
 					
 				}
-				else if(currency.equalsIgnoreCase("ethereum")&&wallet[0].getQuantity()>quantity)
+				else if(currency.equalsIgnoreCase("ethereum")&&wallet[0].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[1].subCurrency(quantity);
 				}
-				else if(currency.equalsIgnoreCase("litecoin")&&wallet[0].getQuantity()>quantity)
+				else if(currency.equalsIgnoreCase("litecoin")&&wallet[0].getQuantity()>=quantity)
 				{
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[2].subCurrency(quantity);
 				}
 				
-				output.print(transactionId);
+			/*	output.print(transactionId);
 				output.print(user.getLastTransaction());
-				output.println("BuyGUI");
+				output.println("BuyGUI");*/
 				
 				
 				return true;
@@ -173,7 +180,6 @@ public class Transaction implements Serializable {
 		ois=new ObjectInputStream(fis);
 		wallet=(Wallet[])ois.readObject();
 	
-		System.out.println();		
 		if(payment instanceof BankAccount)
 		{
 			BankAccount ba=(BankAccount)payment;

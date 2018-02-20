@@ -5,6 +5,8 @@
  */
 package com.exchange.gui;
 
+import javax.swing.JOptionPane;
+
 import com.exchange.AutoScheduler;
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
@@ -38,14 +40,14 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	initComponents();
     	   txtROI.setEnabled(false);
            txtIncreaseAmount.setEnabled(false);
-           txtDays.setEnabled(false);
-           rbDaily.setEnabled(false);
-           rbWeekly.setEnabled(false);
-           rbCustom.setEnabled(false);
+           txtDays.setEnabled(true);
+           rbDaily.setEnabled(true);
+           rbWeekly.setEnabled(true);
+           rbCustom.setEnabled(true);
            lbl1.setEnabled(true);
            lbl2.setEnabled(false);
            lbl3.setEnabled(false);
-           jLabel17.setEnabled(false);
+           jLabel17.setEnabled(true);
     	
     }
     
@@ -653,14 +655,14 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
         else if(!lbl1.isSelected()){
            txtROI.setEnabled(false);
            txtIncreaseAmount.setEnabled(false);
-           txtDays.setEnabled(false);
-           rbDaily.setEnabled(false);
-           rbWeekly.setEnabled(false);
-           rbCustom.setEnabled(false);
+           txtDays.setEnabled(true);
+           rbDaily.setEnabled(true);
+           rbWeekly.setEnabled(true);
+           rbCustom.setEnabled(true);
            lbl1.setEnabled(true);
            lbl2.setEnabled(false);
            lbl3.setEnabled(false);
-           jLabel17.setEnabled(false);
+           jLabel17.setEnabled(true);
         }
     }//GEN-LAST:event_lbl1ActionPerformed
 
@@ -685,8 +687,106 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
 
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
         // TODO add your handling code here:
+    	double amount = 0;
+    	boolean investmentType;
+    	boolean divideInvestment;
+	double [] percentageDivision = {0,0,0};
+    	double [] growthDivision = {0,0,0}; 
+    	double increaseAmountPercentage;
+    	double percentROI = 0; 
+    	int duration = 0; 
+    	boolean roi = false;
     	
-   // 	AutoScheduler as = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision, growthDivision, increaseAmountPercentage, percentROI, duration, user, roi);
+    	if(rbDaily.isSelected()== false && rbWeekly.isSelected()== false && 
+                rbCustom.isSelected()== false){
+            JOptionPane.showMessageDialog(null, "Select a duration to repeat the tranaction!");
+        }
+        else if(rbDaily.isSelected()){
+        	duration = 1;
+        }
+        else if(rbWeekly.isSelected()){
+        	duration = 7;
+        }
+        else if(rbCustom.isSelected()){
+            if(txtDays.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter number of days to repeat the tranaction!");
+            }
+            else {
+            	duration = Integer.parseInt(txtDays.getText());
+            }
+        }
+    		
+    	if(txtAmount.getText().trim().length() == 0 &&
+        		txtAmount.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null, "Enter Amount!");        
+        }
+    	else
+    		amount = Double.parseDouble(txtAmount.getText());
+    	
+    	if(rbAuto.isSelected()) {
+    		investmentType = true;
+    		percentageDivision[0] = 0;
+	    	percentageDivision[1] = 0;
+	    	percentageDivision[2] = 0;
+	    	growthDivision[0] = 0;
+	    	growthDivision[1] = 0;
+	    	growthDivision[2] = 0;
+    	}
+    	else {
+    		investmentType = false;
+    	}
+    	
+    	if(!rbPercentage.isSelected()) {
+    		divideInvestment = true;
+    	}
+    	else {
+    		divideInvestment = false;
+    	}
+    	
+    	if(rbManual.isSelected() && rbPercentage.isSelected() == false) {
+    	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
+    	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
+    	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
+    	growthDivision[0] = Double.parseDouble(txtGrowthBitcoin.getText());
+    	growthDivision[1] = Double.parseDouble(txtGrowthEthereum.getText());
+    	growthDivision[2] = Double.parseDouble(jTextField7.getText());
+    	}
+    	else if(rbManual.isSelected() && rbPercentage.isSelected() == false) {
+    	    	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
+    	    	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
+    	    	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
+    	    	growthDivision[0] = 0;
+    	    	growthDivision[1] = 0;
+    	    	growthDivision[2] = 0;
+    	}
+    	
+    	if(lbl1.isSelected()){
+    		roi = true;
+    	}
+    	else {
+    		roi = false;
+    		increaseAmountPercentage = 0;
+    		percentROI = 0;
+    	}
+    	
+    	if(txtIncreaseAmount.getText().trim().length() == 0 &&
+    			txtIncreaseAmount.getText().trim().equals("")) {
+    		increaseAmountPercentage = 0;
+    	}
+    	else{
+    		increaseAmountPercentage = Double.parseDouble(txtIncreaseAmount.getText());
+    	}
+    	
+    	if(txtROI.getText().trim().length() == 0 &&
+    			txtROI.getText().trim().equals("")) {
+    		percentROI = 0;
+    	}
+    	else{
+    		percentROI = Double.parseDouble(txtROI.getText());
+    	}
+    	
+    	AutoScheduler as = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision, 
+    	growthDivision, increaseAmountPercentage, percentROI, duration, user, roi);
     	
     	
     }//GEN-LAST:event_btnScheduleActionPerformed

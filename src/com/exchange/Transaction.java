@@ -101,18 +101,30 @@ public class Transaction implements Serializable {
 		this.time = time;
 	}
 	
-	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName)
+	
+	public void writeFile(HashMap<String, Double> details,String fileName) throws IOException
+	{
+		fos=new FileOutputStream(fileName);
+		oos=new ObjectOutputStream(fos);
+		oos.writeObject(details);
+		
+		fos=new FileOutputStream(emailID+"Wallet.dat");
+	    oos=new ObjectOutputStream(fos);
+		oos.writeObject(wallet);
+	
+	}
+	
+	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName) throws IOException
 	{
 		double currentBalance=details.get(bankName);
 
-       if(quantity>0)
+       if(quantity>0 && amount>0)
        {
 				
 				//amount calculation if quantity given	
 				
 				if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>quantity)
 				{
-					amount=cryptoCurrency[0].getPrice()*quantity;
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[0].subCurrency(quantity);
@@ -120,14 +132,12 @@ public class Transaction implements Serializable {
 				}
 				else if(currency.equalsIgnoreCase("ethereum")&&wallet[0].getQuantity()>quantity)
 				{
-					amount=cryptoCurrency[1].getPrice()*quantity;
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[1].subCurrency(quantity);
 				}
 				else if(currency.equalsIgnoreCase("litecoin")&&wallet[0].getQuantity()>quantity)
 				{
-					amount=cryptoCurrency[2].getPrice()*quantity;
 					currentBalance += amount;
 					details.put(bankName, currentBalance);
 					wallet[2].subCurrency(quantity);
@@ -137,43 +147,11 @@ public class Transaction implements Serializable {
 				output.print(user.getLastTransaction());
 				output.println("BuyGUI");
 				
+				
 				return true;
 	  }
 
-	 else if(amount>0)
-     {
-    	   
-    	   //quantity calculation if amount given
-
-	    	       if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>amount/cryptoCurrency[0].getPrice())
-				{
-					quantity=amount/cryptoCurrency[0].getPrice();
-					currentBalance += amount;
-					details.put(bankName, currentBalance);
-					wallet[0].subCurrency(quantity);
-					
-				}
-				else if(currency.equalsIgnoreCase("ethereum")&&wallet[1].getQuantity()>amount/cryptoCurrency[1].getPrice())
-				{
-					quantity=amount/cryptoCurrency[1].getPrice();
-					currentBalance += amount;
-					details.put(bankName, currentBalance);
-					wallet[1].subCurrency(quantity);
-				}
-				else if(currency.equalsIgnoreCase("ethereum")&&wallet[1].getQuantity()>amount/cryptoCurrency[2].getPrice())
-				{
-					quantity=amount/cryptoCurrency[2].getPrice();
-					currentBalance += amount;
-					details.put(bankName, currentBalance);
-					wallet[2].subCurrency(quantity);
-				}
-	    	       
-	    	            output.print(transactionId);
-					output.print(user.getLastTransaction());
-					output.println("BuyGUI");
-					
-					return true;
-    	   		}
+	 
     	   		else
     	   		{
     	   			System.out.println("No balance");
@@ -296,10 +274,14 @@ public class Transaction implements Serializable {
 					output.print(user.getLastTransaction());
 					output.println("BuyGUI");
 					
+					fos=new FileOutputStream(emailID+"Bank.dat");
+					oos=new ObjectOutputStream(fos);
+					oos.writeObject(details);
 					
-					FileOutputStream fos=new FileOutputStream(emailID+"Wallet.dat");
-					ObjectOutputStream  oos=new ObjectOutputStream(fos);
+					fos=new FileOutputStream(emailID+"Wallet.dat");
+				    oos=new ObjectOutputStream(fos);
 					oos.writeObject(wallet);
+					
 					return true;
 				}
 				else
@@ -331,7 +313,10 @@ public class Transaction implements Serializable {
 			BankAccount ba=(BankAccount)payment;
 			details= ba.getBankAccount();
 			
-            return sellCommit(quantity, amount, details, currency, bankName);
+            sellCommit(quantity, amount, details, currency, bankName);
+            writeFile(details, emailID+"Bank.dat");
+            
+            return true;
 		}
 	
 		else if(payment instanceof CreditCard)
@@ -339,8 +324,9 @@ public class Transaction implements Serializable {
 			CreditCard ca=(CreditCard)payment;
 			details= ca.getCardAccount();
 			
-           return  sellCommit(quantity, amount, details, currency, bankName);
-			
+            sellCommit(quantity, amount, details, currency, bankName);
+            writeFile(details, emailID+"Credit.dat");
+			return true;
 		}
 		return false;
 	}

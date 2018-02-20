@@ -30,7 +30,7 @@ public class CreditCard extends Payment {
 			cardAccount = new HashMap<String,Double>();
 			FileOutputStream fos=new FileOutputStream(emailID+"Credit.dat");
 			ObjectOutputStream  oos=new ObjectOutputStream(fos);
-			cardAccount.put("N",0.0);
+			//cardAccount.put("N",0.0);
 			
 			oos.writeObject(cardAccount);
 			

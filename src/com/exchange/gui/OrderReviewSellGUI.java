@@ -70,7 +70,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
         jLabel1.setText("Order Review ");
 
         buy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        buy.setText("Confirm BuyGUI");
+        buy.setText("Confirm Sell");
         buy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -147,15 +147,16 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void changeOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeOrderActionPerformed
-        // TODO add your handling code here:
+    private void changeOrderActionPerformed(java.awt.event.ActionEvent evt)
+    {
+    	
     }//GEN-LAST:event_changeOrderActionPerformed
 
     private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
     {
     	
     	      
-    	  currentUser.transaction(bankName, amount, quantity, currencyName, "buy", paymentType);
+    	  currentUser.transaction(bankName, amount, quantity, currencyName, "sell", paymentType);
     	  DashboardGUI g =new DashboardGUI(currentUser, system);
     	  g.setVisible(true);
     	  Thread dashboard=new Thread(g);

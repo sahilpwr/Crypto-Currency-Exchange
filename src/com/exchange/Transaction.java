@@ -114,15 +114,21 @@ public class Transaction implements Serializable {
 	
 	}
 	
-	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName) throws IOException
+	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName) throws IOException, ClassNotFoundException
 	{
 		double currentBalance=details.get(bankName);
+		System.out.println("Current Balance"+ currentBalance);
 
        if(quantity>0 && amount>0)
        {
 				
 				//amount calculation if quantity given	
-				
+    				fis=new FileInputStream(emailID+"Wallet.dat");
+    				ois=new ObjectInputStream(fis);
+    				wallet=(Wallet[])ois.readObject();
+    				
+    				System.out.println("Current Balance"+ currentBalance);
+
 				if(currency.equalsIgnoreCase("bitcoin")&&wallet[0].getQuantity()>quantity)
 				{
 					currentBalance += amount;
@@ -143,9 +149,9 @@ public class Transaction implements Serializable {
 					wallet[2].subCurrency(quantity);
 				}
 				
-				output.print(transactionId);
+			/*	output.print(transactionId);
 				output.print(user.getLastTransaction());
-				output.println("BuyGUI");
+				output.println("BuyGUI");*/
 				
 				
 				return true;
@@ -173,7 +179,6 @@ public class Transaction implements Serializable {
 		ois=new ObjectInputStream(fis);
 		wallet=(Wallet[])ois.readObject();
 	
-		System.out.println();		
 		if(payment instanceof BankAccount)
 		{
 			BankAccount ba=(BankAccount)payment;

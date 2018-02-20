@@ -330,7 +330,8 @@ public class SellGUI extends javax.swing.JFrame {
 	    	    quantity=Double.parseDouble(jTextField2.getText());
 	    		amount=currentPrice*quantity;
 	    		
-	    	    OrderReviewGUI order=new OrderReviewGUI(quantity,amount,bankName,currencyName,currentUser,system);
+	    	    OrderReviewSellGUI order=new OrderReviewSellGUI(quantity,amount,bankName,currencyName,currentUser,system);
+	    	    System.out.println("currency anme"+currencyName);
 	    	    order.setVisible(true);
     	   }
     	   else if(amountRadio.isSelected())

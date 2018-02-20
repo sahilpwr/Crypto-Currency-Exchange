@@ -33,6 +33,8 @@ public class ManualScheduler extends Schedule {
 	public boolean scheduleByQuantity()
 	{
 		
+		System.out.println("HITTED");
+		
 		double temp= 0;
 		
 		currency = system.cryptoInfo();

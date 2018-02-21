@@ -36,16 +36,6 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			bitcoinChange.setText(""+Integer.toString(currency[0].getPercentDifference())+" %");
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
-			
-			
-			
-			//if()
-			{
-				
-				
-			}
-			
-			
 			try
 			{
 				Thread.sleep(2000);
@@ -452,8 +442,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
     private void alertsActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    		AlertsGUI alert=new AlertsGUI(currentUser, currency,system);
-    		alert.setVisible(true);
+    		//AlertsGUI alert=new AlertsGUI();
+    		//alert.setVisible(true);
     }
 
     private void convertActionPerformed(java.awt.event.ActionEvent evt)
@@ -468,7 +458,6 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
     }
 
     private void autoScheduleActionPerformed(java.awt.event.ActionEvent evt) 
-<<<<<<< HEAD
     {      
 	    	AutoSchedulerGUI g = new AutoSchedulerGUI(currentUser, system, currency);
 	    	g.setVisible(true);
@@ -476,15 +465,6 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         
 
 
-=======
-
-    {//GEN-FIRST:event_autoScheduleActionPerformed
-        // TODO add your handling code here:
-        
-    	AutoSchedulerGUI g = new AutoSchedulerGUI(currentUser, system, currency);
-    	g.setVisible(true);
-    }
->>>>>>> 9f228f782a0fee6cb2ced899b568dc9276c78875
     private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_transactionActionPerformed

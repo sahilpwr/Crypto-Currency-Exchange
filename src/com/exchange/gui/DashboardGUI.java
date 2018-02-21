@@ -457,21 +457,13 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
     }
 
     private void autoScheduleActionPerformed(java.awt.event.ActionEvent evt) 
-<<<<<<< HEAD
+
     {//GEN-FIRST:event_autoScheduleActionPerformed
         // TODO add your handling code here:
         
     	AutoSchedulerGUI g = new AutoSchedulerGUI(currentUser, system, currency);
     	g.setVisible(true);
-       
-        
-    }//GEN-LAST:event_autoScheduleActionPerformed
-=======
-    {
-          
     }
->>>>>>> origin/master
-
     private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_transactionActionPerformed

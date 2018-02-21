@@ -35,18 +35,18 @@ public class ManualScheduler extends Schedule {
 		
 		System.out.println("HITTED");
 		
-		double temp= 0;
+		double currentPrice= 0;
 		
 		currency = system.cryptoInfo();
 		
 		if(currencyName.equalsIgnoreCase("bitcoin"))
-			temp = currency[0].getPrice();
+			currentPrice = currency[0].getPrice();
 		else if(currencyName.equalsIgnoreCase("ethereum"))
-			temp = currency[1].getPrice();
+			currentPrice = currency[1].getPrice();
 		else if(currencyName.equalsIgnoreCase("litecoin"))
-			temp = currency[2].getPrice();
+			currentPrice = currency[2].getPrice();
 		
-		setAmount(temp*quantity);
+		setAmount(currentPrice*quantity);
 		
 		return true;
 	}

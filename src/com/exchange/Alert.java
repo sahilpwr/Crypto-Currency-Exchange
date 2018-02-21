@@ -14,7 +14,8 @@ public class Alert extends Thread{
 		return notify;
 	}
 	
-	public Alert(int id) {
+	public Alert(int id) 
+	{
 		
 		this.alertId = id;
 	}

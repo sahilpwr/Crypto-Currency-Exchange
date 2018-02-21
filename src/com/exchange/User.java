@@ -148,6 +148,16 @@ public void addPayment()
 	 transactionID++;
  }
  
+ public void conversion(double quantity, String currency1, String currency2,double toQuantity) throws ClassNotFoundException, IOException
+ {
+	 Transaction transaction=new Transaction(emailID,currency,user);
+	 transaction.convert(quantity, currency1, currency2,toQuantity);
+	 transactionHistory.put(transactionID, transaction);	
+	 transactionID++;
+	 
+
+ }
+ 
  public int getTransactionID() 
  {
 		return transactionID;

@@ -159,13 +159,13 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel7.setText("% Change in last 2 min");
+        jLabel7.setText("% Change in last 4 secs");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel8.setText("% Change in last 2 min");
+        jLabel8.setText("% Change in last 4 secs");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel9.setText("% Change in last 2 min");
+        jLabel9.setText("% Change in last 4 secs");
 
         bitcoinChange.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         bitcoinChange.setText("+26.53%");
@@ -457,20 +457,12 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
     }
 
     private void autoScheduleActionPerformed(java.awt.event.ActionEvent evt) 
-<<<<<<< HEAD
-    {//GEN-FIRST:event_autoScheduleActionPerformed
-        // TODO add your handling code here:
-        
-    	AutoSchedulerGUI g = new AutoSchedulerGUI(currentUser, system, currency);
-    	g.setVisible(true);
-       
-        
-    }//GEN-LAST:event_autoScheduleActionPerformed
-=======
-    {
-          
+    {      
+	    	AutoSchedulerGUI g = new AutoSchedulerGUI(currentUser, system, currency);
+	    	g.setVisible(true);
     }
->>>>>>> origin/master
+        
+
 
     private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
         // TODO add your handling code here:

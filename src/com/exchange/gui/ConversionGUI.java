@@ -5,6 +5,12 @@ package com.exchange.gui;
  * and open the template in the editor.
  */
 
+import java.io.IOException;
+import java.text.DecimalFormat;
+
+import javax.swing.JTextField;
+
+import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.User;
 
@@ -14,10 +20,18 @@ public class ConversionGUI extends javax.swing.JFrame {
 	CurrencySystem system;
 	User currentUser;
 	String bankName;
+	double quantity,quantityChange;
+	CryptoCurrency[] cryptoCurrency;
+	String currency1,currency2;
+	 DecimalFormat df = new DecimalFormat(".##");
+	 double toQuantity;
+
+	 
     public ConversionGUI(User currentUser,CurrencySystem system) 
     {
     		this.currentUser=currentUser;
 		this.system=system;
+		cryptoCurrency=system.cryptoInfo();
         initComponents();
     }
 
@@ -54,7 +68,7 @@ public class ConversionGUI extends javax.swing.JFrame {
         jLabel3.setText("To");
 
         fromCombo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        fromCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Currency 1" }));
+        fromCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
         fromCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fromComboActionPerformed(evt);
@@ -62,15 +76,20 @@ public class ConversionGUI extends javax.swing.JFrame {
         });
 
         toCombo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        toCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Currency 2"}));
+        toCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ""}));
         toCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toComboActionPerformed(evt);
+                try {
+					toComboActionPerformed(evt);
+				} catch (ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
         quantity1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        quantity1.setText("                 ");
+       // quantity1.setText("");
         quantity1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quantity1ActionPerformed(evt);
@@ -87,7 +106,15 @@ public class ConversionGUI extends javax.swing.JFrame {
         convert.setText("Convert");
         convert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                convertActionPerformed(evt);
+                try {
+					convertActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -105,8 +132,13 @@ public class ConversionGUI extends javax.swing.JFrame {
         currencyWallet.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         currencyWallet.setText("1235 Ethreum");
         
-        
-        fromCombo.addItem("bitcoin");
+        fromCombo.addItem("Bitcoin");
+	    fromCombo.addItem("Ethereum");
+	    fromCombo.addItem("Litecoin");
+	    toCombo.addItem("Bitcoin");
+	    toCombo.addItem("Ethereum");
+	    toCombo.addItem("litecoin");
+	   
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +158,7 @@ public class ConversionGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(quantity1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantity1,  javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(quantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(119, 119, 119))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -189,20 +221,98 @@ public class ConversionGUI extends javax.swing.JFrame {
 
     private void fromComboActionPerformed(java.awt.event.ActionEvent evt)
     { 
-    	
+    		currency1=fromCombo.getSelectedItem().toString();
+    	/*	if(currencyName=="Bitcoin")
+    		{
+    	    	    toCombo.removeItemAt(0);
+
+    			   // toCombo.addItem("Ethereum");
+    			    //toCombo.addItem("litecoin");
+    		}
+    		else if(currencyName=="Ethereum")
+		{
+    			toCombo.removeItemAt(1);
+
+			   // toCombo.addItem("Bitcoin");
+			    //toCombo.addItem("litecoin");
+		}
+    		else if(currencyName=="Litecoin")
+		{
+    			toCombo.removeItemAt(2);
+
+			   // toCombo.addItem("Bitcoin");
+			    //toCombo.addItem("Ethereum");
+		}
+*/    	   
+    	   
+    	 
     }
 
-    private void toComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_toComboActionPerformed
+    private void toComboActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException
+    {
 
-    private void convertActionPerformed(java.awt.event.ActionEvent evt) 
+        currency2=toCombo.getSelectedItem().toString();
+        if(!quantity1.getText().isEmpty())
+     	        quantity=Double.parseDouble(quantity1.getText());
+
+        if(currency1.equalsIgnoreCase("Bitcoin")&&currency2.equalsIgnoreCase("Ethereum"))
+         { 
+         	  currencyWallet.setText(Double.toString(Double.parseDouble(df.format(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[1].getPrice()))
+     		   ));	   
+         	  toQuantity=Double.parseDouble(df.format(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[1].getPrice()));
+         }
+        else if(currency1.equalsIgnoreCase("Bitcoin")&&currency2.equalsIgnoreCase("Litecoin"))
+ 		{
+ 			currencyWallet.setText(Double.toString(Double.parseDouble(df.format(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[2].getPrice()))
+ 					));
+       	  toQuantity=Double.parseDouble(df.format(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[2].getPrice()));
+
+ 		}
+        else if(currency1.equalsIgnoreCase("Ethereum")&&currency2.equalsIgnoreCase("Bitcoin"))
+ 		{
+ 			currencyWallet.setText(Double.toString(Double.parseDouble(df.format(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[0].getPrice()))));
+       	  toQuantity=Double.parseDouble(df.format(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[0].getPrice()));
+
+ 		}
+        else if(currency1.equalsIgnoreCase("Ethereum")&&currency2.equalsIgnoreCase("Litecoin"))
+ 		{
+ 			currencyWallet.setText(Double.toString(Double.parseDouble(df.format(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[2].getPrice()))
+ 					));	
+ 	       	  toQuantity=Double.parseDouble(df.format(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[2].getPrice()));
+
+ 		}
+        else if(currency1.equalsIgnoreCase("Litecoin")&&currency2.equalsIgnoreCase("Bitcoin"))
+ 		{
+ 			currencyWallet.setText(Double.toString(Double.parseDouble(df.format(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[0].getPrice()))
+ 					));	
+ 	       	  toQuantity=Double.parseDouble(df.format(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[0].getPrice()));
+
+ 		}
+        else if(currency1.equalsIgnoreCase("Litecoin")&&currency2.equalsIgnoreCase("Ethereum"))
+ 		{
+ 			currencyWallet.setText(Double.toString(Double.parseDouble(df.format(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[1].getPrice()))
+ 					));
+ 	       	  toQuantity=Double.parseDouble(df.format(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[1].getPrice()));
+
+ 		}
+        
+        
+     	
+
+    }
+
+    private void convertActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
+    {
+    	 currentUser.conversion(quantity, currency1, currency2,toQuantity);
+    	 DashboardGUI g =new DashboardGUI(currentUser, system);
+   	  g.setVisible(true);
+   	  Thread dashboard=new Thread(g);
+   	  dashboard.start();
+    }
+
+    private void quantity1ActionPerformed(java.awt.event.ActionEvent evt) 
     {
     	
-    }//GEN-LAST:event_convertActionPerformed
-
-    private void quantity1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantity1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_quantity1ActionPerformed
 
  

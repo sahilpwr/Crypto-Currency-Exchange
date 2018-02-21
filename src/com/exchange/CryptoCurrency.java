@@ -45,12 +45,12 @@ public class CryptoCurrency extends Thread implements Serializable
 		 //  System.out.println(price+" "+currencyName+" "+sdf.format(cal.getTime()));
 		  
 		   currentSeconds=cal.get(Calendar.SECOND);
-		   System.out.println("c"+currentSeconds);
-		   System.out.println("r"+currentSeconds);
-		   System.out.println((currentSeconds-recentSeconds)+"  diff");
+		  // System.out.println("c"+currentSeconds);
+		  // System.out.println("r"+currentSeconds);
+		  // System.out.println((currentSeconds-recentSeconds)+"  diff");
 		   if(Math.abs((currentSeconds-recentSeconds))>4)
 	       {
-			   System.out.println("sahil");
+			
 	    	   percentDifference=(int) (((price-recentPrice)/recentPrice)*100);
 	    	   recentSeconds=currentSeconds;
 	    	   recentPrice=price;

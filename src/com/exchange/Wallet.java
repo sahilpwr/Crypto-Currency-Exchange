@@ -27,7 +27,7 @@ public class Wallet implements Serializable{
 	}
 	
 	public boolean subCurrency(double quantity) {
-		if(this.quantity>quantity)
+		if(this.quantity>=quantity)
 		{
 			this.quantity=this.quantity-quantity;
 			return true;

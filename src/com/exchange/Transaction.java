@@ -344,31 +344,58 @@ public class Transaction implements Serializable
 		
 	}
 	
-	public void convert(int quantity, String currency1, String currency2)
+	public void convert(double quantity, String currency1, String currency2,double toQuantity) throws ClassNotFoundException, IOException
 	{
+			fis=new FileInputStream(emailID+"Wallet.dat");
+			ois=new ObjectInputStream(fis);
+			wallet=(Wallet[])ois.readObject();
+		
 	
 		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("ethereum"))
-			wallet[1].addCurrency(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[1].getPrice());
-		
+		{
+			wallet[1].addCurrency(toQuantity);
+			wallet[0].subCurrency(quantity);
+		}
 		if(currency1.equalsIgnoreCase("bitcoin")&&currency2.equalsIgnoreCase("litecoin"))
-			wallet[2].addCurrency(quantity*cryptoCurrency[0].getPrice()/cryptoCurrency[2].getPrice());
-		
+		{
+			wallet[2].addCurrency(toQuantity);
+			wallet[0].subCurrency(quantity);
+		}
 		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("bitcoin"))
-			wallet[0].addCurrency(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[0].getPrice());
+		{
+			wallet[0].addCurrency(toQuantity);
+			wallet[1].subCurrency(quantity);
+
+		}
 		
 		if(currency1.equalsIgnoreCase("ethereum")&&currency2.equalsIgnoreCase("litecoin"))
-			wallet[2].addCurrency(quantity*cryptoCurrency[1].getPrice()/cryptoCurrency[2].getPrice());
+		{
+			wallet[2].addCurrency(toQuantity);
+			wallet[1].subCurrency(quantity);
+
+		}
 		
 		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("bitcoin"))
-			wallet[0].addCurrency(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[0].getPrice());
+		{
+			wallet[0].addCurrency(toQuantity);
+			wallet[2].subCurrency(quantity);
+
+		}
 		
 		if(currency1.equalsIgnoreCase("litecoin")&&currency2.equalsIgnoreCase("ethereum"))
-			wallet[1].addCurrency(quantity*cryptoCurrency[2].getPrice()/cryptoCurrency[1].getPrice());
+		{
+			wallet[1].addCurrency(toQuantity);
+			wallet[2].subCurrency(quantity);
+
+		}
+		fos=new FileOutputStream(emailID+"Wallet.dat");
+		oos=new ObjectOutputStream(fos);
+		oos.writeObject(wallet);
 		
 		
-		output.print(transactionId);
+		/*output.print(transactionId);
 		output.print(user.getLastTransaction());
-		output.println("Convert");
+		output.println("Convert");*/
 		
 		
 		

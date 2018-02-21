@@ -202,6 +202,7 @@ public class PaymentMethodGUI extends javax.swing.JFrame
         if(accountRadio.isSelected())
         {
         		  cardRadio.setEnabled(false);
+        		  accountDropdown.removeAllItems();
         		  accountDropdown.addItem("American Express");
               accountDropdown.addItem("Chase");
               accountDropdown.addItem("Citi");
@@ -210,7 +211,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame
         }
         else if(!accountRadio.isSelected())
         {
-      	  accountDropdown.removeAllItems();
+        	  accountDropdown.removeAllItems();
+   	   	   accountDropdown.addItem("Select Bank/Credit Card");
       	  cardRadio.setEnabled(true);
       	  accountRadio.setEnabled(true);
         }
@@ -234,10 +236,11 @@ public class PaymentMethodGUI extends javax.swing.JFrame
        if(cardRadio.isSelected())
         {
     	   	     accountRadio.setEnabled(false);
+    	   	     accountDropdown.removeAllItems();
     	   	     accountDropdown.addItem("BofA Credit Card");
-	          accountDropdown.addItem("Chase Credit card");
-	          accountDropdown.addItem("Citi Credit card");
-	          accountDropdown.addItem("HSBC Credit card");
+	          accountDropdown.addItem("Chase Credit Card");
+	          accountDropdown.addItem("Citi Credit Card");
+	          accountDropdown.addItem("HSBC Credit Card");
 	          accountDropdown.addItem("Well Fargo Credit card");
           
          
@@ -245,6 +248,7 @@ public class PaymentMethodGUI extends javax.swing.JFrame
        else if(!cardRadio.isSelected())
        {
     	   	   accountDropdown.removeAllItems();
+    	   	   accountDropdown.addItem("Select Bank/Credit Card");
     	   	   cardRadio.setEnabled(true);
             accountRadio.setEnabled(true);
 	   	   

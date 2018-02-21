@@ -172,13 +172,24 @@ public Payment getCredit() throws IOException, ClassNotFoundException
 	return payment[1];
 }
  
- public void createAlert(CurrencySystem system,String currencyName,double price)
+ public void createAlert(int alertID)
  {
-	 Alert alertPrice =new Alert(alertID);
-	 alertPrice.createAlert(system, currencyName, price);
-	 alertPrice.start();
+	 Alert alertPrice =new Alert();
      alerts.put(alertID, alertPrice);
      alertID++;
+ }
+ 
+ 
+ public HashMap<Integer,Alert> getAlertHistory()
+ {
+	 
+	 return alerts;
+ }
+ 
+ public  HashMap<Integer, Alert> getAlert()
+ {
+	return alerts;
+	 
  }
  
  public void destroyAlert(int id)

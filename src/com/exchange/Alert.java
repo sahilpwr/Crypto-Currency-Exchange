@@ -4,64 +4,36 @@ public class Alert extends Thread{
 
 	private double alertPrice;
 	private String currencyName;
-	private CryptoCurrency cryptoCurrencies ;
-	private CryptoCurrency[] currency;
 	private boolean notify;
 	private int alertId;
 	
-	public boolean isNotify() 
-	{
-		return notify;
+	public double getAlertPrice() {
+		return alertPrice;
 	}
-	
-	public Alert(int id) 
-	{
-		
-		this.alertId = id;
-	}
-	
-	
 
-
-	public void run()
-	{
-		while(true)
-		{
-			if(alertPrice>=cryptoCurrencies.getPrice())
-				notify=true;
-			else
-				notify=false;
-				
-			try 
-			{
-				Thread.sleep(2000);
-			} 
-			catch (InterruptedException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	public void setAlertPrice(double alertPrice) {
+		this.alertPrice = alertPrice;
 	}
-	
-	
-	
-	
-	public void createAlert(CurrencySystem system,String currencyName, double price) {
-		
-		this.alertPrice = price;
+
+	public String getCurrencyName() {
+		return currencyName;
+	}
+
+	public void setCurrencyName(String currencyName) {
 		this.currencyName = currencyName;
-		currency=system.cryptoInfo()	;	
-		
-		if(currencyName.equalsIgnoreCase("bitcoin"))
-			this.cryptoCurrencies = currency[0];
-		
-		if(currencyName.equalsIgnoreCase("ethereum"))
-			this.cryptoCurrencies = currency[1];
-		
-		if(currencyName.equalsIgnoreCase("litecoin"))
-			this.cryptoCurrencies = currency[2];
-		
 	}
+
+	public int getAlertId() {
+		return alertId;
+	}
+
+	public void setAlertId(int alertId) {
+		this.alertId = alertId;
+	}
+	
+	
+	
+	
+	
 	
 }

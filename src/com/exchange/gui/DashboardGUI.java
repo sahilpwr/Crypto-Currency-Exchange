@@ -36,6 +36,16 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			bitcoinChange.setText(""+Integer.toString(currency[0].getPercentDifference())+" %");
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
+			
+			
+			
+			//if()
+			{
+				
+				
+			}
+			
+			
 			try
 			{
 				Thread.sleep(2000);
@@ -442,7 +452,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
     private void alertsActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    	
+    		AlertsGUI alert=new AlertsGUI(currentUser, currency,system);
+    		alert.setVisible(true);
     }
 
     private void convertActionPerformed(java.awt.event.ActionEvent evt)

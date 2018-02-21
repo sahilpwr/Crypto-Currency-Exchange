@@ -32,8 +32,8 @@ public class OrderReviewGUI extends javax.swing.JFrame {
     		this.currencyName=currencyName;
     		this.system=system;
     		
-    	
-        	  if(bankName.contains("card"))
+    	System.out.println("aaaaaaaaaaa"+bankName.contains("Card"));
+        	  if(bankName.contains("Card"))
         		  paymentType="credit";
         	  else 
         		  paymentType="bank";
@@ -154,7 +154,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
     private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
     {
     	
-    	      
+    	  System.out.println("aaaaa"+paymentType);
     	  currentUser.transaction(bankName, amount, quantity, currencyName, "buy", paymentType);
     	  DashboardGUI g =new DashboardGUI(currentUser, system);
     	  g.setVisible(true);

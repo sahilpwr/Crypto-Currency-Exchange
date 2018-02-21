@@ -134,6 +134,8 @@ public void addPayment()
  public void transaction(String bankName,double amount, double quantity,
 			String currencyType,String transactionType,String paymentType) throws ClassNotFoundException, IOException
  { 
+	  System.out.println("aaaaa"+paymentType);
+
 	 Transaction transaction=new Transaction(emailID,currency,user);
 	 if(transactionType=="buy"&&paymentType=="bank")
 	    transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[0]);

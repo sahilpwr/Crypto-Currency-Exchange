@@ -6,8 +6,10 @@ package com.exchange.gui;
  */
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import com.exchange.CurrencySystem;
+import com.exchange.Payment;
 import com.exchange.User;
 
 /**
@@ -156,6 +158,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
     	
     	  System.out.println("aaaaa"+paymentType);
     	  currentUser.transaction(bankName, amount, quantity, currencyName, "buy", paymentType);
+    	  
     	  DashboardGUI g =new DashboardGUI(currentUser, system);
     	  g.setVisible(true);
     	  Thread dashboard=new Thread(g);

@@ -284,12 +284,13 @@ public class BuyGUI extends javax.swing.JFrame {
     	    Payment pay=currentUser.getBank();
  		HashMap<String, Double> map=pay.getBankAccount();
  		
- 		
+ 																									
  	   if(!map.isEmpty())
  	   {
  			for(String key: map.keySet())
  			{
  			    	bankCombo.addItem(key);
+ 			    	System.out.println("bank"+key);
  			}
  	   }
  	   
@@ -301,6 +302,8 @@ public class BuyGUI extends javax.swing.JFrame {
  			for(String key: map.keySet())
  			{
  			    	bankCombo.addItem(key);
+ 			    	System.out.println(key);
+
  			}
  	   }
     	

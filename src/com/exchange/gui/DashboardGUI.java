@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.exchange.Alert;
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
+import com.exchange.Payment;
 import com.exchange.User;
 
 public class DashboardGUI extends javax.swing.JFrame implements Runnable
@@ -125,7 +126,15 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         bitcoinBuy.setText("Buy");
         bitcoinBuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bitcoinBuyActionPerformed(evt);
+                try {
+					bitcoinBuyActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -428,7 +437,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bitcoinBuyActionPerformed(java.awt.event.ActionEvent evt) 
+    private void bitcoinBuyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
     {
     		currency=system.cryptoInfo();
     		BuyGUI buy=new BuyGUI(currentUser,currency,system);

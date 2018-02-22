@@ -241,7 +241,7 @@ public class PaymentMethodGUI extends javax.swing.JFrame
 	          accountDropdown.addItem("Chase Credit Card");
 	          accountDropdown.addItem("Citi Credit Card");
 	          accountDropdown.addItem("HSBC Credit Card");
-	          accountDropdown.addItem("Well Fargo Credit card");
+	          accountDropdown.addItem("Well Fargo Credit Card");
           
          
         }

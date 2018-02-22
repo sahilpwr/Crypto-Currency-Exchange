@@ -171,7 +171,9 @@ public class Transaction implements Serializable
 	public boolean buyCurrency(String bankName,double amount, double quantity,
 			String currency,Payment payment) throws ClassNotFoundException, IOException
 	{
-		
+		 		
+ 		
+	 	 
 		//yet to implement fees and update wallet and transaction!
 		double currentBalance=0;
 		HashMap<String, Double> details;
@@ -179,6 +181,7 @@ public class Transaction implements Serializable
 		fis=new FileInputStream(emailID+"Wallet.dat");
 		ois=new ObjectInputStream(fis);
 		wallet=(Wallet[])ois.readObject();
+		
 	
 		if(payment instanceof BankAccount)
 		{
@@ -280,13 +283,14 @@ public class Transaction implements Serializable
 					output.print(user.getLastTransaction());
 					output.println("BuyGUI");*/
 					
-					fos=new FileOutputStream(emailID+"Bank.dat");
+					fos=new FileOutputStream(emailID+"Credit.dat");
 					oos=new ObjectOutputStream(fos);
 					oos.writeObject(details);
 					
 					fos=new FileOutputStream(emailID+"Wallet.dat");
 				    oos=new ObjectOutputStream(fos);
 					oos.writeObject(wallet);
+					
 					
 					return true;
 				}

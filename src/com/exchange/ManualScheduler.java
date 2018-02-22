@@ -27,7 +27,7 @@ public class ManualScheduler extends Schedule {
 		if(!this.investmentType)
 			scheduleByQuantity();
 	}
-	
+	   
 	
 	
 	public boolean scheduleByQuantity()

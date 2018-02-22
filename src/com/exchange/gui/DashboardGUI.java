@@ -2,6 +2,10 @@ package com.exchange.gui;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Timer;
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import com.exchange.Alert;
 import com.exchange.CryptoCurrency;
@@ -15,7 +19,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
      CurrencySystem system;
 	 User currentUser;
 	 CryptoCurrency[] currency;
-	 Alert alert;
+	
 	 
 	 
 	 
@@ -30,6 +34,10 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 	public void run()
 	{
 		HashMap<Integer, Alert> alertHistory=currentUser.getAlertHistory();
+		JOptionPane option;
+	    JDialog dialog;
+		Timer t;
+
 		while(true)
 		{
 			currency=system.cryptoInfo();
@@ -42,10 +50,16 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			bitcoinChange.setText(""+Integer.toString(currency[0].getPercentDifference())+" %");
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
-			
-			//if()
+		
+			alertHistory=currentUser.getAlertHistory();
+			for(Alert alert: alertHistory.values())
 			{
-				
+				if(alert.getAlertPrice()>currency[2].getPrice())
+				{
+					JOptionPane.showMessageDialog(null, "Price of Litecoin is below"+alert.getAlertPrice());
+					//JOptionPane.
+					break;
+				}
 			}
 			
 			try

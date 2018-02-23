@@ -537,21 +537,34 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         // TODO add your handling code here:
     }//GEN-LAST:event_transactionActionPerformed
 
-    private void ethereumBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ethereumBuyActionPerformed
-        // TODO add your handling code here:
+    private void ethereumBuyActionPerformed(java.awt.event.ActionEvent evt) 
+    {
+    	    currency=system.cryptoInfo();
+		BuyGUI buy=new BuyGUI(currentUser,currency,system);
+		buy.setVisible(true);
+
     }//GEN-LAST:event_ethereumBuyActionPerformed
 
     private void litecoinBuyActionPerformed(java.awt.event.ActionEvent evt)
-    {//GEN-FIRST:event_litecoinBuyActionPerformed
+    {
+    		currency=system.cryptoInfo();
+		BuyGUI buy=new BuyGUI(currentUser,currency,system);
+		buy.setVisible(true);
+    }
 
-    }//GEN-LAST:event_litecoinBuyActionPerformed
-
-    private void ethereumSellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ethereumSellActionPerformed
-        // TODO add your handling code here:
+    private void ethereumSellActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_ethereumSellActionPerformed
+    		currency=system.cryptoInfo();
+	     SellGUI sell=new SellGUI(currentUser,currency,system);
+	     sell.setVisible(true);
+    		
     }//GEN-LAST:event_ethereumSellActionPerformed
 
-    private void litecoinSellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_litecoinSellActionPerformed
-        // TODO add your handling code here:
+    private void litecoinSellActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_litecoinSellActionPerformed
+    	     currency=system.cryptoInfo();
+	     SellGUI sell=new SellGUI(currentUser,currency,system);
+	     sell.setVisible(true);
     }
     
     

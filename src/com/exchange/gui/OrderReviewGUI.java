@@ -98,7 +98,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Weekly Limit Remaining: ");
+        jLabel2.setText("                       ");
 
         limit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         limit.setText("$8000 out of $20,000");

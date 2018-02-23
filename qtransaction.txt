@@ -1,0 +1,2 @@
+bitcoin 21.69 10000.0 Chase Buy
+bitcoin 1.0 14341.0 HSBC Credit Card Buy

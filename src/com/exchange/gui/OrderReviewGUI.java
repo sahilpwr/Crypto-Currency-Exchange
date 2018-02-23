@@ -92,7 +92,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 				}
             }
         });
-  	  orderReview.setText("Currency: "+currencyName+"\nPayment Method: "+paymentType+"\nQuantity: "+quantity+"\nAmount: "+amount);
+  	  orderReview.setText("Currency: "+currencyName+"\nPayment Method: "+paymentType+"\nQuantity: "+quantity+"\nCan be bought at: "+(amount/quantity)+"\nAmount: "+amount);
         orderReview.setColumns(20);
         orderReview.setRows(5);
        

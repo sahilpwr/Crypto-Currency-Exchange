@@ -20,6 +20,7 @@ public class User implements Serializable
  private String password;
  private Payment[] payment;
  private int limit;
+<<<<<<< HEAD
  private Calendar lastTransaction;
  private Wallet[] wallet;
  private CryptoCurrency[] currency;
@@ -34,6 +35,14 @@ private int schedulerID;
 private int autoSchedulerID;
 private HashMap< Integer, AutoScheduler> autoSchedulerHistory;
 private PrintWriter output ;
+=======
+ Wallet[] wallet;
+ CryptoCurrency[] currency;
+ User user;
+ HashMap<String, Alert> alerts;
+int transactionID=1;
+private double roi;
+>>>>>>> origin/master
 
 
 public int getLimit() {
@@ -44,13 +53,6 @@ public void setLimit(int limit) {
 	this.limit = limit;
 }
 
-public Calendar getLastTransaction() {
-	return lastTransaction;
-}
-
-public void setLastTransaction(Calendar lastTransaction) {
-	this.lastTransaction = lastTransaction;
-}
 
 public String getFirstName() {
 	return firstName;
@@ -77,8 +79,13 @@ public void setEmailID(String emailID) throws IOException
 	int schedulerID=1;
 	int autoSchedulerID=1;
 	this.emailID = emailID;
+<<<<<<< HEAD
 	schedulerHistory = new HashMap< Integer, ManualScheduler>();
 	autoSchedulerHistory = new HashMap< Integer, AutoScheduler>();
+=======
+	alerts=new HashMap<>();
+	
+>>>>>>> origin/master
 	payment=new Payment[2];
 	payment[0]=new BankAccount(emailID);
 	payment[1]=new CreditCard(emailID);
@@ -145,9 +152,15 @@ public void addPayment()
  public void transaction(String bankName,double amount, double quantity,
 			String currencyType,String transactionType,String paymentType) throws ClassNotFoundException, IOException
  { 
+<<<<<<< HEAD
 	 Transaction transaction=new Transaction(emailID,currency,user);
 	 
 	 if(transactionType=="buy"&&paymentType=="bank") 
+=======
+	  
+	 Transaction transaction=new Transaction(emailID,currency);
+	 if(transactionType=="buy"&&paymentType=="bank")
+>>>>>>> origin/master
 	    transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[0]);
 	 else if(transactionType=="buy"&&paymentType=="credit")
 		 transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[1]);
@@ -156,19 +169,23 @@ public void addPayment()
      else if(transactionType=="sell"&&paymentType=="credit")
 	      transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[1]);
 	 
+<<<<<<< HEAD
      
   
 	 
 	 
 	 transactionHistory.put(transactionID, transaction);	
 	 transactionID++;
+=======
+	// transactionHistory.put(transactionID, transaction);	
+	 //transactionID++;
+>>>>>>> origin/master
  }
  
  public void conversion(double quantity, String currency1, String currency2,double toQuantity) throws ClassNotFoundException, IOException
  {
-	 Transaction transaction=new Transaction(emailID,currency,user);
+	 Transaction transaction=new Transaction(emailID,currency);
 	 transaction.convert(quantity, currency1, currency2,toQuantity);
-	 transactionHistory.put(transactionID, transaction);	
 	 transactionID++;
 	 
 
@@ -188,31 +205,27 @@ public Payment getCredit() throws IOException, ClassNotFoundException
 	return payment[1];
 }
  
- public void createAlert(int alertID)
+ public void createAlert(String alertID)
  {
 	 Alert alertPrice =new Alert();
      alerts.put(alertID, alertPrice);
-     alertID++;
+  
  }
  
  
- public HashMap<Integer,Alert> getAlertHistory()
+ public HashMap<String,Alert> getAlertHistory()
  {
 	 
 	 return alerts;
  }
+
  
- public  HashMap<Integer, Alert> getAlert()
- {
-	return alerts;
-	 
- }
- 
- public void destroyAlert(int id)
+ public void destroyAlert(String id)
  {
 	 if(alerts.containsKey(id))
 		 alerts.remove(id);
  }
+<<<<<<< HEAD
  public HashMap<Integer, ManualScheduler> getSchedulerHistory() {
 		return schedulerHistory;
 	}
@@ -241,5 +254,9 @@ public Payment getCredit() throws IOException, ClassNotFoundException
 		autoSchedulerHistory.put(autoSchedulerID++, auto);
 	}
 
+=======
+
+ 
+>>>>>>> origin/master
 
 }

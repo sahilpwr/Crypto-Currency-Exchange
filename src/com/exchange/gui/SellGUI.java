@@ -343,7 +343,7 @@ public class SellGUI extends javax.swing.JFrame {
     			else if(currentPrice==0)
     				quantity=amount/100;
 
-    			
+    			System.out.println(df.format(quantity));
     		    OrderReviewGUI order=new OrderReviewGUI(Double.parseDouble(df.format(quantity)),amount,bankName,currencyName,currentUser,system);
     		    order.setVisible(true);
     	   }

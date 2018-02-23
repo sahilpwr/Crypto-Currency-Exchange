@@ -4,7 +4,24 @@ public class Alert extends Thread{
 
 	private double alertPrice;
 	private String currencyName;
-	private boolean notify;
+	private String notify;
+	private String alertID;
+	public String getAlertID() {
+		return alertID;
+	}
+
+	public void setAlertID(String alertID) {
+		this.alertID = alertID;
+	}
+
+	public String getNotify() {
+		return notify;
+	}
+
+	public void setNotify(String notify) {
+		this.notify = notify;
+	}
+
 	private int alertId;
 	
 	public double getAlertPrice() {
@@ -23,14 +40,7 @@ public class Alert extends Thread{
 		this.currencyName = currencyName;
 	}
 
-	public int getAlertId() {
-		return alertId;
-	}
 
-	public void setAlertId(int alertId) {
-		this.alertId = alertId;
-	}
-	
 	
 	
 	

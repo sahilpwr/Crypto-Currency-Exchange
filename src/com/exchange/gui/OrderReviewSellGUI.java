@@ -30,7 +30,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
     		this.system=system;
     		
     		 
-        	  if(bankName.contains("card"))
+        	  if(bankName.contains("Card"))
         		  paymentType="credit";
         	  else 
         		  paymentType="bank";
@@ -89,7 +89,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Weekly Limit Remaining: ");
+        jLabel2.setText("                        ");
 
         limit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         limit.setText("$8000 out of $20,000");

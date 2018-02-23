@@ -33,7 +33,6 @@ public class Transaction implements Serializable
 	private long transactionId;
 	private CryptoCurrency[] cryptoCurrency;
 	private Payment payment;
-	private User user;
 	private Wallet[] wallet;
 	String emailID;
 	Calendar cal;
@@ -47,12 +46,16 @@ public class Transaction implements Serializable
 
 	
 	
-	public Transaction(String emailID,CryptoCurrency[] currency,User user) throws IOException, ClassNotFoundException 
+	public Transaction(String emailID,CryptoCurrency[] currency) throws IOException, ClassNotFoundException 
 	{
 		this.emailID=emailID;
 		this.cryptoCurrency=currency;
+<<<<<<< HEAD
 		this.user=user;
 
+=======
+		output = new PrintWriter("transaction.txt");
+>>>>>>> origin/master
 	}
 	
 	public double getPrice() {
@@ -121,7 +124,7 @@ public class Transaction implements Serializable
 	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName) throws IOException, ClassNotFoundException
 	{
 		double currentBalance=details.get(bankName);
-		System.out.println("Current Balance"+ currentBalance);
+		System.out.println("Current Balance"+ bankName);
 
        if(quantity>0 && amount>0)
        {
@@ -172,7 +175,9 @@ public class Transaction implements Serializable
 	public boolean buyCurrency(String bankName,double amount, double quantity,
 			String currency,Payment payment) throws ClassNotFoundException, IOException
 	{
-		
+		 		
+ 		
+	 	 
 		//yet to implement fees and update wallet and transaction!
 		double currentBalance=0;
 		HashMap<String, Double> details;
@@ -180,6 +185,7 @@ public class Transaction implements Serializable
 		fis=new FileInputStream(emailID+"Wallet.dat");
 		ois=new ObjectInputStream(fis);
 		wallet=(Wallet[])ois.readObject();
+		
 	
 		if(payment instanceof BankAccount)
 		{
@@ -276,13 +282,14 @@ public class Transaction implements Serializable
 					
 				
 					
-					fos=new FileOutputStream(emailID+"Bank.dat");
+					fos=new FileOutputStream(emailID+"Credit.dat");
 					oos=new ObjectOutputStream(fos);
 					oos.writeObject(details);
 					
 					fos=new FileOutputStream(emailID+"Wallet.dat");
 				    oos=new ObjectOutputStream(fos);
 					oos.writeObject(wallet);
+					
 					
 					return true;
 				}

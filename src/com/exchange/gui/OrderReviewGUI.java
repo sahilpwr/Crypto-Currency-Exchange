@@ -11,13 +11,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-<<<<<<< HEAD
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-=======
->>>>>>> origin/master
 import java.util.HashMap;
-
 import com.exchange.CurrencySystem;
 import com.exchange.Payment;
 import com.exchange.User;

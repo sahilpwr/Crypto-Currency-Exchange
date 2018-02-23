@@ -50,12 +50,6 @@ public class Transaction implements Serializable
 	{
 		this.emailID=emailID;
 		this.cryptoCurrency=currency;
-<<<<<<< HEAD
-		this.user=user;
-
-=======
-		output = new PrintWriter("transaction.txt");
->>>>>>> origin/master
 	}
 	
 	public double getPrice() {

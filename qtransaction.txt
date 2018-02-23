@@ -1,0 +1,3 @@
+bitcoin 2.0 29078.0 Chase Buy
+litecoin 3.85 1000.0 Citi Credit Card Buy
+ethereum 1.5 10000.0 Chase Buy

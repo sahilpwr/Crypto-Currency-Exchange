@@ -2,15 +2,12 @@ package com.exchange.gui;
 
 import java.awt.Toolkit;
 import java.io.IOException;
-<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.*;
-
 import com.exchange.AutoScheduler;
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.ManualScheduler;
-=======
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Timer;
@@ -22,7 +19,7 @@ import com.exchange.Alert;
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.Payment;
->>>>>>> origin/master
+
 import com.exchange.User;
 
 public class DashboardGUI extends javax.swing.JFrame implements Runnable
@@ -60,7 +57,6 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			bitcoinChange.setText(""+Integer.toString(currency[0].getPercentDifference())+" %");
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
-<<<<<<< HEAD
 			
 			HashMap<Integer, ManualScheduler> scheduler=currentUser.getSchedulerHistory();		
 			   if(!scheduler.isEmpty())
@@ -144,8 +140,6 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 							e1.printStackTrace();
 						}
 		 				
-		 				
-=======
 		
 			alertHistory=currentUser.getAlertHistory();
 			for(Alert alert: alertHistory.values())
@@ -192,7 +186,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 				
 			}
 			
->>>>>>> origin/master
+
 			try
 			{
 				Thread.sleep(2000);

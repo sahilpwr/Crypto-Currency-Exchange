@@ -1,6 +1,8 @@
 package com.exchange.gui;
 
+import java.awt.Toolkit;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Timer;
 
@@ -19,8 +21,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
      CurrencySystem system;
 	 User currentUser;
 	 CryptoCurrency[] currency;
-	
-	 
+	 DecimalFormat df = new DecimalFormat("###.##");
 	 
 	 
     public DashboardGUI(User currentUser,CurrencySystem system) throws ClassNotFoundException, IOException 
@@ -33,9 +34,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
     
 	public void run()
 	{
-		HashMap<Integer, Alert> alertHistory=currentUser.getAlertHistory();
-		JOptionPane option;
-	    JDialog dialog;
+		HashMap<String, Alert> alertHistory=currentUser.getAlertHistory();
+		 
 		Timer t;
 
 		while(true)
@@ -54,12 +54,46 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			alertHistory=currentUser.getAlertHistory();
 			for(Alert alert: alertHistory.values())
 			{
-				if(alert.getAlertPrice()>currency[2].getPrice())
+				if(alert.getNotify()=="above")
 				{
-					JOptionPane.showMessageDialog(null, "Price of Litecoin is below"+alert.getAlertPrice());
-					//JOptionPane.
-					break;
+					if(alert.getCurrencyName()=="Bitcoin"&&alert.getAlertPrice()<currency[0].getPrice())
+					{
+						 JOptionPane.showMessageDialog(null, "Bitcoin is above"+alert.getAlertPrice());
+						  currentUser.destroyAlert(alert.getAlertID());
+					}
+					if(alert.getCurrencyName()=="Ethereum"&&alert.getAlertPrice()<currency[1].getPrice())
+					{
+						 JOptionPane.showMessageDialog(null, "Ethereum is above"+alert.getAlertPrice());
+						  currentUser.destroyAlert(alert.getAlertID());
+					}
+					if(alert.getCurrencyName()=="Litecoin"&&alert.getAlertPrice()<currency[2].getPrice())
+					{
+						 JOptionPane.showMessageDialog(null, "Litecoin is above"+alert.getAlertPrice());
+						  currentUser.destroyAlert(alert.getAlertID());
+					}
+				
 				}
+				
+				else if(alert.getNotify()=="below")
+				{
+					if(alert.getCurrencyName()=="Bitcoin"&&alert.getAlertPrice()>currency[0].getPrice())
+					{
+						 JOptionPane.showMessageDialog(null, "Bitcoin is below"+alert.getAlertPrice());
+						  currentUser.destroyAlert(alert.getAlertID());
+					}
+					if(alert.getCurrencyName()=="Ethereum"&&alert.getAlertPrice()>currency[1].getPrice())
+					{
+						 JOptionPane.showMessageDialog(null, "Ethereum is below"+alert.getAlertPrice());
+						  currentUser.destroyAlert(alert.getAlertID());
+					}
+					if(alert.getCurrencyName()=="Litecoin"&&alert.getAlertPrice()>currency[2].getPrice())
+					{
+						 JOptionPane.showMessageDialog(null, "Bitcoin is below"+alert.getAlertPrice());
+						  currentUser.destroyAlert(alert.getAlertID());
+					}
+				
+				}
+				
 			}
 			
 			try
@@ -234,9 +268,9 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         ethereumWallet.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         ethereumWallet.setText("$20000");
 
-        bitcoinBalance.setText(Double.toString(currentUser.getWallet()[0].getQuantity()));
-		litecoinWallet.setText(Double.toString(currentUser.getWallet()[2].getQuantity()));
-		ethereumWallet.setText(Double.toString(currentUser.getWallet()[1].getQuantity()));
+        bitcoinBalance.setText(df.format(currentUser.getWallet()[0].getQuantity()));
+		litecoinWallet.setText(df.format(currentUser.getWallet()[2].getQuantity()));
+		ethereumWallet.setText(df.format(currentUser.getWallet()[1].getQuantity()));
         
         schedule.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         schedule.setText("Create Schedule");
@@ -476,7 +510,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
     private void alertsActionPerformed(java.awt.event.ActionEvent evt) 
     {
-    		AlertsGUI alert=new AlertsGUI(currentUser, currency, system);
+    		AlertsGUI alert=new AlertsGUI(currentUser, system);
     		alert.setVisible(true);
     }
 
@@ -507,8 +541,9 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         // TODO add your handling code here:
     }//GEN-LAST:event_ethereumBuyActionPerformed
 
-    private void litecoinBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_litecoinBuyActionPerformed
-        // TODO add your handling code here:
+    private void litecoinBuyActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_litecoinBuyActionPerformed
+
     }//GEN-LAST:event_litecoinBuyActionPerformed
 
     private void ethereumSellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ethereumSellActionPerformed

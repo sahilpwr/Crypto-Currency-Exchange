@@ -18,15 +18,12 @@ public class User implements Serializable
  private String password;
  Payment[] payment;
  private int limit;
- private Calendar lastTransaction;
  Wallet[] wallet;
  CryptoCurrency[] currency;
  User user;
- HashMap<Integer, Alert> alerts=new HashMap<>();
-int alertID=1;
+ HashMap<String, Alert> alerts;
 int transactionID=1;
 private double roi;
-HashMap<Integer, Transaction> transactionHistory=new HashMap();
 
  
  public int getLimit() {
@@ -37,13 +34,6 @@ public void setLimit(int limit) {
 	this.limit = limit;
 }
 
-public Calendar getLastTransaction() {
-	return lastTransaction;
-}
-
-public void setLastTransaction(Calendar lastTransaction) {
-	this.lastTransaction = lastTransaction;
-}
 
 public String getFirstName() {
 	return firstName;
@@ -69,6 +59,7 @@ public void setEmailID(String emailID) throws IOException
 {
 	
 	this.emailID = emailID;
+	alerts=new HashMap<>();
 	
 	payment=new Payment[2];
 	payment[0]=new BankAccount(emailID);
@@ -135,7 +126,7 @@ public void addPayment()
 			String currencyType,String transactionType,String paymentType) throws ClassNotFoundException, IOException
  { 
 	  
-	 Transaction transaction=new Transaction(emailID,currency,user);
+	 Transaction transaction=new Transaction(emailID,currency);
 	 if(transactionType=="buy"&&paymentType=="bank")
 	    transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[0]);
 	 else if(transactionType=="buy"&&paymentType=="credit")
@@ -151,9 +142,8 @@ public void addPayment()
  
  public void conversion(double quantity, String currency1, String currency2,double toQuantity) throws ClassNotFoundException, IOException
  {
-	 Transaction transaction=new Transaction(emailID,currency,user);
+	 Transaction transaction=new Transaction(emailID,currency);
 	 transaction.convert(quantity, currency1, currency2,toQuantity);
-	 transactionHistory.put(transactionID, transaction);	
 	 transactionID++;
 	 
 
@@ -173,31 +163,27 @@ public Payment getCredit() throws IOException, ClassNotFoundException
 	return payment[1];
 }
  
- public void createAlert(int alertID)
+ public void createAlert(String alertID)
  {
 	 Alert alertPrice =new Alert();
      alerts.put(alertID, alertPrice);
-     alertID++;
+  
  }
  
  
- public HashMap<Integer,Alert> getAlertHistory()
+ public HashMap<String,Alert> getAlertHistory()
  {
 	 
 	 return alerts;
  }
+
  
- public  HashMap<Integer, Alert> getAlert()
- {
-	return alerts;
-	 
- }
- 
- public void destroyAlert(int id)
+ public void destroyAlert(String id)
  {
 	 if(alerts.containsKey(id))
 		 alerts.remove(id);
  }
+
  
 
 }

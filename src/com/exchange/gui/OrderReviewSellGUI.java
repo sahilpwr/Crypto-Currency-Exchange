@@ -30,7 +30,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
     		this.system=system;
     		
     		 
-        	  if(bankName.contains("card"))
+        	  if(bankName.contains("Card"))
         		  paymentType="credit";
         	  else 
         		  paymentType="bank";

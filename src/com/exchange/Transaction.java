@@ -30,7 +30,6 @@ public class Transaction implements Serializable
 	private long transactionId;
 	private CryptoCurrency[] cryptoCurrency;
 	private Payment payment;
-	private User user;
 	private Wallet[] wallet;
 	String emailID;
 	Calendar cal;
@@ -44,11 +43,10 @@ public class Transaction implements Serializable
 
 	
 	
-	public Transaction(String emailID,CryptoCurrency[] currency,User user) throws IOException, ClassNotFoundException 
+	public Transaction(String emailID,CryptoCurrency[] currency) throws IOException, ClassNotFoundException 
 	{
 		this.emailID=emailID;
 		this.cryptoCurrency=currency;
-		this.user=user;
 		output = new PrintWriter("transaction.txt");
 	}
 	
@@ -118,7 +116,7 @@ public class Transaction implements Serializable
 	public boolean sellCommit(double quantity,double amount,HashMap<String , Double> details,String currency,String bankName) throws IOException, ClassNotFoundException
 	{
 		double currentBalance=details.get(bankName);
-		System.out.println("Current Balance"+ currentBalance);
+		System.out.println("Current Balance"+ bankName);
 
        if(quantity>0 && amount>0)
        {

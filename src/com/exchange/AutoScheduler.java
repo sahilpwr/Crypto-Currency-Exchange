@@ -1,5 +1,6 @@
 package com.exchange;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,14 +11,49 @@ public class AutoScheduler extends Schedule {
 	
 	private boolean investmentType;
 	private double[] percentageDivision = {0.0,0.0,0.0};
-	private double[] growthDivision;
+	private double[] growthDivision = {0.0,0.0,0.0};;
 	private boolean roi;
 	private double percentROI;
 	private double increaseAmountPercentage;
 	private boolean divideInvestment;
-	private double[] amountDivision;
+	private double[] amountDivision = {0.0,0.0,0.0};
 	private double increaseROIAmount;
 	private boolean [] growthFlag = {false, true, false};
+	private String bankname;
+	private Date createDate;
+	private double [] quantity = {0.0,0.0,0.0}; 
+	CurrencySystem system;
+	CryptoCurrency [] currency;
+	private String paymentType;
+	
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+
+	public String getBankname() {
+		return bankname;
+	}
+	
+
+	public void setBankname(String bankname) {
+		this.bankname = bankname;
+	}
+
+	public double getAmount1() {
+		return amountDivision[0];
+	}
+	public double getAmount2() {
+		return amountDivision[1];
+	}
+	public double getAmount3() {
+		return amountDivision[2];
+	}
 	
 	public boolean isRoi() {
 		return roi;
@@ -75,7 +111,18 @@ public class AutoScheduler extends Schedule {
 	public void setGrowthDivision(double[] growthDivision) {
 		this.growthDivision = growthDivision;
 	}
-
+	public double getQuantity1() {
+		return quantity[0];
+	}
+	public double getQuantity2() {
+		return quantity[1];
+	}
+	public double getQuantity3() {
+		return quantity[2];
+	}
+	public void setQuantity(double[] quantityDivision) {
+		this.quantity = quantityDivision;
+	}
 	public double getPercentROI() {
 		return percentROI;
 	}
@@ -99,6 +146,10 @@ public class AutoScheduler extends Schedule {
 	public void setDivideInvestment(boolean divideInvestment) {
 		this.divideInvestment = divideInvestment;
 	}
+	
+	public Date getCreateDate() {
+		return createDate;
+	}
 
 
 	public AutoScheduler() {
@@ -107,12 +158,14 @@ public class AutoScheduler extends Schedule {
 	
 	public AutoScheduler(double amount, boolean investmentType, boolean divideInvestment,
 			double [] percentageDivision, double [] growthDivision, double increaseAmountPercentage,
-			 double percentROI, int duration, User user, boolean roi)
+			 double percentROI, int duration, User user, boolean roi, String name, Date date,CurrencySystem currencySystem,
+	CryptoCurrency [] cryptoCurrencies)
 	{
 			
 		
 		super(amount, duration, user);
-		
+		this.system=currencySystem;
+		this.currency=cryptoCurrencies;
 		this.investmentType = investmentType;
 		this.divideInvestment = divideInvestment;
 		this.percentageDivision = percentageDivision;
@@ -120,18 +173,60 @@ public class AutoScheduler extends Schedule {
 		this.increaseAmountPercentage = increaseAmountPercentage;
 		this.percentROI = percentROI;
 		this.roi = roi;
+		this.bankname = name;
+		this.createDate = date;
+		
+  	  if(bankname.contains("Card"))
+		  paymentType="card";
+	  else 
+		  paymentType="bank";
+
 		
 		if(roi)
 			increaseInvestment();
 		
 		if(investmentType)
 			autoInvest();
-		else
+		else {
 			percentInvest();
 		
-		
+		amountDivision();
+		quantityDivision();
+		}
 	}
 	
+	public void amountDivision() {
+		amountDivision[0] = (getAmount() * percentageDivision[0])/100;
+		amountDivision[1] = (getAmount() * percentageDivision[1])/100;
+		amountDivision[2] = (getAmount() * percentageDivision[2])/100;
+	}
+	
+	public boolean quantityDivision()
+	{
+		
+		double [] temp= {0.0, 0.0, 0.0};
+		
+		currency = system.cryptoInfo();
+		
+			temp[0] = currency[0].getPrice();
+			temp[1] = currency[1].getPrice();
+			temp[2] = currency[2].getPrice();
+		
+		quantity[0] = amountDivision[0]/temp[0];
+		quantity[1] = amountDivision[1]/temp[1];
+		quantity[2] = amountDivision[2]/temp[2];
+		
+		return true;
+	}
+	public Date ExecuteDate() {
+		Date execDate = new Date();
+		Date currentDate = new Date();
+		execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
+		if(execDate.before(currentDate)) {
+			execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
+		}
+		return execDate;
+	}
 	
 	public boolean autoInvest() {	
 		
@@ -318,6 +413,7 @@ public class AutoScheduler extends Schedule {
 		
 		for(int i=0;i<percentageDivision.length;i++)
 		{
+		
 			amountDivision[i] = percentageDivision[i] * getAmount() /100;
 		}
 		
@@ -330,7 +426,7 @@ public class AutoScheduler extends Schedule {
 		
 		for(int i=0;i<percentageDivision.length;i++)
 		{
-			amountDivision[i] = percentageDivision[i] * getAmount() /100;
+			amountDivision[i] =( percentageDivision[i] * getAmount()) /100;
 		}
 		
 		if(!divideInvestment)
@@ -351,7 +447,7 @@ public class AutoScheduler extends Schedule {
 	
 	public boolean increaseInvestment()
 	{
-		double temp = getAmount() * increaseAmountPercentage/100 + getAmount();
+		double temp = (getAmount() * increaseAmountPercentage)/100 + getAmount();
 		
 		if(user.getRoi() > percentROI)
 		{

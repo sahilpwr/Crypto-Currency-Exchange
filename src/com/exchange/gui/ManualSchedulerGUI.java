@@ -1,15 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ƒ * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.exchange.gui;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.ManualScheduler;
+import com.exchange.Payment;
 import com.exchange.User;
 
 /**
@@ -21,6 +26,7 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
 	CurrencySystem currencySystem;
 	CryptoCurrency [] cryptoCurrencies;
 	User user;
+	String bankName;
     /**
      * Creates new form ManualSchedulerGUI
      */
@@ -184,7 +190,15 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
         btnSchedule.setLabel("Schedule");
         btnSchedule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnScheduleActionPerformed(evt);
+                try {
+					btnScheduleActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -193,18 +207,34 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
         rbAccount.setText("Bank Account");
         rbAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbAccountActionPerformed(evt);
+                try {
+					rbAccountActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
         rbCreditCard.setText("Credit Card");
         rbCreditCard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbCreditCardActionPerformed(evt);
+                try {
+					rbCreditCardActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
-        cbNames.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbNames.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Bank" }));
         cbNames.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbNamesActionPerformed(evt);
@@ -426,17 +456,60 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQuantityActionPerformed
 
-    private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
+    private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {//GEN-FIRST:event_btnScheduleActionPerformed
     
     	int duration= 0;
     	boolean type = false;
     	String name = "";
+    	Date date = new Date();
     	
-    	if(rbBitcoin.isSelected()== false && rbEthereum.isSelected()== false && 
+      	System.out.println(date);
+    	if(!rbAccount.isSelected() && !rbCreditCard.isSelected())
+    	{
+    		 JOptionPane.showMessageDialog(null, "Select payment method");
+    	}
+    	
+    	
+    	else if(rbBitcoin.isSelected()== false && rbEthereum.isSelected()== false && 
                 rbLitecoin.isSelected()== false){
             JOptionPane.showMessageDialog(null, "Select a currency!");
         }
-    	else if(rbBitcoin.isSelected())
+    
+    		
+     	else if(rbDaily.isSelected()== false && rbWeekly.isSelected()== false && 
+                rbCustom.isSelected()== false){
+            JOptionPane.showMessageDialog(null, "Select a duration to repeat the tranaction!");
+        }
+    	
+        
+        else if(rbAmount.isSelected()== false && rbQuantity.isSelected()== false){
+            JOptionPane.showMessageDialog(null, "Select tranaction type!");
+        }
+        
+         if(rbAmount.isSelected()){
+        	txtQuantity.setText("0");
+           
+            type = true;
+            System.out.println("yes");
+            System.out.println(txtAmount.getText());
+            if(txtAmount.getText().trim().length() == 0 &&
+            		txtAmount.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter Amount!");
+                
+            }
+        }
+        else if(rbQuantity.isSelected()) {
+        	txtAmount.setText("0");
+            type = false;
+            System.out.println("yes yes");
+            System.out.println(txtQuantity.getText());
+            if(txtQuantity.getText().trim().length() == 0 &&
+            		txtQuantity.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter Quantity!");
+            }
+        }
+        
+    	 if(rbBitcoin.isSelected())
     	{
     		name = "bitcoin";
     	}
@@ -447,14 +520,10 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
      	else if(rbLitecoin.isSelected())
     	{
     		name = "litecoin";
-    	}
-    		
-        if(rbDaily.isSelected()== false && rbWeekly.isSelected()== false && 
-                rbCustom.isSelected()== false){
-            JOptionPane.showMessageDialog(null, "Select a duration to repeat the tranaction!");
-        }
-        else if(rbDaily.isSelected()){
-        	duration = 1;
+    	} 
+       
+     	 if(rbDaily.isSelected()){
+        	duration = 4;
         }
         else if(rbWeekly.isSelected()){
         	duration = 7;
@@ -467,39 +536,16 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
             	duration = Integer.parseInt(txtDays.getText());
             }
         }
-        if(rbAmount.isSelected()== false && rbQuantity.isSelected()== false){
-            JOptionPane.showMessageDialog(null, "Select tranaction type!");
-        }
+     	
+        user.setSchedulerHistory(user,Double.parseDouble(txtAmount.getText()),Double.parseDouble(txtQuantity.getText()),
+        		duration,type,name, currencySystem, cryptoCurrencies, bankName, date);
+        //ManualScheduler ms = new ManualScheduler(user,Double.parseDouble(txtAmount.getText()),Double.parseDouble(txtQuantity.getText()),
+        	//	duration,type,name, currencySystem, cryptoCurrencies, bankName);
         
-        if(rbAmount.isSelected()){
-        	txtQuantity.setText("0");
-           
-            type = true;
-            System.out.println("yes");
-            System.out.println(txtAmount.getText());
-            if(txtAmount.getText().trim().length() == 0 &&
-            		txtAmount.getText().trim().equals("")){
-                JOptionPane.showMessageDialog(null, "Enter Amount!");
-                
-            }
-        }
-        else {
-        	txtAmount.setText("0");
-            type = false;
-            System.out.println("yes yes");
-            System.out.println(txtQuantity.getText());
-            if(txtQuantity.getText().trim().length() == 0 &&
-            		txtQuantity.getText().trim().equals("")){
-                JOptionPane.showMessageDialog(null, "Enter Quantity!");
-            }
-        }
-        
-        
-       
-        
-        
-        ManualScheduler ms = new ManualScheduler(user,Double.parseDouble(txtAmount.getText()),Double.parseDouble(txtQuantity.getText()),
-        		duration,type,name, currencySystem, cryptoCurrencies);
+  	  DashboardGUI g =new DashboardGUI(user, currencySystem);
+	  g.setVisible(true);
+	  Thread dashboard=new Thread(g);
+	  dashboard.start();
         
         
     }//GEN-LAST:event_btnScheduleActionPerformed
@@ -581,36 +627,77 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
     
     
 
-    private void rbAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAccountActionPerformed
+    private void rbAccountActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {//GEN-FIRST:event_rbAccountActionPerformed
         // TODO add your handling code here:
         if(rbAccount.isSelected()){
+        		cbNames.removeAllItems();
+        		addCombo();
             rbAccount.setEnabled(true);
             rbCreditCard.setEnabled(false);;
 }
 else if(!rbAccount.isSelected()){
-            rbAccount.setEnabled(true);
+	cbNames.removeAllItems();
+	cbNames.addItem("Select Bank");
+	rbAccount.setEnabled(true);
             rbCreditCard.setEnabled(true);
 }
     }//GEN-LAST:event_rbAccountActionPerformed
 
-    private void rbCreditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCreditCardActionPerformed
+    private void rbCreditCardActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {//GEN-FIRST:event_rbCreditCardActionPerformed
         // TODO add your handling code here:
+    
         if(rbCreditCard.isSelected()){
+        	cbNames.removeAllItems();
+        		addCombo();
             rbAccount.setEnabled(false);
             rbCreditCard.setEnabled(true);;
 }
 else if(!rbCreditCard.isSelected()){
+	cbNames.removeAllItems();
+	cbNames.addItem("Select Bank");
             rbAccount.setEnabled(true);
             rbCreditCard.setEnabled(true);
 }
-    	
-    	
-    	
+        
     }//GEN-LAST:event_rbCreditCardActionPerformed
     
 
+    public void addCombo() throws ClassNotFoundException, IOException
+    {
+    	    Payment pay=user.getBank();
+ 		HashMap<String, Double> map=pay.getBankAccount();
+ 		
+ 		
+ 		
+ 	   if(!map.isEmpty())
+ 	   {
+ 			for(String key: map.keySet())
+ 			{
+ 					cbNames.addItem(key);	 
+ 			}
+ 	   }
+ 	   
+ 	     pay=user.getCredit();
+ 	     map=pay.getCardAccount();
+ 		
+ 	   if(!map.isEmpty())
+ 	   {
+ 			for(String key: map.keySet())
+ 			{
+ 				cbNames.addItem(key);
+ 			}
+ 	   }
+    	
+    }
+    
+    
+    
+    
     private void cbNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNamesActionPerformed
         // TODO add your handling code here:
+    	if(cbNames.getSelectedItem()!=null)
+    	     bankName=cbNames.getSelectedItem().toString();
+    	
     }//GEN-LAST:event_cbNamesActionPerformed
 
     /**

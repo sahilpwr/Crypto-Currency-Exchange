@@ -5,7 +5,15 @@ package com.exchange.gui;
  * and open the template in the editor.
  */
 
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.util.HashMap;
 
 import com.exchange.CurrencySystem;
 import com.exchange.User;
@@ -23,6 +31,9 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 	 String currencyName;
 	 String paymentType="";
 	 CurrencySystem system;
+	 FileOutputStream fos=null;
+	 File file ;
+	 
     public OrderReviewGUI(double quantity,double amount, String bankName,String currencyName, User currentUser,CurrencySystem system)
     {
     		this.currentUser=currentUser;
@@ -160,6 +171,20 @@ public class OrderReviewGUI extends javax.swing.JFrame {
     	  g.setVisible(true);
     	  Thread dashboard=new Thread(g);
     	  dashboard.start();
+    	  
+    	  
+    	  String data = currencyName + " "+  quantity +  " "+ amount +  " "+ bankName + " "+ "Buy";
+    	    		
+  		try(FileWriter fw = new FileWriter(currentUser.getEmailID() + "transaction.txt", true);
+  			    BufferedWriter bw = new BufferedWriter(fw);
+  			    PrintWriter out = new PrintWriter(bw))
+  			{
+  			    out.println(data);;
+
+  			} catch (IOException e) {
+  			 
+  			}
+
     }
 
     private javax.swing.JButton buy;

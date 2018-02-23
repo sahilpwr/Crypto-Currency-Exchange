@@ -9,6 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,7 +43,7 @@ public class Transaction implements Serializable
 	FileOutputStream fos;
 	ObjectOutputStream  oos;
 	
-	PrintWriter output = null; 
+	
 
 	
 	
@@ -49,7 +52,7 @@ public class Transaction implements Serializable
 		this.emailID=emailID;
 		this.cryptoCurrency=currency;
 		this.user=user;
-		output = new PrintWriter("transaction.txt");
+
 	}
 	
 	public double getPrice() {
@@ -150,9 +153,7 @@ public class Transaction implements Serializable
 					wallet[2].subCurrency(quantity);
 				}
 				
-			/*	output.print(transactionId);
-				output.print(user.getLastTransaction());
-				output.println("BuyGUI");*/
+		
 				
 				
 				return true;
@@ -217,9 +218,6 @@ public class Transaction implements Serializable
 						wallet[2].addCurrency(quantity);
 					}
 					
-					/*output.print(transactionId);
-					output.print(user.getLastTransaction());
-					output.println("BuyGUI");*/
 					
 					fos=new FileOutputStream(emailID+"Wallet.dat");
 					oos=new ObjectOutputStream(fos);
@@ -276,9 +274,7 @@ public class Transaction implements Serializable
 						wallet[2].addCurrency(quantity);
 					}
 					
-				/*	output.print(transactionId);
-					output.print(user.getLastTransaction());
-					output.println("BuyGUI");*/
+				
 					
 					fos=new FileOutputStream(emailID+"Bank.dat");
 					oos=new ObjectOutputStream(fos);
@@ -321,7 +317,7 @@ public class Transaction implements Serializable
 			
             sellCommit(quantity, amount, details, currency, bankName);
             writeFile(details, emailID+"Bank.dat");
-            
+          
             return true;
 		}
 	
@@ -332,6 +328,7 @@ public class Transaction implements Serializable
 			
             sellCommit(quantity, amount, details, currency, bankName);
             writeFile(details, emailID+"Credit.dat");
+
 			return true;
 		}
 		return false;
@@ -391,11 +388,7 @@ public class Transaction implements Serializable
 		fos=new FileOutputStream(emailID+"Wallet.dat");
 		oos=new ObjectOutputStream(fos);
 		oos.writeObject(wallet);
-		
-		
-		/*output.print(transactionId);
-		output.print(user.getLastTransaction());
-		output.println("Convert");*/
+
 		
 		
 		

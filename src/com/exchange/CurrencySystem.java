@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -17,14 +18,14 @@ public class CurrencySystem implements Serializable
 {
 	private  HashMap<String,User> 	users;//=new HashMap<String,User>();
 	private CryptoCurrency[] currency=new CryptoCurrency[3];
+
+	
+	
 /*	private FileOutputStream fos=new FileOutputStream("Users.dat");
 	private ObjectOutputStream  oos=new ObjectOutputStream(fos);
 	private FileInputStream fis=new FileInputStream("Users.dat");
 	private ObjectInputStream ois=new ObjectInputStream(fis);*/
 
-	
-   
-	
 	public CurrencySystem() throws IOException
 	{
 		User newUser;
@@ -38,9 +39,9 @@ public class CurrencySystem implements Serializable
 			users.put("none", newUser);
 			oos.writeObject(users);
 			
+			
 		}
-		
-		
+	
 		
 		currency[0]=new CryptoCurrency("bitcoin",15000);
 		currency[0].start();

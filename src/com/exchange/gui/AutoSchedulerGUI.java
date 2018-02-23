@@ -5,11 +5,16 @@
  */
 package com.exchange.gui;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+
 import javax.swing.JOptionPane;
 
 import com.exchange.AutoScheduler;
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
+import com.exchange.Payment;
 import com.exchange.User;
 
 /**
@@ -25,6 +30,7 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
 	CurrencySystem currencySystem;
 	CryptoCurrency [] cryptoCurrencies;
 	User user;
+	String bankName;
 	
 	
     public AutoSchedulerGUI() {
@@ -112,18 +118,34 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
         rbAccount.setText("Bank Account");
         rbAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbAccountActionPerformed(evt);
+                try {
+					rbAccountActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
         rbCard.setText("Credit Card");
         rbCard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbCardActionPerformed(evt);
+                try {
+					rbCardActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
-        cbNames.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbNames.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Bank "}));
         cbNames.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbNamesActionPerformed(evt);
@@ -284,7 +306,15 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
         btnSchedule.setText("Schedule");
         btnSchedule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnScheduleActionPerformed(evt);
+                try {
+					btnScheduleActionPerformed(evt);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -485,23 +515,31 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_rbCustomActionPerformed
 
-    private void rbAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAccountActionPerformed
+    private void rbAccountActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {//GEN-FIRST:event_rbAccountActionPerformed
         if(rbAccount.isSelected()){
+        	cbNames.removeAllItems();
+    		addCombo();
                 rbAccount.setEnabled(true);
                 rbCard.setEnabled(false);;
     }
     else if(!rbAccount.isSelected()){
+    	cbNames.removeAllItems();
+    	cbNames.addItem("Select Bank");
                 rbAccount.setEnabled(true);
                 rbCard.setEnabled(true);
     }
     }//GEN-LAST:event_rbAccountActionPerformed
 
-    private void rbCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCardActionPerformed
+    private void rbCardActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {//GEN-FIRST:event_rbCardActionPerformed
         if(rbCard.isSelected()){
+        	cbNames.removeAllItems();
+        	addCombo();
                 rbAccount.setEnabled(false);
                 rbCard.setEnabled(true);;
     }
     else if(!rbCard.isSelected()){
+    	cbNames.removeAllItems();
+    	cbNames.addItem("Select Bank");
                 rbAccount.setEnabled(true);
                 rbCard.setEnabled(true);
     }
@@ -509,7 +547,37 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
 
     private void cbNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNamesActionPerformed
         // TODO add your handling code here:
+     	if(cbNames.getSelectedItem()!=null)
+   	     bankName=cbNames.getSelectedItem().toString();
     }//GEN-LAST:event_cbNamesActionPerformed
+    
+    public void addCombo() throws ClassNotFoundException, IOException
+    {
+    	    Payment pay=user.getBank();
+ 		HashMap<String, Double> map=pay.getBankAccount();
+ 		
+ 		
+ 		
+ 	   if(!map.isEmpty())
+ 	   {
+ 			for(String key: map.keySet())
+ 			{
+ 					cbNames.addItem(key);	 
+ 			}
+ 	   }
+ 	   
+ 	     pay=user.getCredit();
+ 	     map=pay.getCardAccount();
+ 		
+ 	   if(!map.isEmpty())
+ 	   {
+ 			for(String key: map.keySet())
+ 			{
+ 				cbNames.addItem(key);
+ 			}
+ 	   }
+    	
+    }
 
     private void txtAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAmountActionPerformed
         // TODO add your handling code here:
@@ -685,7 +753,7 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDaysActionPerformed
 
-    private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
+    private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {//GEN-FIRST:event_btnScheduleActionPerformed
         // TODO add your handling code here:
     	double amount = 0;
     	boolean investmentType;
@@ -696,12 +764,36 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	double percentROI = 0; 
     	int duration = 0; 
     	boolean roi = false;
+    Date date = new Date();
     	
-    	if(rbDaily.isSelected()== false && rbWeekly.isSelected()== false && 
+    	
+    	if(!rbAccount.isSelected() && !rbCard.isSelected())
+    	{
+    		 JOptionPane.showMessageDialog(null, "Select payment method");
+    	}
+    	
+    	else if(!rbAuto.isSelected() && !rbManual.isSelected())
+    	{
+    		 JOptionPane.showMessageDialog(null, "Select Schedule type");
+    	}
+    	
+    	
+    	else if(rbDaily.isSelected()== false && rbWeekly.isSelected()== false && 
                 rbCustom.isSelected()== false){
             JOptionPane.showMessageDialog(null, "Select a duration to repeat the tranaction!");
         }
-        else if(rbDaily.isSelected()){
+    	else if(bankName == null) {
+   		 JOptionPane.showMessageDialog(null, "Select Payment Method");
+   	}
+    	else if(txtAmount.getText().trim().length() == 0 &&
+        		txtAmount.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null, "Enter Amount!");        
+        }
+    	else
+    		amount = Double.parseDouble(txtAmount.getText());
+    	
+        
+    	if(rbDaily.isSelected()){
         	duration = 1;
         }
         else if(rbWeekly.isSelected()){
@@ -716,13 +808,7 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
             }
         }
     		
-    	if(txtAmount.getText().trim().length() == 0 &&
-        		txtAmount.getText().trim().equals("")){
-            JOptionPane.showMessageDialog(null, "Enter Amount!");        
-        }
-    	else
-    		amount = Double.parseDouble(txtAmount.getText());
-    	
+        
     	if(rbAuto.isSelected()) {
     		investmentType = true;
     		percentageDivision[0] = 0;
@@ -743,7 +829,7 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     		divideInvestment = false;
     	}
     	
-    	if(rbManual.isSelected() && rbPercentage.isSelected() == false) {
+    	if(rbManual.isSelected() && !rbPercentage.isSelected() ) {
     	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
     	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
     	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
@@ -751,7 +837,8 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	growthDivision[1] = Double.parseDouble(txtGrowthEthereum.getText());
     	growthDivision[2] = Double.parseDouble(jTextField7.getText());
     	}
-    	else if(rbManual.isSelected() && rbPercentage.isSelected() == false) {
+    	else if(rbManual.isSelected() && rbPercentage.isSelected()) {
+    		//System.out.println("here");
     	    	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
     	    	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
     	    	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
@@ -785,8 +872,18 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     		percentROI = Double.parseDouble(txtROI.getText());
     	}
     	
-    	AutoScheduler as = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision, 
-    	growthDivision, increaseAmountPercentage, percentROI, duration, user, roi);
+  
+   
+    	user.setAutoSchedulerHistory(amount, investmentType, divideInvestment, percentageDivision, 
+    	growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, bankName, date, currencySystem,
+    cryptoCurrencies);
+    	//AutoScheduler as = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision, 
+    	//growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, bankName);
+    
+    	  DashboardGUI g =new DashboardGUI(user, currencySystem);
+    	  g.setVisible(true);
+    	  Thread dashboard=new Thread(g);
+    	  dashboard.start();
     	
     	
     }//GEN-LAST:event_btnScheduleActionPerformed

@@ -6,8 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class User implements Serializable
@@ -16,20 +18,25 @@ public class User implements Serializable
  private  String lastName;
  private String  emailID;
  private String password;
- Payment[] payment;
+ private Payment[] payment;
  private int limit;
  private Calendar lastTransaction;
- Wallet[] wallet;
- CryptoCurrency[] currency;
- User user;
- HashMap<Integer, Alert> alerts=new HashMap<>();
-int alertID=1;
-int transactionID=1;
+ private Wallet[] wallet;
+ private CryptoCurrency[] currency;
+ private User user;
+ private HashMap<Integer, Alert> alerts=new HashMap<>();
+ private int alertID=1;
+ private int transactionID=1;
 private double roi;
-HashMap<Integer, Transaction> transactionHistory=new HashMap();
+private HashMap<Integer, Transaction> transactionHistory=new HashMap();
+private HashMap< Integer, ManualScheduler> schedulerHistory;
+private int schedulerID;
+private int autoSchedulerID;
+private HashMap< Integer, AutoScheduler> autoSchedulerHistory;
+private PrintWriter output ;
 
- 
- public int getLimit() {
+
+public int getLimit() {
 	return limit;
 }
 
@@ -67,13 +74,17 @@ public String getEmailID() {
 
 public void setEmailID(String emailID) throws IOException
 {
-	
+	int schedulerID=1;
+	int autoSchedulerID=1;
 	this.emailID = emailID;
-	
+	schedulerHistory = new HashMap< Integer, ManualScheduler>();
+	autoSchedulerHistory = new HashMap< Integer, AutoScheduler>();
 	payment=new Payment[2];
 	payment[0]=new BankAccount(emailID);
 	payment[1]=new CreditCard(emailID);
-
+	
+	
+	
 	
 	File f = new File(emailID+"Wallet.dat");
 	
@@ -135,14 +146,19 @@ public void addPayment()
 			String currencyType,String transactionType,String paymentType) throws ClassNotFoundException, IOException
  { 
 	 Transaction transaction=new Transaction(emailID,currency,user);
-	 if(transactionType=="buy"&&paymentType=="bank")
+	 
+	 if(transactionType=="buy"&&paymentType=="bank") 
 	    transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[0]);
 	 else if(transactionType=="buy"&&paymentType=="credit")
 		 transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[1]);
 	 if(transactionType=="sell"&&paymentType=="bank")
-		  transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[0]);
+		 transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[0]);	  
      else if(transactionType=="sell"&&paymentType=="credit")
 	      transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[1]);
+	 
+     
+  
+	 
 	 
 	 transactionHistory.put(transactionID, transaction);	
 	 transactionID++;
@@ -197,6 +213,33 @@ public Payment getCredit() throws IOException, ClassNotFoundException
 	 if(alerts.containsKey(id))
 		 alerts.remove(id);
  }
- 
+ public HashMap<Integer, ManualScheduler> getSchedulerHistory() {
+		return schedulerHistory;
+	}
+
+	public void setSchedulerHistory(User user, double amount, double quantity, int duration, boolean type,
+			String name,	CurrencySystem system,	CryptoCurrency []currency, String bankName, Date date) 
+	{
+		ManualScheduler manual=new ManualScheduler(user,amount,quantity,
+        		duration,type,name, system, currency, bankName, date);
+		schedulerHistory.put(schedulerID++, manual);
+		
+	}
+	 
+	 public HashMap<Integer, AutoScheduler> getAutoSchedulerHistory() {
+		return autoSchedulerHistory;
+	}
+
+	public void setAutoSchedulerHistory(double amount, boolean investmentType, boolean divideInvestment,
+			double [] percentageDivision, double [] growthDivision, double increaseAmountPercentage,
+			 double percentROI, int duration, User user, boolean roi, String name, Date date, CurrencySystem currencySystem,
+	CryptoCurrency [] cryptoCurrencies) 
+	{
+		AutoScheduler auto=new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision, 
+		    	growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, name, date ,currencySystem,cryptoCurrencies);
+		System.out.println();
+		autoSchedulerHistory.put(autoSchedulerID++, auto);
+	}
+
 
 }

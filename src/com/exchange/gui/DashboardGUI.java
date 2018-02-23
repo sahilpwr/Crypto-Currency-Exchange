@@ -1,9 +1,13 @@
 package com.exchange.gui;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.*;
 
+import com.exchange.AutoScheduler;
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
+import com.exchange.ManualScheduler;
 import com.exchange.User;
 
 public class DashboardGUI extends javax.swing.JFrame implements Runnable
@@ -36,6 +40,90 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			bitcoinChange.setText(""+Integer.toString(currency[0].getPercentDifference())+" %");
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
+			
+			HashMap<Integer, ManualScheduler> scheduler=currentUser.getSchedulerHistory();		
+			   if(!scheduler.isEmpty())
+		 	   {
+		 			for(ManualScheduler value: scheduler.values())
+		 			{
+		 				Date date = new Date();
+		 				if(date.equals(value.ExecuteDate())) 
+		 				{	 				
+		 				try {
+							currentUser.transaction(value.getBankName(), value.getAmount(), value.getQuantity(), 
+									value.getCurrencyName(), "buy", value.getPaymentType());
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		 			     }
+		 	        }
+		 			
+		 	   }	
+		 			HashMap<Integer, AutoScheduler> autoScheduler=currentUser.getAutoSchedulerHistory();		
+		 				if(!autoScheduler.isEmpty())
+				 	   {
+				 			for(AutoScheduler value: autoScheduler.values())
+				 			{
+				 				Date date = new Date();
+				 				if(date.equals(value.ExecuteDate())) 
+				 				{	 				
+				 				try {
+									currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
+											"bitcoin", "buy", value.getPaymentType());
+									System.out.println(value.getBankname()+ value.getAmount1()+ value.getQuantity1()+
+											"bitcoin"+"buy"+value.getPaymentType());
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+				 				try {
+									currentUser.transaction(value.getBankname(), value.getAmount2(), value.getQuantity2(), 
+											"ethereum", "buy", value.getPaymentType());
+									System.out.println(value.getBankname()+ value.getAmount1()+ value.getQuantity1()+
+											"bitcoin"+"buy"+value.getPaymentType());
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+				 				try {
+									currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
+											"litecoin", "buy", value.getPaymentType());
+									System.out.println(value.getBankname()+ value.getAmount1()+ value.getQuantity1()+
+											"bitcoin"+"buy"+value.getPaymentType());
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+				 				}
+				 			}
+				 	   }
+			
+		 				 try {
+							bitcoinBalance.setText(Double.toString(currentUser.getWallet()[0].getQuantity()));
+							litecoinWallet.setText(Double.toString(currentUser.getWallet()[2].getQuantity()));
+			 				ethereumWallet.setText(Double.toString(currentUser.getWallet()[1].getQuantity()));
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		 				
+		 				
 			try
 			{
 				Thread.sleep(2000);

@@ -495,7 +495,14 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
             if(txtAmount.getText().trim().length() == 0 &&
             		txtAmount.getText().trim().equals("")){
                 JOptionPane.showMessageDialog(null, "Enter Amount!");
-                
+            }
+            else {
+            	for( int i =0; i < txtAmount.getText().length(); i++) {
+            		if(!Character.isDigit(txtAmount.getText().charAt(i)) && txtAmount.getText().charAt(i) != '.') {
+            			JOptionPane.showMessageDialog(null, "Amount not valid!");
+            			break;
+            		}
+            	}
             }
         }
         else if(rbQuantity.isSelected()) {
@@ -506,6 +513,14 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
             if(txtQuantity.getText().trim().length() == 0 &&
             		txtQuantity.getText().trim().equals("")){
                 JOptionPane.showMessageDialog(null, "Enter Quantity!");
+            }
+            else {
+            	for( int i =0; i < txtQuantity.getText().length(); i++) {
+            		if(!Character.isDigit(txtQuantity.getText().charAt(i)) && txtQuantity.getText().charAt(i) != '.') {
+            			JOptionPane.showMessageDialog(null, "Quantity not valid!");
+            			break;
+            		}
+            	}
             }
         }
         
@@ -533,6 +548,12 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Enter number of days to repeat the tranaction!");
             }
             else {
+            	for( int i =0; i < txtDays.getText().length(); i++) {
+            		if(!Character.isDigit(txtDays.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "Number of Days has to be an integer!");
+            			break;
+            		}
+            	}
             	duration = Integer.parseInt(txtDays.getText());
             }
         }

@@ -64,12 +64,14 @@ public class ManualScheduler extends Schedule {
 		Date execDate = new Date();
 		Date currentDate = new Date();
 		execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
-		if(execDate.before(currentDate)) {
-			execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
+		while(execDate.before(currentDate)) {
+			execDate.setSeconds(execDate.getSeconds() + getDuration());
 		}
+		System.out.println("Current Date:" + currentDate);
+		System.out.println("Execute Date:" + execDate);
 		return execDate;
+		
 	}
-
 
 	public boolean scheduleByQuantity()
 	{

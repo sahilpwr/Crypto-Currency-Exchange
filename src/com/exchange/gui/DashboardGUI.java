@@ -43,7 +43,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 	{
 		HashMap<String, Alert> alertHistory=currentUser.getAlertHistory();
 		 
-		Timer t;
+		Date currentTime=new Date();
+		boolean flag=true;
 
 		while(true)
 		{
@@ -64,16 +65,22 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 		 			for(ManualScheduler value: scheduler.values())
 		 			{
 		 				Date date = new Date();
-		 				if(date.equals(value.ExecuteDate())) 
-		 				{	 				
+		 				Date temp1 = value.ExecuteDate();
+		 				Date temp2 = value.ExecuteDate();
+		 				temp2.setSeconds(temp1.getSeconds() - 1);
+		 				temp1.setSeconds(temp1.getSeconds() + 1);
+		 				
+		 				
+		 				if(date.before(temp1)  && date.after(temp2)){	 				
 		 				try {
 							currentUser.transaction(value.getBankName(), value.getAmount(), value.getQuantity(), 
 									value.getCurrencyName(), "buy", value.getPaymentType());
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
+						} 
+		 				catch (ClassNotFoundException e)
+		 				{
 							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
+						} catch (IOException e) 
+		 				{
 							e.printStackTrace();
 						}
 		 			     }
@@ -85,60 +92,71 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 				 	   {
 				 			for(AutoScheduler value: autoScheduler.values())
 				 			{
-				 				Date date = new Date();
-				 				if(date.equals(value.ExecuteDate())) 
-				 				{	 				
-				 				try {
-									currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
-											"bitcoin", "buy", value.getPaymentType());
-									System.out.println(value.getBankname()+ value.getAmount1()+ value.getQuantity1()+
-											"bitcoin"+"buy"+value.getPaymentType());
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-				 				try {
-									currentUser.transaction(value.getBankname(), value.getAmount2(), value.getQuantity2(), 
-											"ethereum", "buy", value.getPaymentType());
-									System.out.println(value.getBankname()+ value.getAmount1()+ value.getQuantity1()+
-											"bitcoin"+"buy"+value.getPaymentType());
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-				 				try {
-									currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
-											"litecoin", "buy", value.getPaymentType());
-									System.out.println(value.getBankname()+ value.getAmount1()+ value.getQuantity1()+
-											"bitcoin"+"buy"+value.getPaymentType());
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+					 				Date date = new Date();
+					 				Date temp1 = value.ExecuteDate();
+					 				Date temp2 = value.ExecuteDate();
+					 				temp2.setSeconds(temp1.getSeconds() - 1);
+					 				temp1.setSeconds(temp1.getSeconds() + 1);
+					 				
+					 				if(date.before(temp1)  && date.after(temp2)) 
+					 				{	 				
+						 				try 
+						 				{   value.getROI();
+						 					if(value.getInvestmentType()) {
+						 						value.autoInvest();
+						 					}
+						 					else {
+						 						value.percentInvest();	
+						 					}
+						 					
+						 					value.quantityDivision();
+						 					
+											currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
+													"bitcoin", "buy", value.getPaymentType());
+											currentUser.transaction(value.getBankname(), value.getAmount2(), value.getQuantity2(), 
+													"ethereum", "buy", value.getPaymentType());
+											currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
+													"litecoin", "buy", value.getPaymentType());
+											
+											
+											System.out.println(value.getBankname()+value.getAmount3()+value.getQuantity3()+ 
+													"bitcoin"+value.getPaymentType());
+											
+											System.out.println(value.getBankname()+value.getAmount2()+value.getQuantity2()+ 
+													"ethereum"+value.getPaymentType());
+											System.out.println(value.getBankname()+value.getAmount1()+value.getQuantity1()+ 
+													"litecoin"+value.getPaymentType());
+										} 
+						 				catch (ClassNotFoundException e) 
+						 				{
+											e.printStackTrace();
+										} 
+						 				catch (IOException e)
+						 				{
+										
+											e.printStackTrace();
+										}
+					 				
+					 			
+									}
 				 				}
 				 			}
-				 	   }
+				 	   
 			
 		 				 try {
-							bitcoinBalance.setText(Double.toString(currentUser.getWallet()[0].getQuantity()));
-							litecoinWallet.setText(Double.toString(currentUser.getWallet()[2].getQuantity()));
-			 				ethereumWallet.setText(Double.toString(currentUser.getWallet()[1].getQuantity()));
-						} catch (ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
+							bitcoinBalance.setText(df.format(currentUser.getWallet()[0].getQuantity()));
+							litecoinWallet.setText(df.format(currentUser.getWallet()[2].getQuantity()));
+			 				ethereumWallet.setText(df.format(currentUser.getWallet()[1].getQuantity()));
+						} 
+		 				 catch (ClassNotFoundException e1) 
+		 				 {
 							e1.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
+						  } catch (IOException e1) 
+		 				 {
+							
 							e1.printStackTrace();
-						}
+						  }
+		 				
 		 				
 		
 			alertHistory=currentUser.getAlertHistory();

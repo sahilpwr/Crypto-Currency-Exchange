@@ -18,10 +18,10 @@ public class AutoScheduler extends Schedule {
 	private boolean divideInvestment;
 	private double[] amountDivision = {0.0,0.0,0.0};
 	private double increaseROIAmount;
-	private boolean [] growthFlag = {false, true, false};
+	private boolean [] growthFlag = {false, false, false};
 	private String bankname;
 	private Date createDate;
-	private double [] quantity = {0.0,0.0,0.0}; 
+	private double [] quantity= {0.0,0.0,0.0} ; 
 	CurrencySystem system;
 	CryptoCurrency [] currency;
 	private String paymentType;
@@ -175,13 +175,14 @@ public class AutoScheduler extends Schedule {
 		this.roi = roi;
 		this.bankname = name;
 		this.createDate = date;
-		
+				
   	  if(bankname.contains("Card"))
 		  paymentType="card";
 	  else 
 		  paymentType="bank";
 
-		
+  	System.out.println("invest"+investmentType);
+	
 		if(roi)
 			increaseInvestment();
 		
@@ -189,19 +190,26 @@ public class AutoScheduler extends Schedule {
 			autoInvest();
 		else {
 			percentInvest();
-		
-		amountDivision();
-		quantityDivision();
 		}
+		quantityDivision();
 	}
 	
+	public boolean getInvestmentType() {
+		return investmentType;
+	}
+	public boolean getROI() {
+		return roi;
+	}
 	public void amountDivision() {
 		amountDivision[0] = (getAmount() * percentageDivision[0])/100;
 		amountDivision[1] = (getAmount() * percentageDivision[1])/100;
 		amountDivision[2] = (getAmount() * percentageDivision[2])/100;
+		System.out.println(amountDivision[0]);
+		System.out.println(amountDivision[1]);
+		System.out.println(amountDivision[2]);
 	}
 	
-	public boolean quantityDivision()
+	public void  quantityDivision()
 	{
 		
 		double [] temp= {0.0, 0.0, 0.0};
@@ -215,22 +223,27 @@ public class AutoScheduler extends Schedule {
 		quantity[0] = amountDivision[0]/temp[0];
 		quantity[1] = amountDivision[1]/temp[1];
 		quantity[2] = amountDivision[2]/temp[2];
-		
-		return true;
+		System.out.println(amountDivision[0]);
+		System.out.println(amountDivision[1]);
+		System.out.println(amountDivision[2]);
+
 	}
 	public Date ExecuteDate() {
 		Date execDate = new Date();
 		Date currentDate = new Date();
 		execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
-		if(execDate.before(currentDate)) {
-			execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
+		while(execDate.before(currentDate)) {
+			execDate.setSeconds(execDate.getSeconds() + getDuration());
 		}
+		System.out.println("Current Date:" + currentDate);
+		System.out.println("Execute Date:" + execDate);
 		return execDate;
+		
 	}
 	
 	public boolean autoInvest() {	
 		
-		double[] actualPercentage = {10,20,30};
+		double[] actualPercentage = {currency[0].getPercentDifference(),currency[1].getPercentDifference(),currency[2].getPercentDifference()};
 
 		
 		// all positive  50-30-20
@@ -429,7 +442,15 @@ public class AutoScheduler extends Schedule {
 			amountDivision[i] =( percentageDivision[i] * getAmount()) /100;
 		}
 		
-		if(!divideInvestment)
+		double[] actualPercentage = {currency[0].getPercentDifference(),currency[1].getPercentDifference(),currency[2].getPercentDifference()};
+
+		for(int i=0;i<growthFlag.length;i++){
+			if(growthDivision[i] < actualPercentage[i]) {
+				growthFlag[i] = true;
+			}
+		}
+		
+		if(divideInvestment)
 		{
 			for(int i=0;i<growthFlag.length;i++)
 			{

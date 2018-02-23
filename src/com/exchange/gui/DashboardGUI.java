@@ -626,6 +626,10 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 
     private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
         // TODO add your handling code here:
+    	
+    	TransactionHistoryGUI g = new TransactionHistoryGUI();
+    	g.setVisible(true);
+    	
     }//GEN-LAST:event_transactionActionPerformed
 
     private void ethereumBuyActionPerformed(java.awt.event.ActionEvent evt) 

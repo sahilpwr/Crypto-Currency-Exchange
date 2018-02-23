@@ -21,8 +21,6 @@ public class Alert extends Thread{
 	public void setNotify(String notify) {
 		this.notify = notify;
 	}
-
-	private int alertId;
 	
 	public double getAlertPrice() {
 		return alertPrice;

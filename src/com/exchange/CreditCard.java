@@ -2,7 +2,6 @@ package com.exchange;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -45,10 +44,7 @@ public class CreditCard extends Payment {
 		FileInputStream fis=new FileInputStream(emailID+"Credit.dat");
 		ObjectInputStream ois=new ObjectInputStream(fis);
 		cardAccount=(HashMap<String, Double>)ois.readObject();
-		Random rand = new Random();
 		cardAccount.put(cardName, 20000.00);
-		
-		
 		FileOutputStream fos=new FileOutputStream(emailID+"Credit.dat");
 		ObjectOutputStream  oos=new ObjectOutputStream(fos);
 	

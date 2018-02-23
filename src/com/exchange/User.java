@@ -6,9 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -20,15 +18,11 @@ public class User implements Serializable
  private String password;
  private Payment[] payment;
  private int limit;
- private Calendar lastTransaction;
  private Wallet[] wallet;
  private CryptoCurrency[] currency;
- private User user;
  private HashMap<String, Alert> alerts=new HashMap<>();
- private int alertID=1;
  private int transactionID=1;
 private double roi;
-private HashMap<Integer, Transaction> transactionHistory=new HashMap();
 private HashMap< Integer, ManualScheduler> schedulerHistory;
 private int schedulerID;
 private int autoSchedulerID;

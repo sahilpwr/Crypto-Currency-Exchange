@@ -142,7 +142,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 
     private void changeOrderActionPerformed(java.awt.event.ActionEvent evt)
     {
-    	
+    	    
     }//GEN-LAST:event_changeOrderActionPerformed
 
     private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 

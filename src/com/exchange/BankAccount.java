@@ -9,72 +9,54 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Random;
 
-public class BankAccount extends Payment 
-{
-	private HashMap<String,Double> bankAccount; 
+public class BankAccount extends Payment {
+	private HashMap<String, Double> bankAccount;
 	String emailID;
-	public BankAccount(String emailID) throws IOException 
-	{
-		userName="sahil";	
-		password="sahil";
-		this.emailID=emailID;
-		File f = new File(emailID+"Bank.dat");
-		
-		
-		if(!f.exists())
-		{     
-			bankAccount = new HashMap<String,Double>();
-			FileOutputStream fos=new FileOutputStream(emailID+"Bank.dat");
-			ObjectOutputStream  oos=new ObjectOutputStream(fos);
-			
-			
+
+	public BankAccount(String emailID) throws IOException {
+		userName = "sahil";
+		password = "sahil";
+		this.emailID = emailID;
+		File f = new File(emailID + "Bank.dat");
+
+		if (!f.exists()) {
+			bankAccount = new HashMap<String, Double>();
+			FileOutputStream fos = new FileOutputStream(emailID + "Bank.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+
 			oos.writeObject(bankAccount);
-			
+
 		}
 	}
-		
-	 
-	public void setBankAccount(String bankName) throws IOException, ClassNotFoundException 
-	{
-		FileInputStream fis=new FileInputStream(emailID+"Bank.dat");
-		ObjectInputStream ois=new ObjectInputStream(fis);
-		bankAccount=(HashMap<String, Double>)ois.readObject();
+
+	public void setBankAccount(String bankName) throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream(emailID + "Bank.dat");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		bankAccount = (HashMap<String, Double>) ois.readObject();
 		Random rand = new Random();
 		bankAccount.put(bankName, 50000.00);
-		
-		
-		FileOutputStream fos=new FileOutputStream(emailID+"Bank.dat");
-		ObjectOutputStream  oos=new ObjectOutputStream(fos);
-	
-		
+
+		FileOutputStream fos = new FileOutputStream(emailID + "Bank.dat");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+
 		oos.writeObject(bankAccount);
 	}
-	
-	public HashMap<String, Double> getBankAccount() throws IOException, ClassNotFoundException 
-	{
-									
-		FileInputStream fis=new FileInputStream(emailID+"Bank.dat");
-		ObjectInputStream ois=new ObjectInputStream(fis);
-		bankAccount=(HashMap<String, Double>)ois.readObject();
+
+	public HashMap<String, Double> getBankAccount() throws IOException, ClassNotFoundException {
+
+		FileInputStream fis = new FileInputStream(emailID + "Bank.dat");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		bankAccount = (HashMap<String, Double>) ois.readObject();
 
 		return bankAccount;
 	}
 
-	
-
-	
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	public String getPassword() 
-	{
+	public String getPassword() {
 		return password;
 	}
-
-	
-	
-	
 
 }

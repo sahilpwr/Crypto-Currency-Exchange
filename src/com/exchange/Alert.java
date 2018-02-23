@@ -1,11 +1,12 @@
 package com.exchange;
 
-public class Alert extends Thread{
+public class Alert extends Thread {
 
 	private double alertPrice;
 	private String currencyName;
 	private String notify;
 	private String alertID;
+
 	public String getAlertID() {
 		return alertID;
 	}
@@ -21,7 +22,7 @@ public class Alert extends Thread{
 	public void setNotify(String notify) {
 		this.notify = notify;
 	}
-	
+
 	public double getAlertPrice() {
 		return alertPrice;
 	}
@@ -38,10 +39,4 @@ public class Alert extends Thread{
 		this.currencyName = currencyName;
 	}
 
-
-	
-	
-	
-	
-	
 }

@@ -35,8 +35,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 	{
 		HashMap<String, Alert> alertHistory=currentUser.getAlertHistory();
 		 
-		Date currentTime=new Date();
-		boolean flag=true;
+		
 		Wallet[] wallet = null;
 		try 
 		{
@@ -51,9 +50,37 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		
+
+		
+	HashMap<Integer, AutoScheduler> autoScheduler=currentUser.getAutoSchedulerHistory();		
+	if(!autoScheduler.isEmpty())
+ 	{
+ 			for(AutoScheduler value: autoScheduler.values())
+ 			{
+	 			
+ 				
+ 				Timer timer = new Timer();
+ 				timer.schedule(new RepeatAuto(value, currentUser), 0, value.getDuration()*1000);
+ 			}
+    }
+	
+	HashMap<Integer, ManualScheduler> scheduler=currentUser.getSchedulerHistory();		
+	   if(!scheduler.isEmpty())
+	   {
+			for(ManualScheduler value: scheduler.values())
+			{
+				Timer manual=new Timer();
+				manual.schedule(new RepeatManual(value, currentUser),0,value.getDuration()*1000);
+				
+				
+				
+	        }
+			
+	   }	
+		
 		double roi = 0;
 		double investment=0;
-
 		while(true)
 		{
 			currency=system.cryptoInfo();
@@ -76,89 +103,6 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 		  else
 			  jLabel21.setText("ROI: "+0.0+" %");
 			  
-			
-			HashMap<Integer, ManualScheduler> scheduler=currentUser.getSchedulerHistory();		
-			   if(!scheduler.isEmpty())
-		 	   {
-		 			for(ManualScheduler value: scheduler.values())
-		 			{
-		 				Date date = new Date();
-		 				Date temp1 = value.ExecuteDate();
-		 				Date temp2 = value.ExecuteDate();
-		 				temp2.setSeconds(temp1.getSeconds() - 1);
-		 				temp1.setSeconds(temp1.getSeconds() + 1);
-		 				
-		 				
-		 				if(date.before(temp1)  && date.after(temp2)){	 				
-		 				try {
-							currentUser.transaction(value.getBankName(), value.getAmount(), value.getQuantity(), 
-									value.getCurrencyName(), "buy", value.getPaymentType());
-						} 
-		 				catch (ClassNotFoundException e)
-		 				{
-							e.printStackTrace();
-						} catch (IOException e) 
-		 				{
-							e.printStackTrace();
-						}
-		 			     }
-		 	        }
-		 			
-		 	   }	
-		 			HashMap<Integer, AutoScheduler> autoScheduler=currentUser.getAutoSchedulerHistory();		
-		 				if(!autoScheduler.isEmpty())
-				 	   {
-				 			for(AutoScheduler value: autoScheduler.values())
-				 			{
-					 				Date date = new Date();
-					 				Date temp1 = value.ExecuteDate();
-					 				Date temp2 = value.ExecuteDate();
-					 				temp2.setSeconds(temp1.getSeconds() - 1);
-					 				temp1.setSeconds(temp1.getSeconds() + 1);
-					 			
-
-					 				
-					 				if(date.before(temp1)  && date.after(temp2)) 
-					 				{	 				
-						 				try 
-						 				{   
-						 					if(value.getROI());
-						 					{
-						 						value.increaseInvestment();
-						 					}
-						 					if(value.getInvestmentType()) {
-						 						value.autoInvest();
-						 					}
-						 					else {
-						 						value.percentInvest();	
-						 					}
-						 					
-						 					value.quantityDivision();
-						 					
-											currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
-													"bitcoin", "buy", value.getPaymentType());
-											currentUser.transaction(value.getBankname(), value.getAmount2(), value.getQuantity2(), 
-													"ethereum", "buy", value.getPaymentType());
-											currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
-													"litecoin", "buy", value.getPaymentType());
-											
-											
-										} 
-						 				catch (ClassNotFoundException e) 
-						 				{
-											e.printStackTrace();
-										} 
-						 				catch (IOException e)
-						 				{
-										
-											e.printStackTrace();
-										}
-					 				
-					 			
-									}
-				 				}
-				 			}
-				 	   
 			
 		 				 try {
 							bitcoinBalance.setText(df.format(currentUser.getWallet()[0].getQuantity()));

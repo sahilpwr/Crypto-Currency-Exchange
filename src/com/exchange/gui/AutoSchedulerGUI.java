@@ -275,14 +275,14 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
 
         jLabel17.setText("Repeat Transaction");
 
-        rbDaily.setText("Daily");
+        rbDaily.setText("Daily(secs)");
         rbDaily.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbDailyActionPerformed(evt);
             }
         });
 
-        rbWeekly.setText("Weekly");
+        rbWeekly.setText("Weekly(secs)");
         rbWeekly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbWeeklyActionPerformed(evt);
@@ -817,7 +817,7 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	}
         
     	if(rbDaily.isSelected()){
-        	duration = 1;
+        	duration = 2;
         }
         else if(rbWeekly.isSelected()){
         	duration = 7;

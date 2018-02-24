@@ -6,7 +6,7 @@ public class Schedule {
 	
 	private Payment[] payment;
 	private Date createDateTime;
-	private Integer duration;
+	protected int duration;
 	private double amount;
 	private CryptoCurrency[] c;
 	private CurrencySystem currencySystem;
@@ -52,7 +52,7 @@ public class Schedule {
 	}
 
 
-	public Integer getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 

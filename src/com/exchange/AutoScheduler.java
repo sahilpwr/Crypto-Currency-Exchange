@@ -20,12 +20,12 @@ public class AutoScheduler extends Schedule {
 	private double increaseROIAmount;
 	private boolean [] growthFlag = {false, false, false};
 	private String bankname;
-	private Date createDate;
 	private double [] quantity= {0.0,0.0,0.0} ; 
 	private CurrencySystem system;
 	private CryptoCurrency [] currency;
 	private String paymentType;
 	private User user;
+	
 	
 	public String getPaymentType() {
 		return paymentType;
@@ -148,8 +148,9 @@ public class AutoScheduler extends Schedule {
 		this.divideInvestment = divideInvestment;
 	}
 	
-	public Date getCreateDate() {
-		return createDate;
+
+	public int getDuration() {
+		return duration;
 	}
 
 
@@ -175,7 +176,7 @@ public class AutoScheduler extends Schedule {
 		this.percentROI = percentROI;
 		this.roi = roi;
 		this.bankname = name;
-		this.createDate = date;
+		
 				
   	  if(bankname.contains("Card"))
 		  paymentType="card";
@@ -225,18 +226,7 @@ public class AutoScheduler extends Schedule {
 		
 
 	}
-	public Date ExecuteDate() {
-		Date execDate = new Date();
-		Date currentDate = new Date();
-		execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
-		while(execDate.before(currentDate)) {
-				
-			execDate.setSeconds(execDate.getSeconds() + getDuration());
-			
-		}
-		return execDate;
-		
-	}
+	
 	
 	public boolean autoInvest() {	
 		

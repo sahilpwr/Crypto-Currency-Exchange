@@ -9,7 +9,7 @@ public class ManualScheduler extends Schedule {
 	CurrencySystem system;
 	CryptoCurrency [] currency;
 	private String bankName;
-	private Date createDate;
+	
 	private String paymentType;
 	
 	
@@ -43,7 +43,6 @@ public class ManualScheduler extends Schedule {
 		this.currency=currency;
 		this.system=system;
 		this.bankName = bankName;
-		this.createDate = date;
   	  	if(bankName.contains("card"))
 		  paymentType="credit";
   	  		else 
@@ -57,23 +56,14 @@ public class ManualScheduler extends Schedule {
 	}
 	   
 	
-	
-	public Date getCreateDate() {
-		return createDate;
+	public int getDuration()
+	{
+		return duration;
 	}
+
 	
-	public Date ExecuteDate() {
-		Date execDate = new Date();
-		Date currentDate = new Date();
-		execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
-		while(execDate.before(currentDate)) {
-			execDate.setSeconds(execDate.getSeconds() + getDuration());
-		}
-		System.out.println("Current Date:" + currentDate);
-		System.out.println("Execute Date:" + execDate);
-		return execDate;
-		
-	}
+	
+	
 
 	public boolean scheduleByQuantity()
 	{

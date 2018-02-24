@@ -116,14 +116,14 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
 
         jLabel4.setText("Repeat Transaction");
 
-        rbDaily.setLabel("Daily");
+        rbDaily.setLabel("Daily (2 secs)");
         rbDaily.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbDailyActionPerformed(evt);
             }
         });
 
-        rbWeekly.setLabel("Weekly");
+        rbWeekly.setLabel("Weekly (7 secs)");
         rbWeekly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbWeeklyActionPerformed(evt);
@@ -461,7 +461,6 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
     	String name = "";
     	Date date = new Date();
     	
-      	System.out.println(date);
     	if(!rbAccount.isSelected() && !rbCreditCard.isSelected())
     	{
     		 JOptionPane.showMessageDialog(null, "Select payment method");
@@ -536,7 +535,7 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
     	} 
        
      	 if(rbDaily.isSelected()){
-        	duration = 4;
+        	duration = 2;
         }
         else if(rbWeekly.isSelected()){
         	duration = 7;

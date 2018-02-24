@@ -1,6 +1,5 @@
 package com.exchange.gui;
 
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.*;
@@ -9,18 +8,11 @@ import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.ManualScheduler;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Timer;
-
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import com.exchange.Alert;
-import com.exchange.CryptoCurrency;
-import com.exchange.CurrencySystem;
-import com.exchange.Payment;
-
 import com.exchange.User;
+import com.exchange.Wallet;
 
 public class DashboardGUI extends javax.swing.JFrame implements Runnable
 {
@@ -45,6 +37,22 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 		 
 		Date currentTime=new Date();
 		boolean flag=true;
+		Wallet[] wallet = null;
+		try 
+		{
+			wallet = currentUser.getWallet();
+		} 
+		catch (ClassNotFoundException e2) 
+		{
+			e2.printStackTrace();
+		} 
+		catch (IOException e2) 
+		{
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		double roi = 0;
+		double investment=0;
 
 		while(true)
 		{
@@ -59,10 +67,9 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
 			
-			double roi = 0;
+			investment=wallet[0].getInvestment()+wallet[1].getInvestment() +wallet[2].getInvestment();
 		  
-			System.out.println(currentUser.getTransactionID());
-		      roi=((currency[0].getPrice()+currency[1].getPrice()+currency[2].getPrice()- currentUser.getTransactionID() )/currentUser.getInvestment())*100;
+		   roi=((currency[0].getPrice()+currency[1].getPrice()+currency[2].getPrice()- investment)/investment)*100;
 		
 			jLabel21.setText("ROI: "+df.format(roi));
 			

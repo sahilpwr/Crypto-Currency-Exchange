@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class CreditCard extends Payment {
 
 	private HashMap<String, Double> cardAccount;
-	String emailID;
+	private String emailID;
 
 	public CreditCard(String emailID) throws IOException {
 		userName = "user";

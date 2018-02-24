@@ -12,7 +12,7 @@ import java.util.Random;
 public class BankAccount extends Payment 
 {
 	private HashMap<String, Double> bankAccount;
-	String emailID;
+	private String emailID;
 
 	public BankAccount(String emailID) throws IOException {
 		userName = "user";

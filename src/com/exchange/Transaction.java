@@ -33,10 +33,8 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 	private Payment payment;
 	private Wallet[] wallet;
 	private String paymentType;
-	String emailID;
-	Calendar cal;
-	SimpleDateFormat sdf;
-	String transactionCurrency;
+	private String emailID;
+	private String transactionCurrency;
 
 	public Transaction() {
 
@@ -189,17 +187,22 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[0].addCurrency(quantity);
+						wallet[0].setInvestment(amount);
 
 					} else if (currency.equalsIgnoreCase("ethereum")) {
 
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[1].addCurrency(quantity);
+						wallet[1].setInvestment(amount);
+
 					} else {
 
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[2].addCurrency(quantity);
+						wallet[2].setInvestment(amount);
+
 					}
 
 					FileOutputStream fos = new FileOutputStream(emailID + "Wallet.dat");
@@ -232,17 +235,23 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[0].addCurrency(quantity);
+						wallet[0].setInvestment(amount);
+
 
 					} else if (currency.equalsIgnoreCase("ethereum")) {
 
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[1].addCurrency(quantity);
+						wallet[1].setInvestment(amount);
+
 					} else {
 
 						currentBalance -= amount;
 						details.put(bankName, currentBalance);
 						wallet[2].addCurrency(quantity);
+						wallet[2].setInvestment(amount);
+
 					}
 
 					FileOutputStream fos = new FileOutputStream(emailID + "Credit.dat");
@@ -268,11 +277,6 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 			throws ClassNotFoundException, IOException {
 
 		HashMap<String, Double> details;
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		c.add(Calendar.DATE, 7);
 
 		if (payment instanceof BankAccount) {
 			BankAccount ba = (BankAccount) payment;
@@ -351,8 +355,8 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 
 	public String toString() {
 
-		return transactionId + " " + transactionCurrency + " " + transactionQuantity + " " + transactionAmount + " "
-				+ paymentType + " " + transactionType;
+		return "ID: "+ transactionId + " Currency: " + transactionCurrency + " Quantity: " + transactionQuantity + " Amount: " + transactionAmount + " Payment Type: "
+				+ paymentType + " Trransaction Type: " + transactionType;
 	}
 
 }

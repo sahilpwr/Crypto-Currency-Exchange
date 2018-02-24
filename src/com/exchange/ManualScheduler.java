@@ -11,6 +11,8 @@ public class ManualScheduler extends Schedule {
 	private String bankName;
 	private Date createDate;
 	private String paymentType;
+	
+	
 	public String getPaymentType() {
 		return paymentType;
 	}
@@ -131,10 +133,7 @@ public class ManualScheduler extends Schedule {
 	public void setCurrencyName(String currencyName) {
 		this.currencyName = currencyName;
 	}
-	
-	
-	
-	
+		
 	public boolean crateSchedule(Payment p, java.util.Date date, double dur, CryptoCurrency c,	
 			double amount, double quant ) {
 		return false;

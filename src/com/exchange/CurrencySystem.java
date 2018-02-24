@@ -16,15 +16,9 @@ import java.util.regex.Pattern;
 
 public class CurrencySystem implements Serializable
 {
-	private  HashMap<String,User> 	users;//=new HashMap<String,User>();
+	private  HashMap<String,User> 	users;
 	private CryptoCurrency[] currency=new CryptoCurrency[3];
 
-	
-	
-/*	private FileOutputStream fos=new FileOutputStream("Users.dat");
-	private ObjectOutputStream  oos=new ObjectOutputStream(fos);
-	private FileInputStream fis=new FileInputStream("Users.dat");
-	private ObjectInputStream ois=new ObjectInputStream(fis);*/
 
 	public CurrencySystem() throws IOException
 	{
@@ -53,7 +47,6 @@ public class CurrencySystem implements Serializable
 	
 	public CryptoCurrency[] cryptoInfo()
 	{
-		//System.out.println(currency[0].getPrice());
 		return currency;
 	}
 
@@ -61,7 +54,6 @@ public class CurrencySystem implements Serializable
 	public  boolean createUser(String firstName,String lastName ,String password,String emailID) throws IOException, ClassNotFoundException
 	{
 		
-		// users=(HashMap<String, User>)ois.readObject();
 		FileInputStream fis=new FileInputStream("Users.dat");
 		ObjectInputStream ois=new ObjectInputStream(fis);
 	    users=(HashMap<String, User>)ois.readObject();
@@ -82,9 +74,7 @@ public class CurrencySystem implements Serializable
 			oos.close();
             fos.close();
             
-            
-           // users=(HashMap<String, User>)ois.readObject();
-			return true;
+            			return true;
 		}
 		else
 			System.out.println("exist");
@@ -108,16 +98,11 @@ public class CurrencySystem implements Serializable
 	    }
 	   return null;
 	}
-
-	public static void checkSchedule()
-	{
-	
-	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, IOException 
 	{
 		CurrencySystem system=new CurrencySystem();
-		String button = null;
+		
 		
 	    HomeGUI g=new HomeGUI(system);
 	    g.setVisible(true);

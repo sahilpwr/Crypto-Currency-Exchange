@@ -22,9 +22,10 @@ public class AutoScheduler extends Schedule {
 	private String bankname;
 	private Date createDate;
 	private double [] quantity= {0.0,0.0,0.0} ; 
-	CurrencySystem system;
-	CryptoCurrency [] currency;
+	private CurrencySystem system;
+	private CryptoCurrency [] currency;
 	private String paymentType;
+	private User user;
 	
 	public String getPaymentType() {
 		return paymentType;

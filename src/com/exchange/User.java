@@ -28,12 +28,7 @@ public class User implements Serializable {
 	private int schedulerID;
 	private int autoSchedulerID;
 	private HashMap<Integer, AutoScheduler> autoSchedulerHistory;
-	private double investment = 0;
 	private ArrayList<Transaction> transactionHistory;
-
-	public double getInvestment() {
-		return investment;
-	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -119,15 +114,11 @@ public class User implements Serializable {
 
 	}
 
-	public void addPayment() {
-
-	}
-
+	
 	public void transaction(String bankName, double amount, double quantity, String currencyType,
 			String transactionType, String paymentType) throws ClassNotFoundException, IOException {
 
 		transactionID++;
-		this.investment += amount;
 		Transaction transaction = new Transaction(emailID, currency, transactionType, paymentType, transactionID);
 
 		if (transactionType == "buy" && paymentType == "bank")
@@ -152,7 +143,8 @@ public class User implements Serializable {
 	}
 
 	public void conversion(double quantity, String currency1, String currency2, double toQuantity)
-			throws ClassNotFoundException, IOException {
+			throws ClassNotFoundException, IOException
+	{
 		Transaction transaction = new Transaction(emailID, currency);
 		transaction.convert(quantity, currency1, currency2, toQuantity);
 		transactionID++;
@@ -172,23 +164,27 @@ public class User implements Serializable {
 		return payment[1];
 	}
 
-	public void createAlert(String alertID) {
+	public void createAlert(String alertID) 
+	{
 		Alert alertPrice = new Alert();
 		alerts.put(alertID, alertPrice);
 
 	}
 
-	public HashMap<String, Alert> getAlertHistory() {
+	public HashMap<String, Alert> getAlertHistory() 
+	{
 
 		return alerts;
 	}
 
-	public void destroyAlert(String id) {
+	public void destroyAlert(String id) 
+	{
 		if (alerts.containsKey(id))
 			alerts.remove(id);
 	}
 
-	public HashMap<Integer, ManualScheduler> getSchedulerHistory() {
+	public HashMap<Integer, ManualScheduler> getSchedulerHistory() 
+	{
 		return schedulerHistory;
 	}
 
@@ -200,14 +196,16 @@ public class User implements Serializable {
 
 	}
 
-	public HashMap<Integer, AutoScheduler> getAutoSchedulerHistory() {
+	public HashMap<Integer, AutoScheduler> getAutoSchedulerHistory() 
+	{
 		return autoSchedulerHistory;
 	}
 
 	public void setAutoSchedulerHistory(double amount, boolean investmentType, boolean divideInvestment,
 			double[] percentageDivision, double[] growthDivision, double increaseAmountPercentage, double percentROI,
 			int duration, User user, boolean roi, String name, Date date, CurrencySystem currencySystem,
-			CryptoCurrency[] cryptoCurrencies) {
+			CryptoCurrency[] cryptoCurrencies) 
+	{
 		AutoScheduler auto = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision,
 				growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, name, date, currencySystem,
 				cryptoCurrencies);
@@ -215,7 +213,8 @@ public class User implements Serializable {
 		autoSchedulerHistory.put(autoSchedulerID++, auto);
 	}
 
-	public ArrayList<Transaction> getTransactionHistory() throws IOException, ClassNotFoundException {
+	public ArrayList<Transaction> getTransactionHistory() throws IOException, ClassNotFoundException 
+	{
 
 		FileInputStream fis = new FileInputStream(emailID + "Transaction.dat");
 		ObjectInputStream ois = new ObjectInputStream(fis);

@@ -14,12 +14,12 @@ public class CryptoCurrency extends Thread implements Serializable
    private int percentDifference;
    private String currencyName;
    private int multiplier; 
-   double currentSeconds;
-   double recentSeconds=0;
-   double recentPrice=0;
-   Calendar cal;
-   SimpleDateFormat sdf;
-   Random rand = new Random();
+   private double currentSeconds;
+   private double recentSeconds=0;
+   private double recentPrice=0;
+   private Calendar cal;
+   private SimpleDateFormat sdf;
+   private  Random rand = new Random();
    
    
    public CryptoCurrency(String currencyName, int multiplier) 
@@ -42,7 +42,6 @@ public class CryptoCurrency extends Thread implements Serializable
 	       sdf = new SimpleDateFormat("HH:mm:ss");
 	      
 		   price = rand.nextInt(multiplier) + 1;
-		 //  System.out.println(price+" "+currencyName+" "+sdf.format(cal.getTime()));
 		  
 		   currentSeconds=cal.get(Calendar.SECOND);
 		  // System.out.println("c"+currentSeconds);

@@ -92,6 +92,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 				accountNumberActionPerformed(evt);
 			}
 		});
+		
+		
 
 		username.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 

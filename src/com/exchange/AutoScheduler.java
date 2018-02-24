@@ -205,9 +205,7 @@ public class AutoScheduler extends Schedule {
 		amountDivision[0] = (getAmount() * percentageDivision[0])/100;
 		amountDivision[1] = (getAmount() * percentageDivision[1])/100;
 		amountDivision[2] = (getAmount() * percentageDivision[2])/100;
-		System.out.println(amountDivision[0]);
-		System.out.println(amountDivision[1]);
-		System.out.println(amountDivision[2]);
+	
 	}
 	
 	public void  quantityDivision()
@@ -224,9 +222,7 @@ public class AutoScheduler extends Schedule {
 		quantity[0] = amountDivision[0]/temp[0];
 		quantity[1] = amountDivision[1]/temp[1];
 		quantity[2] = amountDivision[2]/temp[2];
-		System.out.println(amountDivision[0]);
-		System.out.println(amountDivision[1]);
-		System.out.println(amountDivision[2]);
+		
 
 	}
 	public Date ExecuteDate() {
@@ -234,7 +230,9 @@ public class AutoScheduler extends Schedule {
 		Date currentDate = new Date();
 		execDate.setSeconds(getCreateDate().getSeconds() + getDuration());
 		while(execDate.before(currentDate)) {
+				
 			execDate.setSeconds(execDate.getSeconds() + getDuration());
+			
 		}
 		return execDate;
 		

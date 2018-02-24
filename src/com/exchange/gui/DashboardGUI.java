@@ -115,6 +115,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 					 				Date temp2 = value.ExecuteDate();
 					 				temp2.setSeconds(temp1.getSeconds() - 1);
 					 				temp1.setSeconds(temp1.getSeconds() + 1);
+					 			
+
 					 				
 					 				if(date.before(temp1)  && date.after(temp2)) 
 					 				{	 				
@@ -141,13 +143,6 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 													"litecoin", "buy", value.getPaymentType());
 											
 											
-											System.out.println(value.getBankname()+value.getAmount1()+value.getQuantity1()+ 
-													"bitcoin"+value.getPaymentType());
-											
-											System.out.println(value.getBankname()+value.getAmount2()+value.getQuantity2()+ 
-													"ethereum"+value.getPaymentType());
-											System.out.println(value.getBankname()+value.getAmount3()+value.getQuantity3()+ 
-													"litecoin"+value.getPaymentType());
 										} 
 						 				catch (ClassNotFoundException e) 
 						 				{
@@ -685,7 +680,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 		BuyGUI buy=new BuyGUI(currentUser,currency,system);
 		buy.setVisible(true);
 
-    }//GEN-LAST:event_ethereumBuyActionPerformed
+    }
 
     private void litecoinBuyActionPerformed(java.awt.event.ActionEvent evt)
     {

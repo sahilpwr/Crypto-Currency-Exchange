@@ -8,6 +8,7 @@ package com.exchange.gui;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.exchange.CryptoCurrency;
@@ -303,11 +304,17 @@ public class ConversionGUI extends javax.swing.JFrame {
 
     private void convertActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
     {
-    	 currentUser.conversion(quantity, currency1, currency2,toQuantity);
-    	 DashboardGUI g =new DashboardGUI(currentUser, system);
-   	  g.setVisible(true);
-   	  Thread dashboard=new Thread(g);
-   	  dashboard.start();
+	    	if(currency1!=currency2&&quantity>0)
+	    	{
+	    	   currentUser.conversion(quantity, currency1, currency2,toQuantity);
+	    	   DashboardGUI g =new DashboardGUI(currentUser, system);
+	   	   g.setVisible(true);
+	   	   Thread dashboard=new Thread(g);
+	   	   dashboard.start();
+	    	}
+	    	else 
+		     JOptionPane.showMessageDialog(null, "Please don't select same currency for conversion and quantity should be above 0");
+
     }
 
     private void quantity1ActionPerformed(java.awt.event.ActionEvent evt) 

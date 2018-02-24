@@ -756,11 +756,11 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {//GEN-FIRST:event_btnScheduleActionPerformed
         // TODO add your handling code here:
     	double amount = 0;
-    	boolean investmentType;
+    	boolean investmentType = false;
     	boolean divideInvestment;
 	double [] percentageDivision = {0,0,0};
     	double [] growthDivision = {0,0,0}; 
-    	double increaseAmountPercentage;
+    	double increaseAmountPercentage = 0;
     	double percentROI = 0; 
     	int duration = 0; 
     	boolean roi = false;
@@ -771,27 +771,50 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	{
     		 JOptionPane.showMessageDialog(null, "Select payment method");
     	}
-    	
-    	else if(!rbAuto.isSelected() && !rbManual.isSelected())
-    	{
-    		 JOptionPane.showMessageDialog(null, "Select Schedule type");
-    	}
-    	
-    	
-    	else if(rbDaily.isSelected()== false && rbWeekly.isSelected()== false && 
-                rbCustom.isSelected()== false){
-            JOptionPane.showMessageDialog(null, "Select a duration to repeat the tranaction!");
-        }
     	else if(bankName == null) {
-   		 JOptionPane.showMessageDialog(null, "Select Payment Method");
-   	}
+      		 JOptionPane.showMessageDialog(null, "Select Payment Method");
+      	}
     	else if(txtAmount.getText().trim().length() == 0 &&
         		txtAmount.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null, "Enter Amount!");        
         }
-    	else
-    		amount = Double.parseDouble(txtAmount.getText());
+    	else if(!rbAuto.isSelected() && !rbManual.isSelected())
+    	{
+    		 JOptionPane.showMessageDialog(null, "Select Schedule type");
+    	}
+    	else if(rbDaily.isSelected()== false && rbWeekly.isSelected()== false && 
+                rbCustom.isSelected()== false){
+            JOptionPane.showMessageDialog(null, "Select a duration to repeat the tranaction!");
+        }
+    	else if(rbAuto.isSelected()) {
+    		investmentType = true;
+    		percentageDivision[0] = 0;
+	    	percentageDivision[1] = 0;
+	    	percentageDivision[2] = 0;
+	    	growthDivision[0] = 0;
+	    	growthDivision[1] = 0;
+	    	growthDivision[2] = 0;
+    	}
+    	else if(rbManual.isSelected()){
+    		investmentType = false;
+    	}
     	
+    	if(txtAmount.getText().trim().length() > 0){
+    		for( int i =0; i < txtAmount.getText().length(); i++) {
+    			if(!Character.isDigit(txtAmount.getText().charAt(i))) {
+        			JOptionPane.showMessageDialog(null, "Amount is invalidr!");
+        			break;
+        		}
+    		}	
+    		amount = Double.parseDouble(txtAmount.getText());
+    	}	
+    	
+    	if(!rbPercentage.isSelected()) {
+    		divideInvestment = true;
+    	}
+    	else {
+    		divideInvestment = false;
+    	}
         
     	if(rbDaily.isSelected()){
         	duration = 1;
@@ -804,44 +827,128 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Enter number of days to repeat the tranaction!");
             }
             else {
+            	for( int i =0; i < txtDays.getText().length(); i++) {
+            		if(!Character.isDigit(txtDays.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "Number of Days has to be an integer!");
+            			break;
+            		}
+            	}
             	duration = Integer.parseInt(txtDays.getText());
             }
         }
-    		
-        
-    	if(rbAuto.isSelected()) {
-    		investmentType = true;
-    		percentageDivision[0] = 0;
-	    	percentageDivision[1] = 0;
-	    	percentageDivision[2] = 0;
-	    	growthDivision[0] = 0;
-	    	growthDivision[1] = 0;
-	    	growthDivision[2] = 0;
-    	}
-    	else {
-    		investmentType = false;
-    	}
     	
-    	if(!rbPercentage.isSelected()) {
-    		divideInvestment = true;
-    	}
-    	else {
-    		divideInvestment = false;
-    	}
+    	
     	
     	if(rbManual.isSelected() && !rbPercentage.isSelected() ) {
-    	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
-    	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
-    	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
-    	growthDivision[0] = Double.parseDouble(txtGrowthBitcoin.getText());
-    	growthDivision[1] = Double.parseDouble(txtGrowthEthereum.getText());
-    	growthDivision[2] = Double.parseDouble(jTextField7.getText());
+    		
+    		if(txtBitcoin.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter percentage division  for bitcoin!");
+            }
+    		else if(txtEthereum.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter percentage division  for ethereum!");
+            }
+    		else if(txtLitecoin.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter percentage division  for litecoin!");
+            }
+    		else if(txtGrowthBitcoin.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter growth division  for bitcoin!");
+            }
+    		else if(txtGrowthEthereum.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter growth division  for ethereum!");
+            }
+    		else if(jTextField7.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter growth division  for litecoin!");
+            }
+    		else {
+            	for( int i =0; i < txtBitcoin.getText().length(); i++) {
+            		if(!Character.isDigit(txtBitcoin.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for bitcoin is invalid!");
+            			break;
+            		}
+            	}
+            	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
+            	
+            	for( int i =0; i < txtEthereum.getText().length(); i++) {
+            		if(!Character.isDigit(txtEthereum.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for ethereum is invalid!");
+            			break;
+            		}
+            	}
+            	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
+            	
+            	for( int i =0; i < txtLitecoin.getText().length(); i++) {
+            		if(!Character.isDigit(txtLitecoin.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for litecoin is invalid!");
+            			break;
+            		}
+            	}
+            	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
+            	
+            	for( int i =0; i < txtGrowthBitcoin.getText().length(); i++) {
+            		if(!Character.isDigit(txtGrowthBitcoin.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for bitcoin is invalid!");
+            			break;
+            		}
+            	}
+            	growthDivision[0] = Double.parseDouble(txtGrowthBitcoin.getText());
+            	
+            	for( int i =0; i < txtGrowthEthereum.getText().length(); i++) {
+            		if(!Character.isDigit(txtGrowthEthereum.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for ethereum is invalid!");
+            			break;
+            		}
+            	}
+            	growthDivision[1] = Double.parseDouble(txtGrowthEthereum.getText());
+            	
+            	for( int i =0; i < jTextField7.getText().length(); i++) {
+            		if(!Character.isDigit(jTextField7.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for litecoin is invalid!");
+            			break;
+            		}
+            	}
+            	growthDivision[2] = Double.parseDouble(jTextField7.getText());
+            
+            }
     	}
+    	
     	else if(rbManual.isSelected() && rbPercentage.isSelected()) {
     		//System.out.println("here");
-    	    	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
-    	    	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
-    	    	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
+    		if(txtBitcoin.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter percentage division  for bitcoin!");
+            }
+    		else if(txtEthereum.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter percentage division  for ethereum!");
+            }
+    		if(txtLitecoin.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Enter percentage division  for litecoin!");
+            }
+    		else {
+            	for( int i =0; i < txtBitcoin.getText().length(); i++) {
+            		if(!Character.isDigit(txtBitcoin.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for bitcoin is invalid!");
+            			break;
+            		}
+            	}
+            	percentageDivision[0] = Double.parseDouble(txtBitcoin.getText());
+            	
+            	for( int i =0; i < txtEthereum.getText().length(); i++) {
+            		if(!Character.isDigit(txtEthereum.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for ethereum is invalid!");
+            			break;
+            		}
+            	}
+            	percentageDivision[1] = Double.parseDouble(txtEthereum.getText());
+            	
+            	for( int i =0; i < txtLitecoin.getText().length(); i++) {
+            		if(!Character.isDigit(txtLitecoin.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "percentage division  for litecoin is invalid!");
+            			break;
+            		}
+            	}
+            	percentageDivision[2] = Double.parseDouble(txtLitecoin.getText());
+            
+            }
+
     	    	growthDivision[0] = 0;
     	    	growthDivision[1] = 0;
     	    	growthDivision[2] = 0;
@@ -849,6 +956,35 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	
     	if(lbl1.isSelected()){
     		roi = true;
+    		if(txtIncreaseAmount.getText().trim().length() == 0 &&
+        			txtIncreaseAmount.getText().trim().equals("")) {
+    			JOptionPane.showMessageDialog(null, "Enter increase amount percentage!");
+    		}
+    		
+    		else if(txtROI.getText().trim().length() == 0 &&
+    	    			txtROI.getText().trim().equals(""))
+    		{
+    			JOptionPane.showMessageDialog(null, "Enter percentage increase in ROI!");
+    		}
+    		
+    		else{
+        		for( int i =0; i < txtIncreaseAmount.getText().length(); i++) {
+            		if(!Character.isDigit(txtIncreaseAmount.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "Increase amount percentage is invalid!");
+            			break;
+            		}
+            	}
+        		increaseAmountPercentage = Double.parseDouble(txtIncreaseAmount.getText());
+        		
+        		for( int i =0; i < txtROI.getText().length(); i++) {
+            		if(!Character.isDigit(txtROI.getText().charAt(i))) {
+            			JOptionPane.showMessageDialog(null, "Increase amount percentage is invalid!");
+            			break;
+            		}
+            	}
+        		percentROI = Double.parseDouble(txtROI.getText());
+        		
+        	}
     	}
     	else {
     		roi = false;
@@ -860,17 +996,13 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     			txtIncreaseAmount.getText().trim().equals("")) {
     		increaseAmountPercentage = 0;
     	}
-    	else{
-    		increaseAmountPercentage = Double.parseDouble(txtIncreaseAmount.getText());
-    	}
+    	
     	
     	if(txtROI.getText().trim().length() == 0 &&
     			txtROI.getText().trim().equals("")) {
     		percentROI = 0;
     	}
-    	else{
-    		percentROI = Double.parseDouble(txtROI.getText());
-    	}
+
     	
   
    

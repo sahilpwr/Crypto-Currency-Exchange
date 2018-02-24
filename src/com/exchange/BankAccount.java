@@ -9,13 +9,14 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Random;
 
-public class BankAccount extends Payment {
+public class BankAccount extends Payment 
+{
 	private HashMap<String, Double> bankAccount;
 	String emailID;
 
 	public BankAccount(String emailID) throws IOException {
-		userName = "sahil";
-		password = "sahil";
+		userName = "user";
+		password = "user";
 		this.emailID = emailID;
 		File f = new File(emailID + "Bank.dat");
 

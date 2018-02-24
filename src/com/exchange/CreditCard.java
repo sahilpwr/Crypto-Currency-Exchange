@@ -14,8 +14,8 @@ public class CreditCard extends Payment {
 	String emailID;
 
 	public CreditCard(String emailID) throws IOException {
-		userName = "pawar";
-		password = "pawar";
+		userName = "user";
+		password = "user";
 		this.emailID = emailID;
 		File f = new File(emailID + "Credit.dat");
 

@@ -131,6 +131,7 @@ public class LoginGUI extends javax.swing.JFrame
                     else if(system.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
                     {
                        currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
+                       System.out.println(jTextField1.getText()+" "+jTextField2.getText());
                        JOptionPane.showMessageDialog(null, "Logged In");
    
                     

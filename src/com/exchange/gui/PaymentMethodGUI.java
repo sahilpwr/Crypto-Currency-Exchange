@@ -7,6 +7,9 @@ package com.exchange.gui;
 
 import java.io.IOException;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
+
 import com.exchange.CurrencySystem;
 import com.exchange.Payment;
 import com.exchange.User;
@@ -91,10 +94,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 		});
 
 		username.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-		username.setText("                             ");
 
 		password.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-		password.setText("                      ");
 
 		addAccount.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 		addAccount.setText("Add Account");
@@ -226,33 +227,64 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 
 	}// GEN-LAST:event_cardRadioActionPerformed
 
-	private void addAccountActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
-		if (accountRadio.isSelected()) {
+	private void addAccountActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException
+	{
+		String user=username.getText();
+		String pass=password.getText();
+		
+		
+		if (accountRadio.isSelected()) 
+		{
+			
 			Payment pay = currentUser.getBank();
 			map = pay.getBankAccount();
-
-			if (!map.containsKey(bankName))
-				pay.setBankAccount(bankName);
-			else if (map.containsKey(bankName))
-				System.out.println();// dialog box
-
-			DashboardGUI g = new DashboardGUI(currentUser, system);
-			g.setVisible(true);
-			Thread dashboard = new Thread(g);
-			dashboard.start();
-		} else if (cardRadio.isSelected()) {
+			
+			if(user.equals(pay.getUserName())&&pass.equals(pay.getPassword()))
+			{
+				if (!map.containsKey(bankName))
+					pay.setBankAccount(bankName);
+				else if (map.containsKey(bankName))
+					System.out.println();
+	
+				DashboardGUI g = new DashboardGUI(currentUser, system);
+				g.setVisible(true);
+				Thread dashboard = new Thread(g);
+				dashboard.start();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Wrong Username or Password");
+				DashboardGUI g = new DashboardGUI(currentUser, system);
+				g.setVisible(true);
+				Thread dashboard = new Thread(g);
+				dashboard.start();
+			}
+		} 
+		else if (cardRadio.isSelected()) 
+		{
 			Payment pay = currentUser.getCredit();
 			map = pay.getCardAccount();
 
-			if (!map.containsKey(bankName))
-				pay.setcreditCardAccount(bankName);
-			else if (map.containsKey(bankName))
-				System.out.println();// dialog box
-
-			DashboardGUI g = new DashboardGUI(currentUser, system);
-			g.setVisible(true);
-			Thread dashboard = new Thread(g);
-			dashboard.start();
+			if(user.equals(pay.getUserName())&&pass.equals(pay.getPassword()))
+			{
+				if (!map.containsKey(bankName))
+					pay.setcreditCardAccount(bankName);
+				else if (map.containsKey(bankName))
+					System.out.println();// dialog box
+	
+				DashboardGUI g = new DashboardGUI(currentUser, system);
+				g.setVisible(true);
+				Thread dashboard = new Thread(g);
+				dashboard.start();
+			}
+			else 
+			{
+				JOptionPane.showMessageDialog(null, "Wrong Username or Password");
+				DashboardGUI g = new DashboardGUI(currentUser, system);
+				g.setVisible(true);
+				Thread dashboard = new Thread(g);
+				dashboard.start();
+			}
 
 		}
 

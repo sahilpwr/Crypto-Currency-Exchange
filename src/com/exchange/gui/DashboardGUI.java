@@ -270,7 +270,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         jLabel21 = new javax.swing.JLabel();
         roi = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Current Bitcoin Price");

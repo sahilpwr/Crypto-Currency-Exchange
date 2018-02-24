@@ -1,2 +1,0 @@
-bitcoin 2.0 12454.0 American Express Buy
-bitcoin 15.0 7785.0 American Express Sell

@@ -41,7 +41,7 @@ public class TransactionHistoryGUI extends javax.swing.JFrame {
 		btnQuantity = new javax.swing.JButton();
 		btnAmount = new javax.swing.JButton();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		jLabel1.setText("Transaction History");
 

@@ -59,6 +59,13 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
 			
+			double roi = 0;
+		  
+			System.out.println(currentUser.getTransactionID());
+		      roi=((currency[0].getPrice()+currency[1].getPrice()+currency[2].getPrice()- currentUser.getTransactionID() )/currentUser.getInvestment())*100;
+		
+			jLabel21.setText("ROI: "+df.format(roi));
+			
 			HashMap<Integer, ManualScheduler> scheduler=currentUser.getSchedulerHistory();		
 			   if(!scheduler.isEmpty())
 		 	   {
@@ -101,7 +108,11 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 					 				if(date.before(temp1)  && date.after(temp2)) 
 					 				{	 				
 						 				try 
-						 				{   value.getROI();
+						 				{   
+						 					if(value.getROI());
+						 					{
+						 						value.increaseInvestment();
+						 					}
 						 					if(value.getInvestmentType()) {
 						 						value.autoInvest();
 						 					}
@@ -111,20 +122,20 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 						 					
 						 					value.quantityDivision();
 						 					
-											currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
+											currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
 													"bitcoin", "buy", value.getPaymentType());
 											currentUser.transaction(value.getBankname(), value.getAmount2(), value.getQuantity2(), 
 													"ethereum", "buy", value.getPaymentType());
-											currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
+											currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
 													"litecoin", "buy", value.getPaymentType());
 											
 											
-											System.out.println(value.getBankname()+value.getAmount3()+value.getQuantity3()+ 
+											System.out.println(value.getBankname()+value.getAmount1()+value.getQuantity1()+ 
 													"bitcoin"+value.getPaymentType());
 											
 											System.out.println(value.getBankname()+value.getAmount2()+value.getQuantity2()+ 
 													"ethereum"+value.getPaymentType());
-											System.out.println(value.getBankname()+value.getAmount1()+value.getQuantity1()+ 
+											System.out.println(value.getBankname()+value.getAmount3()+value.getQuantity3()+ 
 													"litecoin"+value.getPaymentType());
 										} 
 						 				catch (ClassNotFoundException e) 
@@ -433,7 +444,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         jLabel21.setText("ROI");
 
         roi.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        roi.setText("$13,000");
+      
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

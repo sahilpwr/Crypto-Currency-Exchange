@@ -17,7 +17,6 @@ public class User implements Serializable
  private String  emailID;
  private String password;
  private Payment[] payment;
- private int limit;
  private Wallet[] wallet;
  private CryptoCurrency[] currency;
  private HashMap<String, Alert> alerts=new HashMap<>();
@@ -27,14 +26,12 @@ private HashMap< Integer, ManualScheduler> schedulerHistory;
 private int schedulerID;
 private int autoSchedulerID;
 private HashMap< Integer, AutoScheduler> autoSchedulerHistory;
+private double investment=0;
 
-public int getLimit() {
-	return limit;
+public double getInvestment() {
+	return investment;
 }
 
-public void setLimit(int limit) {
-	this.limit = limit;
-}
 
 
 public String getFirstName() {
@@ -62,6 +59,7 @@ public void setEmailID(String emailID) throws IOException
 	int schedulerID=1;
 	int autoSchedulerID=1;
 	this.emailID = emailID;
+	
 	schedulerHistory = new HashMap< Integer, ManualScheduler>();
 	autoSchedulerHistory = new HashMap< Integer, AutoScheduler>();
 	alerts=new HashMap<>();
@@ -87,9 +85,7 @@ public void setEmailID(String emailID) throws IOException
 		oos.writeObject(wallet);
 		
 	}
-		
-		
-	
+   
 	
 }
 
@@ -123,16 +119,13 @@ User() throws IOException
 	
 
 }
-public void addPayment()
-{
-
-}
 
  public void transaction(String bankName,double amount, double quantity,
 			String currencyType,String transactionType,String paymentType) throws ClassNotFoundException, IOException
  { 
 
 	 Transaction transaction=new Transaction(emailID,currency);
+	 this.investment+=amount;
 	 
 	 if(transactionType=="buy"&&paymentType=="bank")
 	    transaction.buyCurrency(bankName, amount, quantity, currencyType,payment[0]);
@@ -142,7 +135,7 @@ public void addPayment()
 		 transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[0]);	  
      else if(transactionType=="sell"&&paymentType=="credit")
 	      transaction.sellCurrency(bankName, amount, quantity, currencyType,payment[1]);
-
+	 
  }
  
  public void conversion(double quantity, String currency1, String currency2,double toQuantity) throws ClassNotFoundException, IOException

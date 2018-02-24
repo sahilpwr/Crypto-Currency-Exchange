@@ -55,7 +55,7 @@ public class AutoScheduler extends Schedule {
 		return amountDivision[2];
 	}
 	
-	public boolean isRoi() {
+	public boolean getRoi() {
 		return roi;
 	}
 
@@ -235,8 +235,6 @@ public class AutoScheduler extends Schedule {
 		while(execDate.before(currentDate)) {
 			execDate.setSeconds(execDate.getSeconds() + getDuration());
 		}
-		System.out.println("Current Date:" + currentDate);
-		System.out.println("Execute Date:" + execDate);
 		return execDate;
 		
 	}

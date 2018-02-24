@@ -1,2 +1,0 @@
-bitcoin 0.9 10000.0 American Express Buy
-bitcoin 1.04 10000.0 American Express Buy

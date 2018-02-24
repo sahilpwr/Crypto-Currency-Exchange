@@ -19,7 +19,8 @@ public class CreditCard extends Payment {
 		this.emailID = emailID;
 		File f = new File(emailID + "Credit.dat");
 
-		if (!f.exists()) {
+		if (!f.exists()) 
+		{
 
 			cardAccount = new HashMap<String, Double>();
 			FileOutputStream fos = new FileOutputStream(emailID + "Credit.dat");

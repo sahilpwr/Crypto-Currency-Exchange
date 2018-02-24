@@ -26,6 +26,7 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 		this.currentUser = currentUser;
 		this.system = system;
 		initComponents();
+		accountNumber.setVisible(false);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -66,7 +67,7 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 		});
 
 		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-		jLabel2.setText("Enter Card Number/ Bank Account");
+		//jLabel2.setText("Enter Card Number/ Bank Account");
 
 		jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 		jLabel3.setText("Username");
@@ -266,7 +267,7 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 		{
 			Payment pay = currentUser.getCredit();
 			map = pay.getCardAccount();
-
+			
 			if(user.equals(pay.getUserName())&&pass.equals(pay.getPassword()))
 			{
 				if (!map.containsKey(bankName))
@@ -288,6 +289,10 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 				dashboard.start();
 			}
 
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Select Bank or Card");
 		}
 
 	}

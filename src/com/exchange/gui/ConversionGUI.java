@@ -59,7 +59,7 @@ public class ConversionGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Currency ConversionGUI");
+        jLabel1.setText("Currency Conversion");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("From ");
@@ -121,16 +121,16 @@ public class ConversionGUI extends javax.swing.JFrame {
         quantityLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel7.setText("ConversionGUI Charges");
+      
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel8.setText("2%");
+    
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel9.setText("Total Currency Deposited in Wallet");
 
         currencyWallet.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        currencyWallet.setText("1235 Ethreum");
+        
         
         fromCombo.addItem("Bitcoin");
 	    fromCombo.addItem("Ethereum");

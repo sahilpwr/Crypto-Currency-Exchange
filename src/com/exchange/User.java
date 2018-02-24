@@ -22,34 +22,19 @@ public class User implements Serializable {
 	private Wallet[] wallet;
 	private CryptoCurrency[] currency;
 	private HashMap<String, Alert> alerts = new HashMap<>();
-	private int transactionID = 1;
-	private double roi;
+	private int transactionID ;
 	private HashMap<Integer, ManualScheduler> schedulerHistory;
 	private int schedulerID;
 	private int autoSchedulerID;
 	private HashMap<Integer, AutoScheduler> autoSchedulerHistory;
 	private ArrayList<Transaction> transactionHistory;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmailID() {
-		return emailID;
-	}
 
 	
 	public void setEmailID(String emailID) throws IOException {
-		int schedulerID = 1;
-		int autoSchedulerID = 1;
+		schedulerID = 1;
+		autoSchedulerID = 1;
+		transactionID=1;
 
 		this.emailID = emailID;
 		schedulerHistory = new HashMap<Integer, ManualScheduler>();
@@ -87,48 +72,29 @@ public class User implements Serializable {
 
 	}
 	
-		public String getPassword() {
-		return password;
-	}
+	
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public double getRoi() {
-		return roi;
-	}
-
-	public void setRoi(double roi) {
-		this.roi = roi;
-	}
-
-	public Wallet[] getWallet() throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(emailID + "Wallet.dat");
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		wallet = (Wallet[]) ois.readObject();
-		return wallet;
-	}
 
 	User() throws IOException {
 
 	}
 
 	
-	public void transaction(String bankName, double amount, double quantity, String currencyType,
+	public boolean transaction(String bankName, double amount, double quantity, String currencyType,
 			String transactionType, String paymentType) throws ClassNotFoundException, IOException {
 
-		transactionID++;
+		boolean commit = false;
 		Transaction transaction = new Transaction(emailID, currency, transactionType, paymentType, transactionID);
-
+		transactionID++;
+		
 		if (transactionType == "buy" && paymentType == "bank")
-			transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[0]);
+			commit=transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[0]);
 		else if (transactionType == "buy" && paymentType == "credit")
-			transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[1]);
+			commit=transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[1]);
 		if (transactionType == "sell" && paymentType == "bank")
-			transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[0]);
+			commit=transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[0]);
 		else if (transactionType == "sell" && paymentType == "credit")
-			transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[1]);
+			commit=transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[1]);
 
 		FileInputStream fis = new FileInputStream(emailID + "Transaction.dat");
 		ObjectInputStream ois = new ObjectInputStream(fis);
@@ -139,6 +105,8 @@ public class User implements Serializable {
 		FileOutputStream fos = new FileOutputStream(emailID + "Transaction.dat");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(transactionHistory);
+		
+		return commit;
 
 	}
 
@@ -147,10 +115,42 @@ public class User implements Serializable {
 	{
 		Transaction transaction = new Transaction(emailID, currency);
 		transaction.convert(quantity, currency1, currency2, toQuantity);
-		transactionID++;
 
 	}
 
+
+	public void setSchedulerHistory(User user, double amount, double quantity, int duration, boolean type, String name,
+			CurrencySystem system, CryptoCurrency[] currency, String bankName, Date date) {
+		ManualScheduler manual = new ManualScheduler(user, amount, quantity, duration, type, name, system, currency,
+				bankName, date);
+		schedulerHistory.put(schedulerID++, manual);
+
+	}
+
+
+
+	public void setAutoSchedulerHistory(double amount, boolean investmentType, boolean divideInvestment,
+			double[] percentageDivision, double[] growthDivision, double increaseAmountPercentage, double percentROI,
+			int duration, User user, boolean roi, String name, Date date, CurrencySystem currencySystem,
+			CryptoCurrency[] cryptoCurrencies) 
+	{
+		AutoScheduler auto = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision,
+				growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, name, date, currencySystem,
+				cryptoCurrencies);
+		System.out.println();
+		autoSchedulerHistory.put(autoSchedulerID++, auto);
+	}
+
+	public ArrayList<Transaction> getTransactionHistory() throws IOException, ClassNotFoundException 
+	{
+
+		FileInputStream fis = new FileInputStream(emailID + "Transaction.dat");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		transactionHistory = (ArrayList<Transaction>) ois.readObject();
+
+		return transactionHistory;
+	}
+	
 	public int getTransactionID() {
 
 		return transactionID;
@@ -187,40 +187,41 @@ public class User implements Serializable {
 	{
 		return schedulerHistory;
 	}
-
-	public void setSchedulerHistory(User user, double amount, double quantity, int duration, boolean type, String name,
-			CurrencySystem system, CryptoCurrency[] currency, String bankName, Date date) {
-		ManualScheduler manual = new ManualScheduler(user, amount, quantity, duration, type, name, system, currency,
-				bankName, date);
-		schedulerHistory.put(schedulerID++, manual);
-
+	
+	public String getPassword() {
+		return password;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmailID() {
+		return emailID;
+	}
 	public HashMap<Integer, AutoScheduler> getAutoSchedulerHistory() 
 	{
 		return autoSchedulerHistory;
 	}
-
-	public void setAutoSchedulerHistory(double amount, boolean investmentType, boolean divideInvestment,
-			double[] percentageDivision, double[] growthDivision, double increaseAmountPercentage, double percentROI,
-			int duration, User user, boolean roi, String name, Date date, CurrencySystem currencySystem,
-			CryptoCurrency[] cryptoCurrencies) 
-	{
-		AutoScheduler auto = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision,
-				growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, name, date, currencySystem,
-				cryptoCurrencies);
-		System.out.println();
-		autoSchedulerHistory.put(autoSchedulerID++, auto);
-	}
-
-	public ArrayList<Transaction> getTransactionHistory() throws IOException, ClassNotFoundException 
-	{
-
-		FileInputStream fis = new FileInputStream(emailID + "Transaction.dat");
+	
+	public Wallet[] getWallet() throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream(emailID + "Wallet.dat");
 		ObjectInputStream ois = new ObjectInputStream(fis);
-		transactionHistory = (ArrayList<Transaction>) ois.readObject();
-
-		return transactionHistory;
+		wallet = (Wallet[]) ois.readObject();
+		return wallet;
 	}
+
 
 }

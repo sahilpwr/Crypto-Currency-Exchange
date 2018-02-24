@@ -71,7 +71,11 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 		  
 		   roi=((currency[0].getPrice()+currency[1].getPrice()+currency[2].getPrice()- investment)/investment)*100;
 		
-			jLabel21.setText("ROI: "+df.format(roi));
+		  if(investment!=0)
+			jLabel21.setText("ROI: "+df.format(roi)+" %");
+		  else
+			  jLabel21.setText("ROI: "+0.0+" %");
+			  
 			
 			HashMap<Integer, ManualScheduler> scheduler=currentUser.getSchedulerHistory();		
 			   if(!scheduler.isEmpty())

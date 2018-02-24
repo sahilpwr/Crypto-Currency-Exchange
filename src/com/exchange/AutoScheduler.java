@@ -469,10 +469,10 @@ public class AutoScheduler extends Schedule {
 	{
 		double temp = (getAmount() * increaseAmountPercentage)/100 + getAmount();
 		
-		if(user.getRoi() > percentROI)
+		/*if(user.getRoi() > percentROI)
 		{
 			setAmount(temp) ;
-		}
+		}*/
 		
 		
 		

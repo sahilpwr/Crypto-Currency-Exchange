@@ -3,6 +3,9 @@ package com.exchange.gui;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
+
 import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.Payment;
@@ -303,28 +306,43 @@ public class SellGUI extends javax.swing.JFrame {
 	}
 
 	private void checkoutActionPerformed(java.awt.event.ActionEvent evt) {
-		if (quantityRadio.isSelected()) {
-
-			quantity = Double.parseDouble(jTextField2.getText());
-			amount = currentPrice * quantity;
-
-			OrderReviewSellGUI order = new OrderReviewSellGUI(quantity, amount, bankName, currencyName, currentUser,
-					system);
-			System.out.println("currency anme" + currencyName);
-			order.setVisible(true);
-		} else if (amountRadio.isSelected()) {
-
-			amount = Double.parseDouble(jTextField1.getText());
-			if (currentPrice != 0)
-				quantity = amount / currentPrice;
-			else if (currentPrice == 0)
-				quantity = amount / 100;
-
-			System.out.println(df.format(quantity));
-			OrderReviewGUI order = new OrderReviewGUI(Double.parseDouble(df.format(quantity)), amount, bankName,
-					currencyName, currentUser, system);
-			order.setVisible(true);
-		}
+		if(ethereumRadio.isSelected()||bitcoinRadio.isSelected()||litecoinRadio.isSelected()||(!bankName.isEmpty()))
+	    	{
+			if (quantityRadio.isSelected()) 
+			{
+	
+				quantity = Double.parseDouble(jTextField2.getText());
+				amount = currentPrice * quantity;
+	
+				OrderReviewSellGUI order = new OrderReviewSellGUI(quantity, amount, bankName, currencyName, currentUser,
+						system);
+				System.out.println("currency anme" + currencyName);
+				order.setVisible(true);
+			} 
+			else if (amountRadio.isSelected())
+			{
+	
+				amount = Double.parseDouble(jTextField1.getText());
+				if (currentPrice != 0)
+					quantity = amount / currentPrice;
+				else if (currentPrice == 0)
+					quantity = amount / 100;
+	
+				System.out.println(df.format(quantity));
+				OrderReviewGUI order = new OrderReviewGUI(Double.parseDouble(df.format(quantity)), amount, bankName,
+						currencyName, currentUser, system);
+				order.setVisible(true);
+			}
+			else
+	    	   {
+	    		   JOptionPane.showMessageDialog(null, "Opps you forgot to select amount or quantity or bank");
+	    	   }
+	    	}
+		
+	 	else
+	    	{
+	    			JOptionPane.showMessageDialog(null, "Select Cryptocurrency");
+	    }
 
 	}
 

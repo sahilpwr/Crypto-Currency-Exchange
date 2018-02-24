@@ -11,6 +11,11 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Currency;
+
+import javax.swing.JOptionPane;
+
+import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.User;
 
@@ -136,14 +141,21 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void changeOrderActionPerformed(java.awt.event.ActionEvent evt) 
-	{// GEN-FIRST:event_changeOrderActionPerformed
+	{
+		CryptoCurrency[] currency=system.cryptoInfo();
+		BuyGUI buy=new BuyGUI(currentUser,currency,system);
+		buy.setVisible(true);
+
 	}// GEN-LAST:event_changeOrderActionPerformed
 
 	private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
 
-		System.out.println("aaaaa" + paymentType);
-		currentUser.transaction(bankName, amount, quantity, currencyName, "buy", paymentType);
+		boolean commit=currentUser.transaction(bankName, amount, quantity, currencyName, "buy", paymentType);
 
+		if(!commit)
+			JOptionPane.showMessageDialog(null, "Transaction not completed due to insufficient balance");
+		
+		
 		DashboardGUI g = new DashboardGUI(currentUser, system);
 		g.setVisible(true);
 		Thread dashboard = new Thread(g);
@@ -151,7 +163,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 
 		String data = currencyName + " " + quantity + " " + amount + " " + bankName + " " + "Buy";
 
-		try (FileWriter fw = new FileWriter(currentUser.getEmailID() + "transaction.txt", true);
+		try (FileWriter fw = new FileWriter(currentUser.getEmailID() + "TransactionLog.txt", true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw)) {
 			out.println(data);

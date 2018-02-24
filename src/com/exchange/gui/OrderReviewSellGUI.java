@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.swing.JOptionPane;
+
 import com.exchange.CurrencySystem;
 import com.exchange.User;
 
@@ -133,19 +135,27 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 
 	private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
 
-		currentUser.transaction(bankName, amount, quantity, currencyName, "sell", paymentType);
+		boolean commit=currentUser.transaction(bankName, amount, quantity, currencyName, "sell", paymentType);
+		
+		if(!commit)
+			JOptionPane.showMessageDialog(null, "Transaction not completed due to insufficient balance");
+		
+		
+		
 		DashboardGUI g = new DashboardGUI(currentUser, system);
 		g.setVisible(true);
 		Thread dashboard = new Thread(g);
 		dashboard.start();
 
+		
+		
 		String data = currencyName + " " + quantity + " " + amount + " " + bankName + " " + "Sell";
 
 		try (FileWriter fw = new FileWriter(currentUser.getEmailID() + "transaction.txt", true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw)) {
 			out.println(data);
-			;
+		
 
 		} catch (IOException e) {
 

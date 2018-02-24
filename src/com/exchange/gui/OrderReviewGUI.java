@@ -136,8 +136,8 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void changeOrderActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_changeOrderActionPerformed
-		// TODO add your handling code here:
+	private void changeOrderActionPerformed(java.awt.event.ActionEvent evt) 
+	{// GEN-FIRST:event_changeOrderActionPerformed
 	}// GEN-LAST:event_changeOrderActionPerformed
 
 	private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {

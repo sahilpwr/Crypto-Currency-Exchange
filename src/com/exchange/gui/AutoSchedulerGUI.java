@@ -109,7 +109,7 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
         btnSchedule = new javax.swing.JButton();
         lbl2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Auto Scheduler");
 

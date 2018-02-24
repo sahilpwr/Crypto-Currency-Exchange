@@ -48,7 +48,7 @@ public class AlertsGUI extends javax.swing.JFrame {
 
 		jTextField3.setText("jTextField3");
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 		jLabel4.setText("Amount");

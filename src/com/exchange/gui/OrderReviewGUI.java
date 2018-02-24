@@ -35,7 +35,6 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 		this.currencyName = currencyName;
 		this.system = system;
 
-		System.out.println("aaaaaaaaaaa" + bankName.contains("Card"));
 		if (bankName.contains("Card"))
 			paymentType = "credit";
 		else
@@ -66,7 +65,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 
 		jCheckBox1.setText("jCheckBox1");
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 		jLabel1.setText("Order Review ");

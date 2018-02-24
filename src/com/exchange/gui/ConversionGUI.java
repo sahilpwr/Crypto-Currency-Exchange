@@ -56,7 +56,7 @@ public class ConversionGUI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         currencyWallet = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Currency ConversionGUI");

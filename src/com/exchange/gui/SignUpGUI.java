@@ -30,7 +30,7 @@ public class SignUpGUI extends javax.swing.JFrame {
 		jLabel4 = new javax.swing.JLabel();
 		jLabel5 = new javax.swing.JLabel();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		jTextField1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 

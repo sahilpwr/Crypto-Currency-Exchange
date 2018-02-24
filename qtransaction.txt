@@ -1,2 +1,2 @@
-bitcoin 2.0 24948.0 Chase Buy
-bitcoin 2.0 1026.0 Chase Buy
+bitcoin 2.0 12454.0 American Express Buy
+bitcoin 15.0 7785.0 American Express Sell

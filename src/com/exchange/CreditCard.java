@@ -32,18 +32,12 @@ public class CreditCard extends Payment {
 
 	}
 
-<<<<<<< HEAD
-	public void setcreditCardAccount(String cardName) throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(emailID + "Credit.dat");
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		cardAccount = (HashMap<String, Double>) ois.readObject();
-=======
 	public void setcreditCardAccount(String cardName) throws IOException, ClassNotFoundException 
 	{
 		FileInputStream fis=new FileInputStream(emailID+"Credit.dat");
 		ObjectInputStream ois=new ObjectInputStream(fis);
 		cardAccount=(HashMap<String, Double>)ois.readObject();
->>>>>>> origin/master
+
 		cardAccount.put(cardName, 20000.00);
 		FileOutputStream fos = new FileOutputStream(emailID + "Credit.dat");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);

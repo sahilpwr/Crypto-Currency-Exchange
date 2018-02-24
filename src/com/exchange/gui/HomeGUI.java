@@ -216,7 +216,6 @@ public class HomeGUI extends javax.swing.JFrame implements Runnable
 		while(true)
 		{
 			currency=system.cryptoInfo();
-			System.out.println(currency[0].getPrice());
 			
 			bitcoinPrice.setText("$ "+Double.toString(currency[0].getPrice()));
 			ethereumPrice.setText("$ "+Double.toString(currency[1].getPrice()));

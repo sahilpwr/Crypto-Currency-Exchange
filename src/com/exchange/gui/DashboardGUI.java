@@ -84,7 +84,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 		while(true)
 		{
 			currency=system.cryptoInfo();
-			System.out.println(currency[0].getPrice());
+			
 			
 			bitcoinPrice.setText("$ "+Double.toString(currency[0].getPrice()));
 			ethereumPrice.setText("$ "+Double.toString(currency[1].getPrice()));
@@ -104,19 +104,19 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			  jLabel21.setText("ROI: "+0.0+" %");
 			  
 			
-		 				 try {
-							bitcoinBalance.setText(df.format(currentUser.getWallet()[0].getQuantity()));
-							litecoinWallet.setText(df.format(currentUser.getWallet()[2].getQuantity()));
-			 				ethereumWallet.setText(df.format(currentUser.getWallet()[1].getQuantity()));
-						} 
-		 				 catch (ClassNotFoundException e1) 
-		 				 {
-							e1.printStackTrace();
-						  } catch (IOException e1) 
-		 				 {
+		try {
+			bitcoinBalance.setText(df.format(currentUser.getWallet()[0].getQuantity()));
+			litecoinWallet.setText(df.format(currentUser.getWallet()[2].getQuantity()));
+			ethereumWallet.setText(df.format(currentUser.getWallet()[1].getQuantity()));
+			} 
+		 	catch (ClassNotFoundException e1) 
+		 	{
+			e1.printStackTrace();
+			 } catch (IOException e1) 
+		 	{
 							
-							e1.printStackTrace();
-						  }
+			e1.printStackTrace();
+			}
 		 				
 		 				
 		
@@ -140,6 +140,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 						 JOptionPane.showMessageDialog(null, "Litecoin is above"+alert.getAlertPrice());
 						  currentUser.destroyAlert(alert.getAlertID());
 					}
+					
+					System.out.println("Alert Executed");
 				
 				}
 				
@@ -160,6 +162,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 						 JOptionPane.showMessageDialog(null, "Bitcoin is below"+alert.getAlertPrice());
 						  currentUser.destroyAlert(alert.getAlertID());
 					}
+					
+					System.out.println("Alert Executed");
 				
 				}
 				
@@ -578,7 +582,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
     }
     private void scheduleActionPerformed(java.awt.event.ActionEvent evt) 
     {
-	    	System.out.println("Clicked");
+	  
 	    	
 	    	ManualSchedulerGUI g = new ManualSchedulerGUI(currentUser, system, currency);
 	    	g.setVisible(true);

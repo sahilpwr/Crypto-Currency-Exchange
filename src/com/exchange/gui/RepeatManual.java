@@ -1,6 +1,7 @@
 package com.exchange.gui;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.TimerTask;
 
 import com.exchange.ManualScheduler;
@@ -20,6 +21,7 @@ public class RepeatManual extends TimerTask
 	@Override
 	public void run() 
 	{
+		Date date=new Date();
 		try 
 		{
 			currentUser.transaction(value.getBankName(), value.getAmount(), value.getQuantity(), 
@@ -33,6 +35,8 @@ public class RepeatManual extends TimerTask
 	     {
 			e.printStackTrace();
 		}
+		
+		System.out.println("Transaction for Manual Schduler executed at: " +date);
 		
 	}
 

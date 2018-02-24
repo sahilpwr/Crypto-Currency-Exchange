@@ -121,7 +121,7 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 		transactionCurrency = currency;
 
 		double currentBalance = details.get(bankName);
-		System.out.println("Current Balance" + bankName);
+		
 
 		if (quantity > 0 && amount > 0) {
 
@@ -147,6 +147,7 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 				wallet[2].subCurrency(quantity);
 			}
 
+			System.out.println("Current balance in "+ bankName+ " after selling:" +currentBalance);
 			return true;
 		}
 
@@ -160,6 +161,10 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 	public boolean buyCurrency(String bankName, double amount, double quantity, String currency, Payment payment)
 			throws ClassNotFoundException, IOException {
 
+		System.out.println("Trade Amount: "+amount);
+		amount=amount+amount*0.02;
+		System.out.println("Trade Amount after 2% transaction fees: "+amount);
+		
 		transactionQuantity = Double.toString(quantity);
 		transactionAmount = Double.toString(amount);
 		transactionCurrency = currency;
@@ -175,7 +180,7 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 			BankAccount ba = (BankAccount) payment;
 			details = ba.getBankAccount();
 			currentBalance = details.get(bankName);
-			System.out.println("Current Balance" + currentBalance);
+			
 			if (quantity > 0 && amount > 0) {
 
 				if (currentBalance > amount) {
@@ -212,10 +217,12 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 					fos = new FileOutputStream(emailID + "Bank.dat");
 					oos = new ObjectOutputStream(fos);
 					oos.writeObject(details);
-
+					
+					System.out.println("Current balance in "+ bankName+ " after buying:" +currentBalance);
 					return true;
+					
 				} else {
-					System.out.println("No balance");
+					System.out.println("No balance in bank");
 					return false;
 				}
 			}
@@ -261,10 +268,13 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 					fos = new FileOutputStream(emailID + "Wallet.dat");
 					oos = new ObjectOutputStream(fos);
 					oos.writeObject(wallet);
+					
+					System.out.println("Current balance in "+ bankName+ " after buying:" +currentBalance);
+
 
 					return true;
 				} else {
-					System.out.println("No balance");
+					System.out.println("No balance in bank");
 					return false;
 				}
 			}

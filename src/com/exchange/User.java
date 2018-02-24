@@ -106,6 +106,9 @@ public class User implements Serializable {
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(transactionHistory);
 		
+		if(commit)
+		    System.out.println("Transaction Executed");
+		
 		return commit;
 
 	}
@@ -137,7 +140,7 @@ public class User implements Serializable {
 		AutoScheduler auto = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision,
 				growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, name, date, currencySystem,
 				cryptoCurrencies);
-		System.out.println();
+	
 		autoSchedulerHistory.put(autoSchedulerID++, auto);
 	}
 

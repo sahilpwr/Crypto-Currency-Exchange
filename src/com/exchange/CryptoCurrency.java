@@ -44,9 +44,7 @@ public class CryptoCurrency extends Thread implements Serializable
 		   price = rand.nextInt(multiplier) + 1;
 		  
 		   currentSeconds=cal.get(Calendar.SECOND);
-		  // System.out.println("c"+currentSeconds);
-		  // System.out.println("r"+currentSeconds);
-		  // System.out.println((currentSeconds-recentSeconds)+"  diff");
+		 
 		   if(Math.abs((currentSeconds-recentSeconds))>4)
 	       {
 			
@@ -64,6 +62,9 @@ public class CryptoCurrency extends Thread implements Serializable
 		   {
 			e.printStackTrace();
 		   }
+		   
+		   
+		   System.out.println(currencyName+" price: "+price);
 	   }
    }
 

@@ -58,7 +58,6 @@ public class CurrencySystem implements Serializable
 		ObjectInputStream ois=new ObjectInputStream(fis);
 	    users=(HashMap<String, User>)ois.readObject();
 		
-		System.out.println(users.containsKey(emailID));
 		if (!users.containsKey(emailID))
 		{
 			User newUser=new User();
@@ -77,7 +76,7 @@ public class CurrencySystem implements Serializable
             			return true;
 		}
 		else
-			System.out.println("exist");
+			System.out.println("User already exist");
 		return false;
 	}
 	

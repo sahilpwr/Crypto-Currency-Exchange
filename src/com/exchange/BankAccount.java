@@ -28,6 +28,9 @@ public class BankAccount extends Payment
 			oos.writeObject(bankAccount);
 
 		}
+		
+		System.out.println("Total amount available in bank: $50,000");
+
 	}
 
 	public void setBankAccount(String bankName) throws IOException, ClassNotFoundException {

@@ -18,7 +18,7 @@ public class RepeatAuto extends TimerTask  {
 	}
 	public void run()
 	{
-		
+		Date date=new Date();
 		 				
 				try 
 				{   
@@ -41,8 +41,7 @@ public class RepeatAuto extends TimerTask  {
 						"ethereum", "buy", value.getPaymentType());
 				currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
 						"litecoin", "buy", value.getPaymentType());
-				Date date = new Date();
-				System.out.println(date);
+			
 				
 			} 
 				catch (ClassNotFoundException e) 
@@ -55,7 +54,8 @@ public class RepeatAuto extends TimerTask  {
 				e.printStackTrace();
 			}
 			
-		
+			
+		System.out.println("Transaction for Auto Schduler executed at: " +date);
 		
 		
 	}

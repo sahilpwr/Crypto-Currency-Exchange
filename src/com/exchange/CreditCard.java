@@ -30,6 +30,9 @@ public class CreditCard extends Payment {
 			oos.writeObject(cardAccount);
 
 		}
+		
+		System.out.println("Total amount available in credit card: $20,000");
+
 
 	}
 

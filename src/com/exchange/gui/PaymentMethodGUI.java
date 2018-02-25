@@ -257,10 +257,7 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Wrong Username or Password");
-				DashboardGUI g = new DashboardGUI(currentUser, system);
-				g.setVisible(true);
-				Thread dashboard = new Thread(g);
-				dashboard.start();
+				
 			}
 		} 
 		else if (cardRadio.isSelected()) 
@@ -283,10 +280,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 			else 
 			{
 				JOptionPane.showMessageDialog(null, "Wrong Username or Password");
-				DashboardGUI g = new DashboardGUI(currentUser, system);
-				g.setVisible(true);
-				Thread dashboard = new Thread(g);
-				dashboard.start();
+			
+				
 			}
 
 		}

@@ -24,11 +24,19 @@ public class AutoScheduler extends Schedule {
 	private CurrencySystem system;
 	private CryptoCurrency [] currency;
 	private String paymentType;
-	private User user;
+	private double originalAmount;
 	
 	
 	public String getPaymentType() {
 		return paymentType;
+	}
+	
+	public double getOriginalAmount() {
+		return originalAmount;
+	}
+	
+	public void setOriginalAmount(double amount) {
+		originalAmount = getAmount();
 	}
 
 
@@ -183,10 +191,9 @@ public class AutoScheduler extends Schedule {
 	  else 
 		  paymentType="bank";
 
-  	System.out.println("invest"+investmentType);
 	
-		if(roi)
-			increaseInvestment();
+		//if(roi)
+		//	increaseInvestment();
 		
 		if(investmentType)
 			autoInvest();
@@ -457,10 +464,15 @@ public class AutoScheduler extends Schedule {
 	{
 		double temp = (getAmount() * increaseAmountPercentage)/100 + getAmount();
 		
-		/*if(user.getRoi() > percentROI)
+		Wallet[] wallet=user.getWallet();
+		
+		double investment=wallet[0].getInvestment()+wallet[1].getInvestment() +wallet[2].getInvestment();
+		double roi=((currency[0].getPrice()+currency[1].getPrice()+currency[2].getPrice()- investment)/investment)*100;
+
+		if(roi > percentROI)
 		{
 			setAmount(temp) ;
-		}*/
+		}
 		
 		
 		

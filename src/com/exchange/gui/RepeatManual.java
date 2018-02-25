@@ -22,19 +22,8 @@ public class RepeatManual extends TimerTask
 	public void run() 
 	{
 		Date date=new Date();
-		try 
-		{
-			currentUser.transaction(value.getBankName(), value.getAmount(), value.getQuantity(), 
-					value.getCurrencyName(), "buy", value.getPaymentType());
-		} 
-	    catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-	     {
-			e.printStackTrace();
-		}
+		currentUser.transaction(value.getBankName(), value.getAmount(), value.getQuantity(), 
+				value.getCurrencyName(), "buy", value.getPaymentType());
 		
 		System.out.println("Transaction for Manual Schduler executed at: " +date);
 		

@@ -76,7 +76,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 		jLabel1.setText("Order Review ");
 
 		buy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-		buy.setText("Confirm BuyGUI");
+		buy.setText("Confirm Buy");
 		buy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
@@ -106,7 +106,7 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 		jLabel2.setText("                       ");
 
 		limit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-		limit.setText("$8000 out of $20,000");
+		limit.setText("             ");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);

@@ -19,40 +19,29 @@ public class RepeatAuto extends TimerTask  {
 	public void run()
 	{
 		Date date=new Date();
-		 				
-				try 
-				{   
-					if(value.getROI());
-					{
-						value.increaseInvestment();
-					}
-					if(value.getInvestmentType()) {
-						value.autoInvest();
-					}
-					else {
-						value.percentInvest();	
-					}
-					
-					value.quantityDivision();
-					
-				currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
-						"bitcoin", "buy", value.getPaymentType());
-				currentUser.transaction(value.getBankname(), value.getAmount2(), value.getQuantity2(), 
-						"ethereum", "buy", value.getPaymentType());
-				currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
-						"litecoin", "buy", value.getPaymentType());
-			
+		System.out.println("Original investment" + value.getAmount());
+				value.setOriginalAmount(value.getAmount());
+				if(value.getROI());
+				{
+					value.increaseInvestment();
+				}
+				if(value.getInvestmentType()) {
+					value.autoInvest();
+				}
+				else {
+					value.percentInvest();	
+				}
 				
-			} 
-				catch (ClassNotFoundException e) 
-				{
-				e.printStackTrace();
-			} 
-				catch (IOException e)
-				{
-			
-				e.printStackTrace();
-			}
+				value.quantityDivision();
+				
+				value.setAmount(value.getOriginalAmount());
+				
+currentUser.transaction(value.getBankname(), value.getAmount1(), value.getQuantity1(), 
+					"bitcoin", "buy", value.getPaymentType());
+currentUser.transaction(value.getBankname(), value.getAmount2(), value.getQuantity2(), 
+					"ethereum", "buy", value.getPaymentType());
+currentUser.transaction(value.getBankname(), value.getAmount3(), value.getQuantity3(), 
+					"litecoin", "buy", value.getPaymentType());
 			
 			
 		System.out.println("Transaction for Auto Schduler executed at: " +date);

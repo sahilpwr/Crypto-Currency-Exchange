@@ -77,7 +77,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 			}
 		});
 		orderReview.setText("Currency: " + currencyName + "\nPayment Method: " + paymentType + "\nQuantity: " + quantity
-				+ "\nAmount: " + amount);
+				+"\nCan be bought at: " + (amount / quantity) + "\nAmount: " + amount);
 		orderReview.setColumns(20);
 		orderReview.setRows(5);
 
@@ -95,7 +95,7 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 		jLabel2.setText("                        ");
 
 		limit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-		limit.setText("$8000 out of $20,000");
+		limit.setText("                ");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -136,9 +136,9 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 	private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
 
 		boolean commit=currentUser.transaction(bankName, amount, quantity, currencyName, "sell", paymentType);
-		
+		System.out.println("true"+commit);
 		if(!commit)
-			JOptionPane.showMessageDialog(null, "Transaction not completed due to insufficient balance");
+			JOptionPane.showMessageDialog(null, "Transaction not completed due to insufficient balance in wallet");
 		
 		
 		

@@ -21,8 +21,8 @@ import java.util.HashMap;
 public class Transaction implements Serializable, Comparator<Transaction>, Comparable<Transaction> {
 
 	private double price;
-	private String transactionAmount;
-	private String transactionQuantity;
+	private Double transactionAmount;
+	private Double transactionQuantity;
 	private float transactionFee;
 	private String transactionType;
 	private String[] bankPayment;
@@ -116,8 +116,8 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 	public boolean sellCommit(double quantity, double amount, HashMap<String, Double> details, String currency,
 			String bankName) throws IOException, ClassNotFoundException {
 
-		transactionQuantity = Double.toString(quantity);
-		transactionAmount = Double.toString(amount);
+		transactionQuantity = quantity;
+		transactionAmount = amount;
 		transactionCurrency = currency;
 
 		double currentBalance = details.get(bankName);
@@ -129,6 +129,7 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 			FileInputStream fis = new FileInputStream(emailID + "Wallet.dat");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			wallet = (Wallet[]) ois.readObject();
+			boolean commit=false;
 
 			System.out.println("Current Balance" + currentBalance);
 
@@ -136,19 +137,22 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 				currentBalance += amount;
 				details.put(bankName, currentBalance);
 				wallet[0].subCurrency(quantity);
+				commit=true;
 
 			} else if (currency.equalsIgnoreCase("ethereum") && wallet[1].getQuantity() >= quantity) {
 				currentBalance += amount;
 				details.put(bankName, currentBalance);
 				wallet[1].subCurrency(quantity);
+				commit=true;
 			} else if (currency.equalsIgnoreCase("litecoin") && wallet[2].getQuantity() >= quantity) {
 				currentBalance += amount;
 				details.put(bankName, currentBalance);
 				wallet[2].subCurrency(quantity);
+				commit=true;
 			}
 
 			System.out.println("Current balance in "+ bankName+ " after selling:" +currentBalance);
-			return true;
+			return commit;
 		}
 
 		else {
@@ -165,8 +169,8 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 		amount=amount+amount*0.02;
 		System.out.println("Trade Amount after 2% transaction fees: "+amount);
 		
-		transactionQuantity = Double.toString(quantity);
-		transactionAmount = Double.toString(amount);
+		transactionQuantity = quantity;
+		transactionAmount = amount;
 		transactionCurrency = currency;
 
 		double currentBalance = 0;
@@ -292,20 +296,20 @@ public class Transaction implements Serializable, Comparator<Transaction>, Compa
 			BankAccount ba = (BankAccount) payment;
 			details = ba.getBankAccount();
 
-			sellCommit(quantity, amount, details, currency, bankName);
+			boolean commit=sellCommit(quantity, amount, details, currency, bankName);
 			writeFile(details, emailID + "Bank.dat");
 
-			return true;
+			return commit;
 		}
 
 		else if (payment instanceof CreditCard) {
 			CreditCard ca = (CreditCard) payment;
 			details = ca.getCardAccount();
 
-			sellCommit(quantity, amount, details, currency, bankName);
+			boolean commit=sellCommit(quantity, amount, details, currency, bankName);
 			writeFile(details, emailID + "Credit.dat");
 
-			return true;
+			return commit;
 		}
 		return false;
 	}

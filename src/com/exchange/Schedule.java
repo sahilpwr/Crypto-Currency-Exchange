@@ -10,7 +10,7 @@ public class Schedule {
 	private double amount;
 	private CryptoCurrency[] c;
 	private CurrencySystem currencySystem;
-	private User user;
+	protected User user;
 	
 	
 	public CurrencySystem getCurrencySystem() {

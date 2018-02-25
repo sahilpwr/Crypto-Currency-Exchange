@@ -37,19 +37,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 		 
 		
 		Wallet[] wallet = null;
-		try 
-		{
-			wallet = currentUser.getWallet();
-		} 
-		catch (ClassNotFoundException e2) 
-		{
-			e2.printStackTrace();
-		} 
-		catch (IOException e2) 
-		{
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+		wallet = currentUser.getWallet();
 		
 
 		
@@ -104,19 +92,9 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			  jLabel21.setText("ROI: "+0.0+" %");
 			  
 			
-		try {
-			bitcoinBalance.setText(df.format(currentUser.getWallet()[0].getQuantity()));
-			litecoinWallet.setText(df.format(currentUser.getWallet()[2].getQuantity()));
-			ethereumWallet.setText(df.format(currentUser.getWallet()[1].getQuantity()));
-			} 
-		 	catch (ClassNotFoundException e1) 
-		 	{
-			e1.printStackTrace();
-			 } catch (IOException e1) 
-		 	{
-							
-			e1.printStackTrace();
-			}
+		bitcoinBalance.setText(df.format(currentUser.getWallet()[0].getQuantity()));
+		litecoinWallet.setText(df.format(currentUser.getWallet()[2].getQuantity()));
+		ethereumWallet.setText(df.format(currentUser.getWallet()[1].getQuantity()));
 		 				
 		 				
 		

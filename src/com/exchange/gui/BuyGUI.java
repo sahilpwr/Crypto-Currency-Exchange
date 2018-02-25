@@ -338,18 +338,20 @@ public class BuyGUI extends javax.swing.JFrame {
 
     private void checkoutActionPerformed(java.awt.event.ActionEvent evt) 
     {
-	    	if(ethereumRadio.isSelected()||bitcoinRadio.isSelected()||litecoinRadio.isSelected()||(!bankName.isEmpty()))
+	    	if(ethereumRadio.isSelected()||bitcoinRadio.isSelected()||litecoinRadio.isSelected()&&(bankName!=null))
 	    	{
-	    	   if(quantityRadio.isSelected())
+	    	   if(quantityRadio.isSelected()&& (jTextField2.getText().trim().length()!=0))
 	    	   { 
-		    	
+	    		 
+	    			
+	    		   
 		    	    quantity=Double.parseDouble(jTextField2.getText());
 		    		amount=currentPrice*quantity;
 		    		
 		    	    OrderReviewGUI order=new OrderReviewGUI(quantity,amount,bankName,currencyName,currentUser,system);
 		    	    order.setVisible(true);
 	    	   }
-	    	   else if(amountRadio.isSelected())
+	    	   else if(amountRadio.isSelected()&&(jTextField1.getText().trim().length()!=0))
 	    	   {
 	    		  
 	    		   	amount=Double.parseDouble(jTextField1.getText());

@@ -155,12 +155,14 @@ public class SignUpGUI extends javax.swing.JFrame {
 			if (!exists)
 				JOptionPane.showMessageDialog(null, "User with emaild id " + jTextField3.getText() + " alrady exists");
 			else
+			{
 				JOptionPane.showMessageDialog(null, "Account Successfully Created");
 
 			HomeGUI h = new HomeGUI(system);
 			h.setVisible(true);
 			Thread m = new Thread(h);
 			m.start();
+			}
 		}
 	}
 

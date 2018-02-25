@@ -3,6 +3,9 @@ package com.exchange.gui;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
+
 import com.exchange.Alert;
 import com.exchange.CurrencySystem;
 import com.exchange.User;
@@ -196,14 +199,19 @@ public class AlertsGUI extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void deleteActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {// GEN-FIRST:event_deleteActionPerformed
-
-		String deleteAlert = deleteCombo.getSelectedItem().toString();
-		currentUser.destroyAlert(deleteAlert);
-
-		DashboardGUI g = new DashboardGUI(currentUser, system);
-		g.setVisible(true);
-		Thread dashboard = new Thread(g);
-		dashboard.start();
+		
+			String deleteAlert = deleteCombo.getSelectedItem().toString();
+	  if(deleteRadio.isSelected()&&(deleteCombo.isEnabled()))
+	  {		currentUser.destroyAlert(deleteAlert);
+	
+			DashboardGUI g = new DashboardGUI(currentUser, system);
+			g.setVisible(true);
+			Thread dashboard = new Thread(g);
+			dashboard.start();
+		}
+	  else
+	     JOptionPane.showMessageDialog(null, "Select alert to delete from drop box");
+ 
 	}// GEN-LAST:event_deleteActionPerformed
 
 	private void deleteRadioActionPerformed(java.awt.event.ActionEvent evt)
@@ -228,7 +236,8 @@ public class AlertsGUI extends javax.swing.JFrame {
 
 	private void convertActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {// GEN-FIRST:event_convertActionPerformed
 
-		if (createRadio.isSelected() && (aboveRadio.isSelected() || belowRadio.isSelected())) {
+		if (createRadio.isSelected() && (aboveRadio.isSelected() || belowRadio.isSelected()))
+		{
 			currencyName = coinCombo.getSelectedItem().toString();
 			double alertPrice = Double.parseDouble(jTextField2.getText());
 			currentUser.createAlert(currencyName + " " + alertPrice);
@@ -244,6 +253,9 @@ public class AlertsGUI extends javax.swing.JFrame {
 			Thread dashboard = new Thread(g);
 			dashboard.start();
 		}
+		else
+			JOptionPane.showMessageDialog(null, "Select all the fields");
+
 
 	}// GEN-LAST:event_convertActionPerformed
 

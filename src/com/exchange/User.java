@@ -2,6 +2,7 @@ package com.exchange;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -31,7 +32,7 @@ public class User implements Serializable {
 
 
 	
-	public void setEmailID(String emailID) throws IOException {
+	public void setEmailID(String emailID) throws IOException  {
 		schedulerID = 1;
 		autoSchedulerID = 1;
 		transactionID=1;
@@ -49,13 +50,23 @@ public class User implements Serializable {
 
 		if (!f.exists()) {
 			wallet = new Wallet[3];
-			FileOutputStream fos = new FileOutputStream(emailID + "Wallet.dat");
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			wallet[0] = new Wallet("bitcoin");
-			wallet[1] = new Wallet("ethereum");
-			wallet[2] = new Wallet("litecoin");
+			FileOutputStream fos;
+			try 
+			{
+				fos = new FileOutputStream(emailID + "Wallet.dat");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				wallet[0] = new Wallet("bitcoin");
+				wallet[1] = new Wallet("ethereum");
+				wallet[2] = new Wallet("litecoin");
 
-			oos.writeObject(wallet);
+				oos.writeObject(wallet);
+			} 
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 
 		}
 
@@ -63,10 +74,17 @@ public class User implements Serializable {
 
 		if (!f1.exists()) {
 
-			FileOutputStream fos = new FileOutputStream(emailID + "Transaction.dat");
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			
 
-			oos.writeObject(transactionHistory);
+			try 
+			{
+				FileOutputStream fos = new FileOutputStream(emailID + "Transaction.dat");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(transactionHistory);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("End of File ");
+			}
 
 		}
 
@@ -81,33 +99,50 @@ public class User implements Serializable {
 
 	
 	public boolean transaction(String bankName, double amount, double quantity, String currencyType,
-			String transactionType, String paymentType) throws ClassNotFoundException, IOException {
+			String transactionType, String paymentType) {
 
 		boolean commit = false;
-		Transaction transaction = new Transaction(emailID, currency, transactionType, paymentType, transactionID);
-		transactionID++;
+		Transaction transaction;
+		try 
+		{
+			transaction = new Transaction(emailID, currency, transactionType, paymentType, transactionID);
+			transactionID++;
+			
+			if (transactionType == "buy" && paymentType == "bank")
+				commit=transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[0]);
+			else if (transactionType == "buy" && paymentType == "credit")
+				commit=transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[1]);
+			if (transactionType == "sell" && paymentType == "bank")
+				commit=transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[0]);
+			else if (transactionType == "sell" && paymentType == "credit")
+				commit=transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[1]);
+
+			
+			if(commit)
+			{
+			    System.out.println("Transaction Executed");
+
+				FileInputStream fis = new FileInputStream(emailID + "Transaction.dat");
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				transactionHistory = (ArrayList<Transaction>) ois.readObject();
+	
+				transactionHistory.add(transaction);
+	
+				FileOutputStream fos = new FileOutputStream(emailID + "Transaction.dat");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(transactionHistory);
+			}
+			
+		} 
+		catch (ClassNotFoundException | IOException e) 
 		
-		if (transactionType == "buy" && paymentType == "bank")
-			commit=transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[0]);
-		else if (transactionType == "buy" && paymentType == "credit")
-			commit=transaction.buyCurrency(bankName, amount, quantity, currencyType, payment[1]);
-		if (transactionType == "sell" && paymentType == "bank")
-			commit=transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[0]);
-		else if (transactionType == "sell" && paymentType == "credit")
-			commit=transaction.sellCurrency(bankName, amount, quantity, currencyType, payment[1]);
-
-		FileInputStream fis = new FileInputStream(emailID + "Transaction.dat");
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		transactionHistory = (ArrayList<Transaction>) ois.readObject();
-
-		transactionHistory.add(transaction);
-
-		FileOutputStream fos = new FileOutputStream(emailID + "Transaction.dat");
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(transactionHistory);
+		{
+			// TODO Auto-generated catch block
+			System.out.println("End of File ");
+		}
 		
-		if(commit)
-		    System.out.println("Transaction Executed");
+		
+		
 		
 		return commit;
 
@@ -219,10 +254,16 @@ public class User implements Serializable {
 		return autoSchedulerHistory;
 	}
 	
-	public Wallet[] getWallet() throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(emailID + "Wallet.dat");
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		wallet = (Wallet[]) ois.readObject();
+	public Wallet[] getWallet()  {
+		
+		try {
+			FileInputStream fis = new FileInputStream(emailID + "Wallet.dat");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			wallet = (Wallet[]) ois.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("End of File ");
+		}
 		return wallet;
 	}
 

@@ -133,7 +133,6 @@ public class LoginGUI extends javax.swing.JFrame
                        currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
                        System.out.println(jTextField1.getText()+" "+jTextField2.getText());
                        JOptionPane.showMessageDialog(null, "Logged In");
-   
                     
                        DashboardGUI g = new DashboardGUI(currentUser,system);
                        g.setVisible(true);
@@ -142,6 +141,12 @@ public class LoginGUI extends javax.swing.JFrame
                        dashboard.start();
                        
                        
+                    }
+                    else 
+                    {
+                        JOptionPane.showMessageDialog(null, "Wrong Username or Password");
+                        
+
                     }
       
     }   

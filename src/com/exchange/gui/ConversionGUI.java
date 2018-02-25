@@ -304,7 +304,7 @@ public class ConversionGUI extends javax.swing.JFrame {
 
     private void convertActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException 
     {
-	    	if(currency1!=currency2&&quantity>0)
+    	if(currency1!=currency2&&quantity>0)
 	    	{
 	    	   currentUser.conversion(quantity, currency1, currency2,toQuantity);
 	    	   DashboardGUI g =new DashboardGUI(currentUser, system);

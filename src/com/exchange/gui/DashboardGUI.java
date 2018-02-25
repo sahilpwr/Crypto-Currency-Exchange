@@ -82,6 +82,8 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
 			ethereumChange.setText(""+Integer.toString(currency[1].getPercentDifference())+" %");
 			litecoinChange.setText(""+Integer.toString(currency[2].getPercentDifference())+" %");
 			
+			
+			System.out.println(investment+"investment");
 			investment=wallet[0].getInvestment()+wallet[1].getInvestment() +wallet[2].getInvestment();
 		  
 		   roi=((currency[0].getPrice()+currency[1].getPrice()+currency[2].getPrice()- investment)/investment)*100;
@@ -349,7 +351,7 @@ public class DashboardGUI extends javax.swing.JFrame implements Runnable
         });
 
         transaction.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        transaction.setText("Transcation History");
+        transaction.setText("Transaction History");
         transaction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {

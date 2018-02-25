@@ -1013,8 +1013,10 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	//AutoScheduler as = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision, 
     	//growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, bankName);
     
-	    super.dispose();
-
+    	    DashboardGUI g = new DashboardGUI(user, currencySystem);
+ 		g.setVisible(true);
+ 		Thread dashboard = new Thread(g);
+ 		dashboard.start();
     	
     	
     }//GEN-LAST:event_btnScheduleActionPerformed

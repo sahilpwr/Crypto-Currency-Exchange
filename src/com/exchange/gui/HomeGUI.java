@@ -179,6 +179,7 @@ public class HomeGUI extends javax.swing.JFrame implements Runnable
     {                                      
         LoginGUI g=new LoginGUI(system);
 	    g.setVisible(true);
+	    super.dispose();
     }                                     
     
     private void signUpActionPerformed(java.awt.event.ActionEvent evt)

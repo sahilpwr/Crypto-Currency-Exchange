@@ -156,7 +156,10 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 		} catch (IOException e) {
 
 		}
-	    super.dispose();
+		DashboardGUI g = new DashboardGUI(currentUser, system);
+		g.setVisible(true);
+		Thread dashboard = new Thread(g);
+		dashboard.start();
 
 
 	}

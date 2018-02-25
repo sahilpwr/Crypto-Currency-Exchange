@@ -307,7 +307,10 @@ public class ConversionGUI extends javax.swing.JFrame {
     	if(currency1!=currency2&&quantity>0)
 	    	{
 	    	   currentUser.conversion(quantity, currency1, currency2,toQuantity);
-	   	    super.dispose();
+	    	   DashboardGUI g = new DashboardGUI(currentUser, system);
+	   		g.setVisible(true);
+	   		Thread dashboard = new Thread(g);
+	   		dashboard.start();
 
 	    	}
 	    	else 

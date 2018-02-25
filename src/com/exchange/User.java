@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class User implements Serializable {
 
@@ -72,10 +73,8 @@ public class User implements Serializable {
 
 		File f1 = new File(emailID + "Transaction.dat");
 
-		if (!f1.exists()) {
-
-			
-
+		if (!f1.exists()) 
+		{
 			try 
 			{
 				FileOutputStream fos = new FileOutputStream(emailID + "Transaction.dat");
@@ -87,6 +86,9 @@ public class User implements Serializable {
 			}
 
 		}
+		
+		
+
 
 	}
 	

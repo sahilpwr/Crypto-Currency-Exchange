@@ -2,7 +2,9 @@
 
 package com.exchange.gui;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -131,7 +133,35 @@ public class LoginGUI extends javax.swing.JFrame
                     else if(system.checkUser(jTextField1.getText(), jTextField2.getText())!=null)
                     {
                        currentUser = system.checkUser(jTextField1.getText(), jTextField2.getText());
-                       System.out.println(jTextField1.getText()+" "+jTextField2.getText());
+                     
+                       //read previous transactions if any
+           			Scanner input = null;
+           			File file = new   File(jTextField2.getText()+"TransactionLog.txt"); 
+           			if(file.exists())
+           			{
+           				 System.out.println("Previous Transactions:");
+           				try 
+           				{
+           					
+           					 input = new   Scanner(file); 
+           					
+           					 
+           					while (input.hasNextLine()) 
+           					{ 
+           						String line = input.nextLine(); 
+           						System.out.println( line); 
+           					} 
+           				} catch (IOException ioe)
+           				{     
+           						System.out.println(ioe.toString());       
+           				}  
+           				finally  {    if (input != null)  input.close();    }
+           				
+           			}
+                       
+                       
+                       
+                       
                        JOptionPane.showMessageDialog(null, "Logged In");
                     
                        DashboardGUI g = new DashboardGUI(currentUser,system);

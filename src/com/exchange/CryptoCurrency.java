@@ -34,6 +34,10 @@ public class CryptoCurrency extends Thread implements Serializable
        sdf = new SimpleDateFormat( );
 	   recentSeconds=cal.get(Calendar.SECOND);
 	   recentPrice = rand.nextInt(multiplier) + 1;
+	   
+	   
+	   
+	   
    
 	   while(true)
 	   {

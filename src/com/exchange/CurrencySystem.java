@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,12 +90,18 @@ public class CurrencySystem implements Serializable
 		
 		if(users.containsKey(emailID))
 		{
+			
+			
 		     User currentUser=users.get(emailID);
 			 if( currentUser.getPassword().equals(password))
 			 {
 			   return currentUser;
 			 }
 	    }
+		
+		
+		
+		
 	   return null;
 	}
 	

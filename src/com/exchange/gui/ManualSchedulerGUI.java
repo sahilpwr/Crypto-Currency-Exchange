@@ -562,10 +562,8 @@ public class ManualSchedulerGUI extends javax.swing.JFrame {
         //ManualScheduler ms = new ManualScheduler(user,Double.parseDouble(txtAmount.getText()),Double.parseDouble(txtQuantity.getText()),
         	//	duration,type,name, currencySystem, cryptoCurrencies, bankName);
         
-  	  DashboardGUI g =new DashboardGUI(user, currencySystem);
-	  g.setVisible(true);
-	  Thread dashboard=new Thread(g);
-	  dashboard.start();
+	    super.dispose();
+
         
         
     }//GEN-LAST:event_btnScheduleActionPerformed

@@ -178,6 +178,7 @@ public class LoginGUI extends javax.swing.JFrame
                         
 
                     }
+                    super.dispose();
       
     }   
     

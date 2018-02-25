@@ -307,10 +307,8 @@ public class ConversionGUI extends javax.swing.JFrame {
     	if(currency1!=currency2&&quantity>0)
 	    	{
 	    	   currentUser.conversion(quantity, currency1, currency2,toQuantity);
-	    	   DashboardGUI g =new DashboardGUI(currentUser, system);
-	   	   g.setVisible(true);
-	   	   Thread dashboard=new Thread(g);
-	   	   dashboard.start();
+	   	    super.dispose();
+
 	    	}
 	    	else 
 		     JOptionPane.showMessageDialog(null, "Please don't select same currency for conversion and quantity should be above 0");

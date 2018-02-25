@@ -158,10 +158,8 @@ public class SignUpGUI extends javax.swing.JFrame {
 			{
 				JOptionPane.showMessageDialog(null, "Account Successfully Created");
 
-			HomeGUI h = new HomeGUI(system);
-			h.setVisible(true);
-			Thread m = new Thread(h);
-			m.start();
+			    super.dispose();
+
 			}
 		}
 	}

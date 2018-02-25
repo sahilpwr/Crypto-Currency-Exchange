@@ -373,7 +373,8 @@ public class BuyGUI extends javax.swing.JFrame {
 	    	{
 	    			JOptionPane.showMessageDialog(null, "Select Cryptocurrency");
 	    }
-    	
+	        super.dispose();
+
     }
 
     private void amountRadioActionPerformed(java.awt.event.ActionEvent evt) 

@@ -343,6 +343,8 @@ public class SellGUI extends javax.swing.JFrame {
 	    	{
 	    			JOptionPane.showMessageDialog(null, "Select Cryptocurrency");
 	    }
+	    super.dispose();
+
 
 	}
 

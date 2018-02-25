@@ -204,10 +204,8 @@ public class AlertsGUI extends javax.swing.JFrame {
 	  if(deleteRadio.isSelected()&&(deleteCombo.isEnabled()))
 	  {		currentUser.destroyAlert(deleteAlert);
 	
-			DashboardGUI g = new DashboardGUI(currentUser, system);
-			g.setVisible(true);
-			Thread dashboard = new Thread(g);
-			dashboard.start();
+	    super.dispose();
+
 		}
 	  else
 	     JOptionPane.showMessageDialog(null, "Select alert to delete from drop box");
@@ -248,10 +246,8 @@ public class AlertsGUI extends javax.swing.JFrame {
 			alert.setCurrencyName(currencyName);
 			alert.setNotify(notify);
 
-			DashboardGUI g = new DashboardGUI(currentUser, system);
-			g.setVisible(true);
-			Thread dashboard = new Thread(g);
-			dashboard.start();
+		    super.dispose();
+
 		}
 		else
 			JOptionPane.showMessageDialog(null, "Select all the fields");

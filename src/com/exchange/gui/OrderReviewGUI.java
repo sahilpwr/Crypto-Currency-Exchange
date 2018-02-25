@@ -145,6 +145,8 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 		CryptoCurrency[] currency=system.cryptoInfo();
 		BuyGUI buy=new BuyGUI(currentUser,currency,system);
 		buy.setVisible(true);
+	    super.dispose();
+
 
 	}// GEN-LAST:event_changeOrderActionPerformed
 
@@ -156,10 +158,6 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null, "Transaction not completed due to insufficient balance");
 		
 		
-		DashboardGUI g = new DashboardGUI(currentUser, system);
-		g.setVisible(true);
-		Thread dashboard = new Thread(g);
-		dashboard.start();
 
 		String data = currencyName + " " + quantity + " " + amount + " " + bankName + " " + "Buy";
 
@@ -172,6 +170,9 @@ public class OrderReviewGUI extends javax.swing.JFrame {
 		} catch (IOException e) {
 
 		}
+		
+	    super.dispose();
+
 
 	}
 

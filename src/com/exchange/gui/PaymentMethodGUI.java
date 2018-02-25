@@ -248,11 +248,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 					pay.setBankAccount(bankName);
 				else if (map.containsKey(bankName))
 					System.out.println();
-	
-				DashboardGUI g = new DashboardGUI(currentUser, system);
-				g.setVisible(true);
-				Thread dashboard = new Thread(g);
-				dashboard.start();
+			    super.dispose();
+
 			}
 			else
 			{
@@ -272,10 +269,8 @@ public class PaymentMethodGUI extends javax.swing.JFrame {
 				else if (map.containsKey(bankName))
 					System.out.println();// dialog box
 	
-				DashboardGUI g = new DashboardGUI(currentUser, system);
-				g.setVisible(true);
-				Thread dashboard = new Thread(g);
-				dashboard.start();
+			    super.dispose();
+
 			}
 			else 
 			{

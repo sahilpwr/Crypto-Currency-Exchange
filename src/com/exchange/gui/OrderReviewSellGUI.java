@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
 
+import com.exchange.CryptoCurrency;
 import com.exchange.CurrencySystem;
 import com.exchange.User;
 
@@ -129,8 +130,12 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void changeOrderActionPerformed(java.awt.event.ActionEvent evt) {
-
+	private void changeOrderActionPerformed(java.awt.event.ActionEvent evt) 
+	{
+		CryptoCurrency[] currency=system.cryptoInfo();
+		SellGUI sell=new SellGUI(currentUser,currency,system);
+		sell.setVisible(true);
+	    super.dispose();
 	}// GEN-LAST:event_changeOrderActionPerformed
 
 	private void buyActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
@@ -139,15 +144,6 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 		System.out.println("true"+commit);
 		if(!commit)
 			JOptionPane.showMessageDialog(null, "Transaction not completed due to insufficient balance in wallet");
-		
-		
-		
-		DashboardGUI g = new DashboardGUI(currentUser, system);
-		g.setVisible(true);
-		Thread dashboard = new Thread(g);
-		dashboard.start();
-
-		
 		
 		String data = currencyName + " " + quantity + " " + amount + " " + bankName + " " + "Sell";
 
@@ -160,6 +156,8 @@ public class OrderReviewSellGUI extends javax.swing.JFrame {
 		} catch (IOException e) {
 
 		}
+	    super.dispose();
+
 
 	}
 

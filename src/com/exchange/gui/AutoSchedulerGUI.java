@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.exchange.AutoScheduler;
@@ -1012,10 +1013,8 @@ public class AutoSchedulerGUI extends javax.swing.JFrame {
     	//AutoScheduler as = new AutoScheduler(amount, investmentType, divideInvestment, percentageDivision, 
     	//growthDivision, increaseAmountPercentage, percentROI, duration, user, roi, bankName);
     
-    	  DashboardGUI g =new DashboardGUI(user, currencySystem);
-    	  g.setVisible(true);
-    	  Thread dashboard=new Thread(g);
-    	  dashboard.start();
+	    super.dispose();
+
     	
     	
     }//GEN-LAST:event_btnScheduleActionPerformed
